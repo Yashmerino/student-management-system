@@ -5,6 +5,7 @@ public class Student {
 	private String surname;
 	private short age;
 	private String course;
+	private short gradeYear;
 	
 	static int id;
 	
@@ -81,5 +82,19 @@ public class Student {
 	public static void setId(int id) {
 		Student.id = id;
 		id++;
+	}
+
+	/**
+	 * @return the gradeYear
+	 */
+	public short getGradeYear() {
+		return gradeYear;
+	}
+
+	/**
+	 * @param The gradeYear to set
+	 */
+	public void setGradeYear(short gradeYear) {
+		this.gradeYear = gradeYear;
 	}
 }
