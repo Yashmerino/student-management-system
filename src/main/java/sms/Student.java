@@ -6,13 +6,18 @@ public class Student {
 	private short age;
 	private String course;
 	private short gradeYear;
-	
-	static int id;
+	int id;
+	static int counter;
 	
 	static {
-		id = 0;
+		counter = 0;
 	}
 
+	Student() {
+		this.id = counter;
+		counter++;
+	}
+	
 	/**
 	 * @return the name
 	 */
@@ -72,17 +77,10 @@ public class Student {
 	/**
 	 * @return the id
 	 */
-	public static int getId() {
+	public int getId() {
 		return id;
 	}
 
-	/**
-	 * @param The id to set
-	 */
-	public static void setId(int id) {
-		Student.id = id;
-		id++;
-	}
 
 	/**
 	 * @return the gradeYear
