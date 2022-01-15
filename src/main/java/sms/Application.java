@@ -4,10 +4,13 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -102,8 +105,44 @@ public class Application {
 
 		// The button to press after the login and password were written
 		JButton connectButton = new JButton("Connect");
-		connectButton.setBounds(243, 288, 138, 33);
+		connectButton.setBounds(240, 290, 140, 35);
 		connectButton.setFont(new Font("Tahoma", Font.PLAIN, 20));
+
+		// Execute connection and create a table when "Connect" button pressed
+		connectButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				// If one of the fields are empty then warn user about it
+				if (loginField.getText().equals("") || passwordField.getText().equals("")) {
+					JOptionPane.showMessageDialog(new JFrame(), "Fields are empty!", "Error",
+							JOptionPane.ERROR_MESSAGE);
+				} else {
+					// Get login and password from fields and set them for database handler
+					DBHandler.setLogin(loginField.getText());
+					DBHandler.setPassword(passwordField.getText());
+
+					// Show an input dialog in order to get a name for the table
+					String tableName;
+					tableName = JOptionPane.showInputDialog(new JFrame(), "Type a name for your table:");
+
+					// If no text was written then set the table's name to "Default"
+					if (tableName == null || tableName.equals("")) {
+						tableName = "Default";
+					}
+
+					// If table has\hasn't been successfully created then inform the user about that
+					if (DBHandler.createTable(tableName)) {
+						JOptionPane.showMessageDialog(new JFrame(), "Table has been successfully created!", "Success",
+								JOptionPane.INFORMATION_MESSAGE);
+					} else {
+						JOptionPane.showMessageDialog(new JFrame(),
+								"Table hasn't been created! Check your database credentials!", "Error",
+								JOptionPane.ERROR_MESSAGE);
+					}
+				}
+
+			}
+		});
+
 		bottomPanel.setLayout(null);
 		bottomPanel.add(passwordText);
 		bottomPanel.add(loginText);
