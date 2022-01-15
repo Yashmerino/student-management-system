@@ -26,7 +26,7 @@ public class Student {
 	/**
 	 * The year when the student started the course
 	 */
-	private short gradeYear;
+	private short startYear;
 	/**
 	 * The unique id of the student
 	 */
@@ -62,9 +62,9 @@ public class Student {
 	}
 
 	/**
-	 * @param The name to set to the student
+	 * @param name - The name to set to the student
 	 */
-	public void setName(String name) {
+	public void setName(final String name) {
 		this.name = name;
 	}
 
@@ -76,9 +76,9 @@ public class Student {
 	}
 
 	/**
-	 * @param The surname to set to the student
+	 * @param surname - The surname to set to the student
 	 */
-	public void setSurname(String surname) {
+	public void setSurname(final String surname) {
 		this.surname = surname;
 	}
 
@@ -90,9 +90,9 @@ public class Student {
 	}
 
 	/**
-	 * @param The age to set to the student
+	 * @param age - The age to set to the student
 	 */
-	public void setAge(short age) {
+	public void setAge(final short age) {
 		this.age = age;
 	}
 
@@ -104,9 +104,9 @@ public class Student {
 	}
 
 	/**
-	 * @param The course to set to the student
+	 * @param course - The course to set to the student
 	 */
-	public void setCourse(String course) {
+	public void setCourse(final String course) {
 		this.course = course;
 	}
 
@@ -120,14 +120,14 @@ public class Student {
 	/**
 	 * @return The year when student started the course
 	 */
-	public short getGradeYear() {
-		return gradeYear;
+	public short getStartYear() {
+		return startYear;
 	}
 
 	/**
-	 * @param The year when student started attending the course
+	 * @param startYear - The year when student started attending the course
 	 */
-	public void setGradeYear(short gradeYear) {
-		this.gradeYear = gradeYear;
+	public void setStartYear(final short startYear) {
+		this.startYear = startYear;
 	}
 }
