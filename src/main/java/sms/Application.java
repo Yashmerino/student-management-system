@@ -14,6 +14,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+import java.awt.SystemColor;
 
 /**
  * The class that manages the front-end part of the application and holds the
@@ -70,12 +71,13 @@ public class Application {
 	private void initialize() {
 		connectionFrame = new JFrame();
 		connectionFrame.setBounds(100, 100, 640, 480);
+		connectionFrame.setResizable(false);
 		connectionFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		connectionFrame.setTitle("Student Management System");
 
 		// The blue-colored panel in the top part of the application
 		JPanel topPanel = new JPanel();
-		topPanel.setBackground(new Color(0, 155, 255));
+		topPanel.setBackground(SystemColor.textHighlight);
 		connectionFrame.getContentPane().add(topPanel, BorderLayout.NORTH);
 
 		// The text that informs the user that they have to connect to a database
@@ -144,7 +146,8 @@ public class Application {
 
 						// Change the contents of the window in order to manage the database
 						managementFrame = new JFrame();
-						managementFrame.setBounds(100, 100, 640, 480);
+						managementFrame.setBounds(100, 100, 860, 540);
+						managementFrame.setResizable(false);
 						managementFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 						managementFrame.setTitle("Student Management System");
 
@@ -166,5 +169,6 @@ public class Application {
 		bottomPanel.add(passwordField);
 		bottomPanel.add(loginField);
 		bottomPanel.add(connectButton);
+		
 	}
 }
