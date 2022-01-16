@@ -7,7 +7,6 @@ import java.awt.Font;
 import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowEvent;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -18,8 +17,8 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 /**
- * The class that holds the front-end connection part of the application and manages the
- * actions performed out there
+ * The class that holds the front-end connection part of the application and
+ * manages the actions performed out there
  * 
  * @author Artiom
  *
@@ -140,11 +139,11 @@ public class ConnectionView {
 								"Success", JOptionPane.INFORMATION_MESSAGE);
 
 						DBHandler.setTableName(tableName);
-						
+
 						// Open a new window where you can manage the table and close the old one
 						ManagementView.main(null);
 						connectionFrame.dispose();
-						
+
 					} else {
 						JOptionPane.showMessageDialog(new JFrame(),
 								"Table hasn't been created or imported! Check your database credentials!", "Error",
@@ -161,6 +160,6 @@ public class ConnectionView {
 		bottomPanel.add(passwordField);
 		bottomPanel.add(loginField);
 		bottomPanel.add(connectButton);
-		
+
 	}
 }

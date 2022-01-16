@@ -30,7 +30,7 @@ public class Student {
 	 * The gender of the student
 	 */
 	private Gender gender;
-	
+
 	/**
 	 * The course that the student attends
 	 */
