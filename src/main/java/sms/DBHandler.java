@@ -1,9 +1,14 @@
 package sms;
 
 import java.sql.Connection;
+import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 /**
  * The class that allows access to a database for reading and writing data
@@ -69,6 +74,7 @@ public class DBHandler {
 	}
 
 	/**
+	 * Creates a table of students
 	 * 
 	 * @param tableName - The table's desired name
 	 */
@@ -77,9 +83,23 @@ public class DBHandler {
 			Connection connection = DriverManager.getConnection(DB_URL, login, password);
 			Statement statement = connection.createStatement();
 
+			// Check if a table with tableName name already exists
+			DatabaseMetaData md = connection.getMetaData();
+			ResultSet rs = md.getTables(null, null, tableName, null);
+			while (rs.next()) {
+				if (rs.getString(3).equals(tableName)) {
+					JOptionPane.showMessageDialog(new JFrame(), "Table " + tableName + " already exists. Reading data.",
+							"Success", JOptionPane.INFORMATION_MESSAGE);
+
+					return true;
+				}
+			}
+
 			String sqlScript = "create table " + tableName + "(id INTEGER not NULL, " + " First varchar(255), "
 					+ "Last varchar(255), " + "Age INTEGER, " + "Course varchar(255), " + "StartYear INTEGER, "
 					+ "PRIMARY KEY ( id ))";
+
+			statement.executeUpdate(sqlScript);
 
 			// Return true if no exception has been thrown
 			return true;
