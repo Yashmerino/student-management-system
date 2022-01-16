@@ -5,11 +5,14 @@ import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Vector;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  * The class that allows access to a database for reading and writing data
@@ -100,6 +103,7 @@ public class DBHandler {
 	 * Creates a table of students
 	 * 
 	 * @param tableName - The table's desired name
+	 * @return true if everything went fine, and false otherwise
 	 */
 	public static boolean createTable(final String tableName) {
 		try {
@@ -118,9 +122,9 @@ public class DBHandler {
 				}
 			}
 
-			String sqlScript = "create table " + tableName + "(ID INTEGER not NULL, " + " Name varchar(255), "
-					+ "Surname varchar(255), " + "Age INTEGER, " + "Gender varchar(6), " + "Course varchar(255), "
-					+ "StartYear INTEGER, " + "PRIMARY KEY ( id ))";
+			String sqlScript = "create table " + tableName + "(ID INTEGER not NULL AUTO_INCREMENT, "
+					+ " Name varchar(255), " + "Surname varchar(255), " + "Age INTEGER, " + "Gender varchar(6), "
+					+ "Course varchar(255), " + "StartYear INTEGER, " + "PRIMARY KEY ( id ))";
 
 			statement.executeUpdate(sqlScript);
 
@@ -135,21 +139,23 @@ public class DBHandler {
 		}
 	}
 
+	/**
+	 * Adds a new student to the table
+	 * 
+	 * @return true if everything went fine, and false otherwise
+	 */
 	public static boolean addStudent() {
 		try {
 			Connection connection = DriverManager.getConnection(DB_URL, login, password);
 			PreparedStatement preparedStatement = connection.prepareStatement("insert into " + tableName
-					+ " (ID, Name, Surname, Age, Gender, Course, StartYear) values " + "(?, ?, ?, ?, ?, ?, ?)");
+					+ " (Name, Surname, Age, Gender, Course, StartYear) values " + "(?, ?, ?, ?, ?, ?)");
 
-			Student student = new Student();
-
-			preparedStatement.setInt(1, student.getId());
-			preparedStatement.setString(2, ManagementView.nameField.getText());
-			preparedStatement.setString(3, ManagementView.surnameField.getText());
-			preparedStatement.setInt(4, Integer.parseInt(ManagementView.ageField.getText()));
-			preparedStatement.setString(5, ManagementView.genderSelectionBox.getSelectedItem().toString());
-			preparedStatement.setString(6, ManagementView.courseField.getText());
-			preparedStatement.setInt(7, Integer.parseInt(ManagementView.startYearField.getText()));
+			preparedStatement.setString(1, ManagementView.nameField.getText());
+			preparedStatement.setString(2, ManagementView.surnameField.getText());
+			preparedStatement.setInt(3, Integer.parseInt(ManagementView.ageField.getText()));
+			preparedStatement.setString(4, ManagementView.genderSelectionBox.getSelectedItem().toString());
+			preparedStatement.setString(5, ManagementView.courseField.getText());
+			preparedStatement.setInt(6, Integer.parseInt(ManagementView.startYearField.getText()));
 
 			preparedStatement.executeUpdate();
 
@@ -159,6 +165,53 @@ public class DBHandler {
 			e.printStackTrace();
 
 			// Return false if an exception has been thrown
+			return false;
+		}
+	}
+
+	/**
+	 * Updates the contents of the table
+	 * 
+	 * @return true if everything went fine, and false otherwise
+	 */
+	public static boolean update() {
+		int howManyColumns = 0, currentColumn = 0;
+
+		try {
+			Connection connection = DriverManager.getConnection(DB_URL, login, password);
+			PreparedStatement preparedStatement = connection.prepareStatement("select * from " + tableName);
+
+			// Reading data from table
+			ResultSet resultSet = preparedStatement.executeQuery();
+			ResultSetMetaData rsmData = resultSet.getMetaData();
+
+			howManyColumns = rsmData.getColumnCount();
+
+			DefaultTableModel recordTable = (DefaultTableModel) ManagementView.table.getModel();
+			recordTable.setRowCount(0);
+
+			while (resultSet.next()) {
+				Vector columnData = new Vector();
+
+				for (currentColumn = 1; currentColumn <= howManyColumns; currentColumn++) {
+					columnData.add(resultSet.getString("ID"));
+					columnData.add(resultSet.getString("Name"));
+					columnData.add(resultSet.getString("Surname"));
+					columnData.add(resultSet.getString("Age"));
+					columnData.add(resultSet.getString("Gender"));
+					columnData.add(resultSet.getString("Course"));
+					columnData.add(resultSet.getString("StartYear"));
+				}
+
+				recordTable.addRow(columnData);
+			}
+
+			// Return true if no exception has been thrown
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+
+			// Return false if exception has been thrown
 			return false;
 		}
 	}
