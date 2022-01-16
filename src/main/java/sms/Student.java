@@ -56,7 +56,7 @@ public class Student {
 	 * Counter is set to 0 initially
 	 */
 	static {
-		counter = 0;
+		counter = 1;
 	}
 
 	/**
