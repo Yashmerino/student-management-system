@@ -11,26 +11,32 @@ public class Student {
 	 * The name of the student
 	 */
 	private String name;
+
 	/**
 	 * The surname of the student
 	 */
 	private String surname;
+
 	/**
 	 * The age of the student
 	 */
 	private short age;
+
 	/**
 	 * The course that the student attends
 	 */
 	private String course;
+
 	/**
 	 * The year when the student started the course
 	 */
 	private short startYear;
+
 	/**
 	 * The unique id of the student
 	 */
 	int id;
+
 	/**
 	 * The counter that is increased by one everytime a new instance is created,
 	 * used for ID system
