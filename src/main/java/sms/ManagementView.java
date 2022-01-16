@@ -121,25 +121,25 @@ public class ManagementView {
 		// The button to press to exit the application
 		JButton exitButton = new JButton("Exit");
 		exitButton.setFont(new Font("Tahoma", Font.PLAIN, 26));
-		exitButton.setBounds(558, 10, 126, 60);
+		exitButton.setBounds(560, 10, 125, 60);
 		buttonsPanel.add(exitButton);
 
 		// The button to press to delete an information from the table
 		JButton deleteButton = new JButton("Delete");
 		deleteButton.setFont(new Font("Tahoma", Font.PLAIN, 26));
-		deleteButton.setBounds(422, 10, 126, 60);
+		deleteButton.setBounds(420, 10, 125, 60);
 		buttonsPanel.add(deleteButton);
 
 		// The button to press to update an information in the table
 		JButton updateButton = new JButton("Update");
 		updateButton.setFont(new Font("Tahoma", Font.PLAIN, 26));
-		updateButton.setBounds(286, 10, 126, 60);
+		updateButton.setBounds(285, 10, 125, 60);
 		buttonsPanel.add(updateButton);
 
 		// The button to press to add a student to the table
 		JButton addButton = new JButton("Add");
 		addButton.setFont(new Font("Tahoma", Font.PLAIN, 26));
-		addButton.setBounds(150, 10, 126, 60);
+		addButton.setBounds(150, 10, 125, 60);
 		buttonsPanel.add(addButton);
 
 		// The panel where user writes information about a student
