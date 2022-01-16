@@ -38,7 +38,7 @@ public class ManagementView {
 	/**
 	 * The table containing all students
 	 */
-	private JTable table;
+	static JTable table;
 
 	/**
 	 * The field where user should write the student's name
@@ -92,6 +92,7 @@ public class ManagementView {
 	 */
 	public ManagementView() {
 		initialize();
+		DBHandler.update();
 	}
 
 	/**
@@ -158,6 +159,14 @@ public class ManagementView {
 
 		// The button to press to update an information in the table
 		JButton updateButton = new JButton("Update");
+
+		// Actions to perform when "update" button clicked
+		updateButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				DBHandler.update();
+			}
+		});
+
 		updateButton.setFont(new Font("Tahoma", Font.PLAIN, 26));
 		updateButton.setBounds(285, 10, 125, 60);
 		buttonsPanel.add(updateButton);
@@ -175,15 +184,14 @@ public class ManagementView {
 					JOptionPane.showMessageDialog(managementFrame, "Please fill in all the fields!", "Error",
 							JOptionPane.ERROR_MESSAGE);
 				} else {
-					if(DBHandler.addStudent()) {
+					if (DBHandler.addStudent()) {
 						JOptionPane.showMessageDialog(managementFrame, "The student has been added successfully!",
 								"Success", JOptionPane.INFORMATION_MESSAGE);
+					} else {
+						JOptionPane.showMessageDialog(managementFrame, "Something went wrong! Check the credentials!",
+								"Error", JOptionPane.ERROR_MESSAGE);
 					}
-					else {
-						JOptionPane.showMessageDialog(managementFrame, "Something went wrong! Check the credentials!", "Error",
-								JOptionPane.ERROR_MESSAGE);
-					}
-					
+
 				}
 			}
 		});
