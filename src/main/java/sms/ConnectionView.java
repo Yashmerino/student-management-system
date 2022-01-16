@@ -4,8 +4,10 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
+import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -14,7 +16,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
-import java.awt.SystemColor;
 
 /**
  * The class that manages the front-end part of the application and holds the
@@ -23,18 +24,12 @@ import java.awt.SystemColor;
  * @author Artiom
  *
  */
-public class Application {
+public class ConnectionView {
 
 	/**
 	 * The contents of the connection window where you have to connect to a database
 	 */
 	private JFrame connectionFrame;
-
-	/**
-	 * The contents of the management window where you perform actions on the
-	 * database
-	 */
-	private JFrame managementFrame;
 
 	/**
 	 * The text field that stores the login the user has written
@@ -49,7 +44,7 @@ public class Application {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Application window = new Application();
+					ConnectionView window = new ConnectionView();
 					window.connectionFrame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -61,7 +56,7 @@ public class Application {
 	/**
 	 * Create the application.
 	 */
-	public Application() {
+	public ConnectionView() {
 		initialize();
 	}
 
@@ -144,15 +139,10 @@ public class Application {
 						JOptionPane.showMessageDialog(new JFrame(), "Table has been successfully created or imported!",
 								"Success", JOptionPane.INFORMATION_MESSAGE);
 
-						// Change the contents of the window in order to manage the database
-						managementFrame = new JFrame();
-						managementFrame.setBounds(100, 100, 860, 540);
-						managementFrame.setResizable(false);
-						managementFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-						managementFrame.setTitle("Student Management System");
-
-						connectionFrame.setVisible(false);
-						managementFrame.setVisible(true);
+						// Open a new window where you can manage the table and close the old one
+						ManagementView.main(null);
+						connectionFrame.dispose();
+						
 					} else {
 						JOptionPane.showMessageDialog(new JFrame(),
 								"Table hasn't been created or imported! Check your database credentials!", "Error",
