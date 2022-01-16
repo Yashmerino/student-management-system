@@ -4,10 +4,13 @@ import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.SystemColor;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -120,6 +123,18 @@ public class ManagementView {
 
 		// The button to press to exit the application
 		JButton exitButton = new JButton("Exit");
+
+		// Actions to perform when "exit" button clicked
+		exitButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (JOptionPane.showConfirmDialog(managementFrame, "Are you sure?", "Student Management System",
+						JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+					managementFrame.dispose();
+					System.exit(0);
+				}
+			}
+		});
+
 		exitButton.setFont(new Font("Tahoma", Font.PLAIN, 26));
 		exitButton.setBounds(560, 10, 125, 60);
 		buttonsPanel.add(exitButton);
