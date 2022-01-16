@@ -12,6 +12,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 /**
@@ -24,17 +25,21 @@ import javax.swing.JTextField;
 public class Application {
 
 	/**
-	 * The contents of the application
+	 * The contents of the connection window where you have to connect to a database
 	 */
-	private JFrame frame;
+	private JFrame connectionFrame;
+
+	/**
+	 * The contents of the management window where you perform actions on the
+	 * database
+	 */
+	private JFrame managementFrame;
+
 	/**
 	 * The text field that stores the login the user has written
 	 */
 	private JTextField loginField;
-	/**
-	 * The text field that stores the password the user has written
-	 */
-	private JTextField passwordField;
+	private JPasswordField passwordField;
 
 	/**
 	 * Launch the application.
@@ -44,7 +49,7 @@ public class Application {
 			public void run() {
 				try {
 					Application window = new Application();
-					window.frame.setVisible(true);
+					window.connectionFrame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -63,15 +68,15 @@ public class Application {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		frame = new JFrame();
-		frame.setBounds(100, 100, 640, 480);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setTitle("Student Management System");
+		connectionFrame = new JFrame();
+		connectionFrame.setBounds(100, 100, 640, 480);
+		connectionFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		connectionFrame.setTitle("Student Management System");
 
 		// The blue-colored panel in the top part of the application
 		JPanel topPanel = new JPanel();
 		topPanel.setBackground(new Color(0, 155, 255));
-		frame.getContentPane().add(topPanel, BorderLayout.NORTH);
+		connectionFrame.getContentPane().add(topPanel, BorderLayout.NORTH);
 
 		// The text that informs the user that they have to connect to a database
 		JLabel connectText = new JLabel("Connect to a database:");
@@ -81,7 +86,7 @@ public class Application {
 
 		// The panel in the bottom part of the application
 		JPanel bottomPanel = new JPanel();
-		frame.getContentPane().add(bottomPanel, BorderLayout.CENTER);
+		connectionFrame.getContentPane().add(bottomPanel, BorderLayout.CENTER);
 
 		// The text that informs the user where they have to type the login
 		JLabel loginText = new JLabel("Login:");
@@ -99,9 +104,8 @@ public class Application {
 		loginField.setColumns(10);
 
 		// Initializes the text field where user writes the password
-		passwordField = new JTextField();
+		passwordField = new JPasswordField();
 		passwordField.setBounds(200, 180, 330, 20);
-		passwordField.setColumns(10);
 
 		// The button to press after the login and password were written
 		JButton connectButton = new JButton("Connect");
@@ -122,20 +126,33 @@ public class Application {
 
 					// Show an input dialog in order to get a name for the table
 					String tableName;
-					tableName = JOptionPane.showInputDialog(new JFrame(), "Type a name for your table:");
+					tableName = JOptionPane.showInputDialog(new JFrame(),
+							"Type a name for your table(if you already have one, just type the same name):");
 
-					// If no text was written then set the table's name to "Default"
+					// If no text was written then warn user about that
 					if (tableName == null || tableName.equals("")) {
-						tableName = "Default";
+						JOptionPane.showMessageDialog(new JFrame(),
+								"Table hasn't been created or imported! Please fill in the fields properly! ", "Error",
+								JOptionPane.ERROR_MESSAGE);
+						return;
 					}
 
 					// If table has\hasn't been successfully created then inform the user about that
 					if (DBHandler.createTable(tableName)) {
-						JOptionPane.showMessageDialog(new JFrame(), "Table has been successfully created!", "Success",
-								JOptionPane.INFORMATION_MESSAGE);
+						JOptionPane.showMessageDialog(new JFrame(), "Table has been successfully created or imported!",
+								"Success", JOptionPane.INFORMATION_MESSAGE);
+
+						// Change the contents of the window in order to manage the database
+						managementFrame = new JFrame();
+						managementFrame.setBounds(100, 100, 640, 480);
+						managementFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+						managementFrame.setTitle("Student Management System");
+
+						connectionFrame.setVisible(false);
+						managementFrame.setVisible(true);
 					} else {
 						JOptionPane.showMessageDialog(new JFrame(),
-								"Table hasn't been created! Check your database credentials!", "Error",
+								"Table hasn't been created or imported! Check your database credentials!", "Error",
 								JOptionPane.ERROR_MESSAGE);
 					}
 				}
