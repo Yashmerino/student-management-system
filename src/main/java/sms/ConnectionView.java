@@ -18,7 +18,7 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 /**
- * The class that manages the front-end part of the application and holds the
+ * The class that holds the front-end connection part of the application and manages the
  * actions performed out there
  * 
  * @author Artiom
