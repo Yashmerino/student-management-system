@@ -7,7 +7,9 @@ import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -42,23 +44,32 @@ public class ManagementView {
 	 * The field where user should write the student's name
 	 */
 	private JTextField nameField;
+
 	/**
 	 * The field where user should write the student's surname
 	 */
 	private JTextField surnameField;
+
 	/**
 	 * The field where user should write the student's age
 	 */
 	private JTextField ageField;
+
 	/**
 	 * The field where user should write the student's attended course
 	 */
 	private JTextField courseField;
+
 	/**
 	 * The field where user should write the year when the student started attending
 	 * the course
 	 */
 	private JTextField startYearField;
+
+	/**
+	 * The box that user uses in order to select student's gender
+	 */
+	private JComboBox genderSelectionBox;
 
 	/**
 	 * Launch the application.
@@ -111,7 +122,7 @@ public class ManagementView {
 		tableScrollPane.setViewportView(table);
 		table.setColumnSelectionAllowed(true);
 		table.setModel(new DefaultTableModel(new Object[][] {},
-				new String[] { "ID", "Name", "Surname", "Age", "Course", "StartYear" }));
+				new String[] { "ID", "Name", "Surname", "Age", "Gender", "Course", "StartYear" }));
 
 		// The panel where all buttons are located
 		JPanel buttonsPanel = new JPanel();
@@ -204,27 +215,39 @@ public class ManagementView {
 		// attended course
 		JLabel courseText = new JLabel("Course");
 		courseText.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		courseText.setBounds(10, 118, 67, 19);
+		courseText.setBounds(10, 156, 67, 19);
 		studentPanel.add(courseText);
 
 		// Initializing course text field
 		courseField = new JTextField();
 		courseField.setColumns(10);
-		courseField.setBounds(85, 115, 143, 22);
+		courseField.setBounds(85, 153, 143, 22);
 		studentPanel.add(courseField);
 
 		// The text that informs the user where they have to write the year when student
 		// started attending the course
 		JLabel startYearText = new JLabel("StartYear");
 		startYearText.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		startYearText.setBounds(10, 150, 67, 19);
+		startYearText.setBounds(10, 188, 67, 19);
 		studentPanel.add(startYearText);
 
 		// Initializing startYear yext field
 		startYearField = new JTextField();
 		startYearField.setColumns(10);
-		startYearField.setBounds(85, 147, 143, 22);
+		startYearField.setBounds(85, 185, 143, 22);
 		studentPanel.add(startYearField);
-	}
 
+		// The text that informs the user where they have to select student's gender
+		JLabel genderText = new JLabel("Gender");
+		genderText.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		genderText.setBounds(10, 120, 67, 19);
+		studentPanel.add(genderText);
+
+		// Initializing the box where user selects the student's gender
+		genderSelectionBox = new JComboBox();
+		genderSelectionBox.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		genderSelectionBox.setModel(new DefaultComboBoxModel(sms.Gender.values()));
+		genderSelectionBox.setBounds(85, 120, 143, 22);
+		studentPanel.add(genderSelectionBox);
+	}
 }

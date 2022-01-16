@@ -1,5 +1,9 @@
 package sms;
 
+enum Gender {
+	Male, Female
+}
+
 /**
  * The class that holds and manages the information about students
  * 
@@ -22,6 +26,11 @@ public class Student {
 	 */
 	private short age;
 
+	/**
+	 * The gender of the student
+	 */
+	private Gender gender;
+	
 	/**
 	 * The course that the student attends
 	 */
@@ -135,5 +144,19 @@ public class Student {
 	 */
 	public void setStartYear(final short startYear) {
 		this.startYear = startYear;
+	}
+
+	/**
+	 * @return The gender of the student
+	 */
+	public Gender getGender() {
+		return gender;
+	}
+
+	/**
+	 * @param gender - The gender to set to the student
+	 */
+	public void setGender(Gender gender) {
+		this.gender = gender;
 	}
 }
