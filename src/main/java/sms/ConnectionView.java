@@ -139,6 +139,8 @@ public class ConnectionView {
 						JOptionPane.showMessageDialog(new JFrame(), "Table has been successfully created or imported!",
 								"Success", JOptionPane.INFORMATION_MESSAGE);
 
+						DBHandler.setTableName(tableName);
+						
 						// Open a new window where you can manage the table and close the old one
 						ManagementView.main(null);
 						connectionFrame.dispose();
