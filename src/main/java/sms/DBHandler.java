@@ -3,6 +3,7 @@ package sms;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -22,14 +23,21 @@ public class DBHandler {
 	 * Login to connect to the database
 	 */
 	private static String login;
+
 	/**
 	 * Password to connect to the database
 	 */
 	private static String password;
+
 	/**
 	 * Database URL, DB's name must be "studentsdb"
 	 */
-	static final String DB_URL = "jdbc:mysql://localhost:3306/studentsdb";
+	static final String DB_URL;
+
+	/**
+	 * The table's name on which actions are performed
+	 */
+	private static String tableName;
 
 	/**
 	 * Default constructor
@@ -43,6 +51,7 @@ public class DBHandler {
 	 */
 	static {
 		login = "root";
+		DB_URL = "jdbc:mysql://localhost:3306/studentsdb";
 	}
 
 	/**
@@ -74,6 +83,20 @@ public class DBHandler {
 	}
 
 	/**
+	 * @return The table's name on which actions are performed
+	 */
+	public static String getTableName() {
+		return tableName;
+	}
+
+	/**
+	 * @param tableName - the name to set to the table
+	 */
+	public static void setTableName(String tableName) {
+		DBHandler.tableName = tableName;
+	}
+
+	/**
 	 * Creates a table of students
 	 * 
 	 * @param tableName - The table's desired name
@@ -95,9 +118,9 @@ public class DBHandler {
 				}
 			}
 
-			String sqlScript = "create table " + tableName + "(ID INTEGER not NULL, " + " First varchar(255), "
-					+ "Last varchar(255), " + "Age INTEGER, " + "Course varchar(255), " + "StartYear INTEGER, "
-					+ "PRIMARY KEY ( id ))";
+			String sqlScript = "create table " + tableName + "(ID INTEGER not NULL, " + " Name varchar(255), "
+					+ "Surname varchar(255), " + "Age INTEGER, " + "Gender varchar(6), " + "Course varchar(255), "
+					+ "StartYear INTEGER, " + "PRIMARY KEY ( id ))";
 
 			statement.executeUpdate(sqlScript);
 
@@ -111,4 +134,33 @@ public class DBHandler {
 			return false;
 		}
 	}
+
+	public static boolean addStudent() {
+		try {
+			Connection connection = DriverManager.getConnection(DB_URL, login, password);
+			PreparedStatement preparedStatement = connection.prepareStatement("insert into " + tableName
+					+ " (ID, Name, Surname, Age, Gender, Course, StartYear) values " + "(?, ?, ?, ?, ?, ?, ?)");
+
+			Student student = new Student();
+
+			preparedStatement.setInt(1, student.getId());
+			preparedStatement.setString(2, ManagementView.nameField.getText());
+			preparedStatement.setString(3, ManagementView.surnameField.getText());
+			preparedStatement.setInt(4, Integer.parseInt(ManagementView.ageField.getText()));
+			preparedStatement.setString(5, ManagementView.genderSelectionBox.getSelectedItem().toString());
+			preparedStatement.setString(6, ManagementView.courseField.getText());
+			preparedStatement.setInt(7, Integer.parseInt(ManagementView.startYearField.getText()));
+
+			preparedStatement.executeUpdate();
+
+			// Return true if no exception has been thrown
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+
+			// Return false if an exception has been thrown
+			return false;
+		}
+	}
+
 }
