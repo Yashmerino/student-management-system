@@ -34,7 +34,7 @@ public class DBHandler {
 	/**
 	 * Default constructor
 	 */
-	DBHandler() {
+	public DBHandler() {
 
 	}
 
@@ -95,7 +95,7 @@ public class DBHandler {
 				}
 			}
 
-			String sqlScript = "create table " + tableName + "(id INTEGER not NULL, " + " First varchar(255), "
+			String sqlScript = "create table " + tableName + "(ID INTEGER not NULL, " + " First varchar(255), "
 					+ "Last varchar(255), " + "Age INTEGER, " + "Course varchar(255), " + "StartYear INTEGER, "
 					+ "PRIMARY KEY ( id ))";
 
