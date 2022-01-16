@@ -43,33 +43,33 @@ public class ManagementView {
 	/**
 	 * The field where user should write the student's name
 	 */
-	private JTextField nameField;
+	static JTextField nameField;
 
 	/**
 	 * The field where user should write the student's surname
 	 */
-	private JTextField surnameField;
+	static JTextField surnameField;
 
 	/**
 	 * The field where user should write the student's age
 	 */
-	private JTextField ageField;
+	static JTextField ageField;
 
 	/**
 	 * The field where user should write the student's attended course
 	 */
-	private JTextField courseField;
+	static JTextField courseField;
 
 	/**
 	 * The field where user should write the year when the student started attending
 	 * the course
 	 */
-	private JTextField startYearField;
+	static JTextField startYearField;
 
 	/**
 	 * The box that user uses in order to select student's gender
 	 */
-	private JComboBox genderSelectionBox;
+	static JComboBox genderSelectionBox;
 
 	/**
 	 * Launch the application.
@@ -164,6 +164,30 @@ public class ManagementView {
 
 		// The button to press to add a student to the table
 		JButton addButton = new JButton("Add");
+
+		// Actions to perform when "add" button clicked
+		addButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				// If one of the fields are empty warn user about that
+				if (nameField.getText().equals("") || surnameField.getText().equals("") || ageField.getText().equals("")
+						|| courseField.getText().equals("") || startYearField.getText().equals("")) {
+
+					JOptionPane.showMessageDialog(managementFrame, "Please fill in all the fields!", "Error",
+							JOptionPane.ERROR_MESSAGE);
+				} else {
+					if(DBHandler.addStudent()) {
+						JOptionPane.showMessageDialog(managementFrame, "The student has been added successfully!",
+								"Success", JOptionPane.INFORMATION_MESSAGE);
+					}
+					else {
+						JOptionPane.showMessageDialog(managementFrame, "Something went wrong! Check the credentials!", "Error",
+								JOptionPane.ERROR_MESSAGE);
+					}
+					
+				}
+			}
+		});
+
 		addButton.setFont(new Font("Tahoma", Font.PLAIN, 26));
 		addButton.setBounds(150, 10, 125, 60);
 		buttonsPanel.add(addButton);
