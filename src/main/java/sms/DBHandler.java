@@ -131,7 +131,7 @@ public class DBHandler {
 			connection.close();
 			statement.close();
 			resultSet.close();
-		
+
 			// Return true if no exception has been thrown
 			return true;
 
@@ -165,7 +165,7 @@ public class DBHandler {
 
 			connection.close();
 			preparedStatement.close();
-			
+
 			// Return true if no exception has been thrown
 			return true;
 		} catch (SQLException e) {
@@ -216,7 +216,7 @@ public class DBHandler {
 			connection.close();
 			preparedStatement.close();
 			resultSet.close();
-			
+
 			// Return true if no exception has been thrown
 			return true;
 		} catch (SQLException e) {
@@ -227,4 +227,36 @@ public class DBHandler {
 		}
 	}
 
+	/**
+	 * Deletes the selected student from the table
+	 * 
+	 * @return true if everything went fine, and false otherwise
+	 */
+	public static boolean delete() {
+		// Getting row that user selected
+		DefaultTableModel RecordTable = (DefaultTableModel) ManagementView.table.getModel();
+		int selectedRow = ManagementView.table.getSelectedRow();
+
+		try {
+			// Geting the ID of the student in the selected row
+			final int ID = Integer.parseInt(RecordTable.getValueAt(selectedRow, 0).toString());
+			
+			Connection connection = DriverManager.getConnection(DB_URL, login, password);
+			PreparedStatement preparedStatement = connection.prepareStatement("delete from " + tableName + " where id = ?");
+			
+			preparedStatement.setInt(1, ID);
+			preparedStatement.executeUpdate();
+
+			connection.close();
+			preparedStatement.close();
+
+			// Return true if no exception has been thrown
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+
+			// Return false if exception has been thrown
+			return false;
+		}
+	}
 }
