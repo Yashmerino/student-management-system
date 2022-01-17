@@ -35,6 +35,7 @@ public class ConnectionView {
 	 */
 	private JTextField loginField;
 	private JPasswordField passwordField;
+	private JTextField dburlField;
 
 	/**
 	 * Launch the application.
@@ -103,6 +104,17 @@ public class ConnectionView {
 		passwordField = new JPasswordField();
 		passwordField.setBounds(200, 180, 330, 20);
 
+		// The field where user should write the database url
+		dburlField = new JTextField();
+		dburlField.setText("jdbc:mysql://localhost:3306/studentsdb");
+		dburlField.setColumns(10);
+		dburlField.setBounds(200, 95, 330, 20);
+
+		// The text that informs user where they have to write database url
+		JLabel dburlText = new JLabel("DB_URL:");
+		dburlText.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		dburlText.setBounds(95, 90, 80, 25);
+
 		// The button to press after the login and password were written
 		JButton connectButton = new JButton("Connect");
 		connectButton.setBounds(240, 290, 140, 35);
@@ -160,6 +172,8 @@ public class ConnectionView {
 		bottomPanel.add(passwordField);
 		bottomPanel.add(loginField);
 		bottomPanel.add(connectButton);
+		bottomPanel.add(dburlText);
+		bottomPanel.add(dburlField);
 
 	}
 }
