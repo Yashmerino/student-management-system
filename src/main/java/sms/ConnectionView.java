@@ -124,33 +124,22 @@ public class ConnectionView {
 		connectButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				// If one of the fields are empty then warn user about it
-				if (loginField.getText().equals("") || passwordField.getText().equals("")) {
-					JOptionPane.showMessageDialog(new JFrame(), "Fields are empty!", "Error",
+				if (loginField.getText().equals("") || passwordField.getText().equals("")
+						|| dburlField.getText().equals("")) {
+					JOptionPane.showMessageDialog(new JFrame(), "Please fill in all the empty fields!", "Error",
 							JOptionPane.ERROR_MESSAGE);
 				} else {
-					// Get login and password from fields and set them for database handler
+					// Get login, password and database url from fields and set them for database
+					// handler
 					DBHandler.setLogin(loginField.getText());
 					DBHandler.setPassword(passwordField.getText());
-
-					// Show an input dialog in order to get a name for the table
-					String tableName;
-					tableName = JOptionPane.showInputDialog(new JFrame(),
-							"Type a name for your table(if you already have one, just type the same name):");
-
-					// If no text was written then warn user about that
-					if (tableName == null || tableName.equals("")) {
-						JOptionPane.showMessageDialog(new JFrame(),
-								"Table hasn't been created or imported! Please fill in the fields properly! ", "Error",
-								JOptionPane.ERROR_MESSAGE);
-						return;
-					}
+					DBHandler.setDB_URL(dburlField.getText());
 
 					// If table has\hasn't been successfully created then inform the user about that
-					if (DBHandler.createTable(tableName)) {
-						JOptionPane.showMessageDialog(new JFrame(), "Table has been successfully created or imported!",
-								"Success", JOptionPane.INFORMATION_MESSAGE);
-
-						DBHandler.setTableName(tableName);
+					if (DBHandler.createTable()) {
+						JOptionPane.showMessageDialog(new JFrame(),
+								"Connection with the database has been successfully established!", "Success",
+								JOptionPane.INFORMATION_MESSAGE);
 
 						// Open a new window where you can manage the table and close the old one
 						ManagementView.main(null);
@@ -158,8 +147,8 @@ public class ConnectionView {
 
 					} else {
 						JOptionPane.showMessageDialog(new JFrame(),
-								"Table hasn't been created or imported! Check your database credentials!", "Error",
-								JOptionPane.ERROR_MESSAGE);
+								"Connection with the database hasn't been established! Please check your credentials!",
+								"Error", JOptionPane.ERROR_MESSAGE);
 					}
 				}
 

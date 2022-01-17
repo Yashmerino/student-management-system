@@ -33,14 +33,14 @@ public class DBHandler {
 	private static String password;
 
 	/**
-	 * Database URL, DB's name must be "studentsdb"
+	 * Database URL
 	 */
-	static final String DB_URL;
+	static String DB_URL;
 
 	/**
 	 * The table's name on which actions are performed
 	 */
-	private static String tableName;
+	private final static String tableName;
 
 	/**
 	 * Default constructor
@@ -55,6 +55,7 @@ public class DBHandler {
 	static {
 		login = "root";
 		DB_URL = "jdbc:mysql://localhost:3306/studentsdb";
+		tableName = "students";
 	}
 
 	/**
@@ -93,10 +94,17 @@ public class DBHandler {
 	}
 
 	/**
-	 * @param tableName - the name to set to the table
+	 * @param DB_URL - the database url to set
 	 */
-	public static void setTableName(String tableName) {
-		DBHandler.tableName = tableName;
+	public static void setDB_URL(final String DB_URL) {
+		DBHandler.DB_URL = DB_URL;
+	}
+
+	/**
+	 * @return The database URL
+	 */
+	public static String getDB_URL() {
+		return DB_URL;
 	}
 
 	/**
@@ -105,7 +113,7 @@ public class DBHandler {
 	 * @param tableName - The table's desired name
 	 * @return true if everything went fine, and false otherwise
 	 */
-	public static boolean createTable(final String tableName) {
+	public static boolean createTable() {
 		try {
 			Connection connection = DriverManager.getConnection(DB_URL, login, password);
 			Statement statement = connection.createStatement();
@@ -115,7 +123,7 @@ public class DBHandler {
 			ResultSet resultSet = dbmData.getTables(null, null, tableName, null);
 			while (resultSet.next()) {
 				if (resultSet.getString(3).equals(tableName)) {
-					JOptionPane.showMessageDialog(new JFrame(), "Table " + tableName + " already exists. Reading data.",
+					JOptionPane.showMessageDialog(new JFrame(), "All necessary tables already exist. Reading data.",
 							"Success", JOptionPane.INFORMATION_MESSAGE);
 
 					return true;
@@ -166,11 +174,18 @@ public class DBHandler {
 			connection.close();
 			preparedStatement.close();
 
+			update();
+
 			// Return true if no exception has been thrown
 			return true;
 		} catch (SQLException e) {
 			e.printStackTrace();
 
+			// Return false if an exception has been thrown
+			return false;
+		} catch(Exception e) {
+			e.printStackTrace();
+			
 			// Return false if an exception has been thrown
 			return false;
 		}
@@ -240,15 +255,18 @@ public class DBHandler {
 		try {
 			// Geting the ID of the student in the selected row
 			final int ID = Integer.parseInt(RecordTable.getValueAt(selectedRow, 0).toString());
-			
+
 			Connection connection = DriverManager.getConnection(DB_URL, login, password);
-			PreparedStatement preparedStatement = connection.prepareStatement("delete from " + tableName + " where id = ?");
-			
+			PreparedStatement preparedStatement = connection
+					.prepareStatement("delete from " + tableName + " where id = ?");
+
 			preparedStatement.setInt(1, ID);
 			preparedStatement.executeUpdate();
 
 			connection.close();
 			preparedStatement.close();
+
+			update();
 
 			// Return true if no exception has been thrown
 			return true;
