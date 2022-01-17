@@ -153,6 +153,26 @@ public class ManagementView {
 
 		// The button to press to delete an information from the table
 		JButton deleteButton = new JButton("Delete");
+
+		// Actions to perform when "delete" button clicked
+		deleteButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				// Asking the user if they are sure about that
+				if (JOptionPane.showConfirmDialog(managementFrame,
+						"Deleting a student from the table may result in losing important information. Are you sure?",
+						"Student Management System", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+					if (DBHandler.delete()) {
+						JOptionPane.showMessageDialog(managementFrame, "Student successfully removed!",
+								"Student Management System", JOptionPane.INFORMATION_MESSAGE);
+					}
+					else {
+						JOptionPane.showMessageDialog(managementFrame, "Something went wrong! Try restarting the application!",
+								"Student Management System", JOptionPane.ERROR_MESSAGE);
+					}
+				}
+			}
+		});
+
 		deleteButton.setFont(new Font("Tahoma", Font.PLAIN, 26));
 		deleteButton.setBounds(420, 10, 125, 60);
 		buttonsPanel.add(deleteButton);
