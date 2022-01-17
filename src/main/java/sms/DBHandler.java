@@ -111,10 +111,10 @@ public class DBHandler {
 			Statement statement = connection.createStatement();
 
 			// Check if a table with tableName name already exists
-			DatabaseMetaData md = connection.getMetaData();
-			ResultSet rs = md.getTables(null, null, tableName, null);
-			while (rs.next()) {
-				if (rs.getString(3).equals(tableName)) {
+			DatabaseMetaData dbmData = connection.getMetaData();
+			ResultSet resultSet = dbmData.getTables(null, null, tableName, null);
+			while (resultSet.next()) {
+				if (resultSet.getString(3).equals(tableName)) {
 					JOptionPane.showMessageDialog(new JFrame(), "Table " + tableName + " already exists. Reading data.",
 							"Success", JOptionPane.INFORMATION_MESSAGE);
 
@@ -128,6 +128,10 @@ public class DBHandler {
 
 			statement.executeUpdate(sqlScript);
 
+			connection.close();
+			statement.close();
+			resultSet.close();
+		
 			// Return true if no exception has been thrown
 			return true;
 
@@ -159,6 +163,9 @@ public class DBHandler {
 
 			preparedStatement.executeUpdate();
 
+			connection.close();
+			preparedStatement.close();
+			
 			// Return true if no exception has been thrown
 			return true;
 		} catch (SQLException e) {
@@ -206,6 +213,10 @@ public class DBHandler {
 				recordTable.addRow(columnData);
 			}
 
+			connection.close();
+			preparedStatement.close();
+			resultSet.close();
+			
 			// Return true if no exception has been thrown
 			return true;
 		} catch (SQLException e) {
