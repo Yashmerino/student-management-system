@@ -157,17 +157,23 @@ public class ManagementView {
 		// Actions to perform when "delete" button clicked
 		deleteButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// Asking the user if they are sure about that
-				if (JOptionPane.showConfirmDialog(managementFrame,
-						"Deleting a student from the table may result in losing important information. Are you sure?",
-						"Student Management System", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-					if (DBHandler.delete()) {
-						JOptionPane.showMessageDialog(managementFrame, "Student successfully removed!",
-								"Student Management System", JOptionPane.INFORMATION_MESSAGE);
-					}
-					else {
-						JOptionPane.showMessageDialog(managementFrame, "Something went wrong! Try restarting the application!",
-								"Student Management System", JOptionPane.ERROR_MESSAGE);
+				// If no row has been selected
+				if (table.getSelectedRow() == -1) {
+					JOptionPane.showMessageDialog(managementFrame, "No student has been selected!",
+							"Student Management System", JOptionPane.ERROR_MESSAGE);
+				} else {
+					// Asking the user if they are sure about that
+					if (JOptionPane.showConfirmDialog(managementFrame,
+							"Deleting a student from the table may result in losing important information. Are you sure?",
+							"Student Management System", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+						if (DBHandler.delete()) {
+							JOptionPane.showMessageDialog(managementFrame, "Student successfully removed!",
+									"Student Management System", JOptionPane.INFORMATION_MESSAGE);
+						} else {
+							JOptionPane.showMessageDialog(managementFrame,
+									"Something went wrong! Try restarting the application!",
+									"Student Management System", JOptionPane.ERROR_MESSAGE);
+						}
 					}
 				}
 			}
