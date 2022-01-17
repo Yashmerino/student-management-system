@@ -53,7 +53,7 @@ public class Student {
 	static int counter;
 
 	/**
-	 * Counter is set to 0 initially
+	 * Counter is set to 1 initially
 	 */
 	static {
 		counter = 1;
