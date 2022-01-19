@@ -66,9 +66,9 @@ public class DBHandler {
 		login = "root";
 		DB_URL = "jdbc:mysql://localhost:3306/studentsdb";
 
-		studentsTable = "Students";
-		coursesTable = "Courses";
-		facultiesTable = "Faculties";
+		studentsTable = "students";
+		coursesTable = "courses";
+		facultiesTable = "faculties";
 	}
 
 	/**
@@ -153,7 +153,7 @@ public class DBHandler {
 
 			String sqlScript;
 
-			if (!checkIfTableExists("students")) {
+			if (!checkIfTableExists(studentsTable)) {
 				// Creating a table of students
 				sqlScript = "create table " + studentsTable + "(ID INTEGER not NULL AUTO_INCREMENT, "
 						+ " Name varchar(255), " + "Surname varchar(255), " + "Age INTEGER, " + "Gender varchar(6), "
@@ -162,11 +162,19 @@ public class DBHandler {
 				statement.executeUpdate(sqlScript);
 			}
 
-			if (!checkIfTableExists("courses")) {
+			if (!checkIfTableExists(coursesTable)) {
 				// Creating a table of courses
 				sqlScript = "create table " + coursesTable + "(ID INTEGER not NULL AUTO_INCREMENT, "
 						+ " Name varchar(255), " + "Faculty varchar(255), " + "Duration INTEGER, "
-						+ "PRIMARY KEY ( id ))";
+						+ "Attendees INTEGER, " + "PRIMARY KEY ( id ))";
+
+				statement.executeUpdate(sqlScript);
+			}
+
+			if (!checkIfTableExists(facultiesTable)) {
+				// Creating a table of faculties
+				sqlScript = "create table " + facultiesTable + "(ID INTEGER not NULL AUTO_INCREMENT, "
+						+ " Name varchar(255), " + "Courses INTEGER, " + "Attendees INTEGER, " + "PRIMARY KEY ( id ))";
 
 				statement.executeUpdate(sqlScript);
 			}
