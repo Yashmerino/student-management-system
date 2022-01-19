@@ -307,5 +307,36 @@ public class ManagementView {
 		genderSelectionBox.setModel(new DefaultComboBoxModel(sms.Gender.values()));
 		genderSelectionBox.setBounds(85, 120, 143, 22);
 		studentPanel.add(genderSelectionBox);
+		
+		// Button that adds a new faculty
+		JButton addFacultyButton = new JButton("Add Faculty");
+		
+		// Actions to perform when "add faculty" button clicked
+		addFacultyButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String facultyName;
+				
+				facultyName = JOptionPane.showInputDialog(managementFrame, "Type the name of the faculty");
+				
+				if(DBHandler.addFaculty(facultyName)) {
+					JOptionPane.showMessageDialog(managementFrame, "The faculty has been added successfully!",
+							"Success", JOptionPane.INFORMATION_MESSAGE);
+				}
+				else {
+					JOptionPane.showMessageDialog(managementFrame, "The faculty hasn't been added! Try again!",
+							"Success", JOptionPane.ERROR_MESSAGE);
+				}
+			}
+		});
+		
+		addFacultyButton.setFont(new Font("Tahoma", Font.PLAIN, 26));
+		addFacultyButton.setBounds(10, 220, 220, 40);
+		studentPanel.add(addFacultyButton);
+		
+		// Button that adds a new course
+		JButton addCourseButton = new JButton("Add Course");
+		addCourseButton.setFont(new Font("Tahoma", Font.PLAIN, 26));
+		addCourseButton.setBounds(10, 270, 220, 40);
+		studentPanel.add(addCourseButton);
 	}
 }
