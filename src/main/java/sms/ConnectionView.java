@@ -147,7 +147,7 @@ public class ConnectionView {
 
 					} else {
 						JOptionPane.showMessageDialog(new JFrame(),
-								"Connection with the database hasn't been established! Please check your credentials!",
+								"Connection with the database hasn't been established!\nPlease check your credentials!",
 								"Error", JOptionPane.ERROR_MESSAGE);
 					}
 				}

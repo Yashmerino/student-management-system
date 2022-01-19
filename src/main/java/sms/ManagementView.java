@@ -164,14 +164,14 @@ public class ManagementView {
 				} else {
 					// Asking the user if they are sure about that
 					if (JOptionPane.showConfirmDialog(managementFrame,
-							"Deleting a student from the table may result in losing important information. Are you sure?",
+							"Deleting a student from the table may result in losing important information.\nAre you sure?",
 							"Student Management System", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
 						if (DBHandler.delete()) {
 							JOptionPane.showMessageDialog(managementFrame, "Student successfully removed!",
 									"Student Management System", JOptionPane.INFORMATION_MESSAGE);
 						} else {
 							JOptionPane.showMessageDialog(managementFrame,
-									"Something went wrong! Try restarting the application!",
+									"Something went wrong!\nTry restarting the application!",
 									"Student Management System", JOptionPane.ERROR_MESSAGE);
 						}
 					}
@@ -214,7 +214,7 @@ public class ManagementView {
 						JOptionPane.showMessageDialog(managementFrame, "The student has been added successfully!",
 								"Success", JOptionPane.INFORMATION_MESSAGE);
 					} else {
-						JOptionPane.showMessageDialog(managementFrame, "Something went wrong! Check the credentials!",
+						JOptionPane.showMessageDialog(managementFrame, "Something went wrong!\nCheck the credentials!",
 								"Error", JOptionPane.ERROR_MESSAGE);
 					}
 
@@ -320,14 +320,14 @@ public class ManagementView {
 
 				if (facultyName == null || facultyName.equals("")) {
 					JOptionPane.showMessageDialog(managementFrame,
-							"The faculty hasn't been added! Please type a name for it!", "Error",
+							"The faculty hasn't been added!\nPlease type a name for it!", "Error",
 							JOptionPane.ERROR_MESSAGE);
 				} else {
 					if (DBHandler.addFaculty(facultyName)) {
 						JOptionPane.showMessageDialog(managementFrame, "The faculty has been added successfully!",
 								"Success", JOptionPane.INFORMATION_MESSAGE);
 					} else {
-						JOptionPane.showMessageDialog(managementFrame, "The faculty hasn't been added! Try again!",
+						JOptionPane.showMessageDialog(managementFrame, "The faculty hasn't been added!\nTry again!",
 								"Success", JOptionPane.ERROR_MESSAGE);
 					}
 				}
@@ -344,6 +344,13 @@ public class ManagementView {
 
 			// Actions to perform when "add course" button clicked
 			public void actionPerformed(ActionEvent e) {
+				// If there are no faculties there is no way to add a course
+				if (DBHandler.getFaculties().length == 0) {
+					JOptionPane.showMessageDialog(managementFrame, "You can't add a course!\nAdd a faculty first",
+							"Error", JOptionPane.ERROR_MESSAGE);
+					return;
+				}
+
 				String courseName = "", faculty = "";
 				int duration = 0;
 
@@ -352,7 +359,7 @@ public class ManagementView {
 				// If no name has been written for the course
 				if (courseName == null || courseName.equals("")) {
 					JOptionPane.showMessageDialog(managementFrame,
-							"The course hasn't been added! Please type a name for it!", "Error",
+							"The course hasn't been added!\nPlease type a name for it!", "Error",
 							JOptionPane.ERROR_MESSAGE);
 					return;
 				} else {
@@ -364,7 +371,7 @@ public class ManagementView {
 					// If no faculty has been selected for the course
 					if (faculty == null || faculty.equals("")) {
 						JOptionPane.showMessageDialog(managementFrame,
-								"The course hasn't been added! Please select a faculty for it or add a new one!",
+								"The course hasn't been added!\nPlease select a faculty for it or add a new one!",
 								"Error", JOptionPane.ERROR_MESSAGE);
 						return;
 					} else {
@@ -376,7 +383,7 @@ public class ManagementView {
 							ex.printStackTrace();
 
 							JOptionPane.showMessageDialog(managementFrame,
-									"The course hasn't been added! Please type the duration of the course!", "Error",
+									"The course hasn't been added!\nPlease type the duration of the course!", "Error",
 									JOptionPane.ERROR_MESSAGE);
 
 							return;
@@ -386,7 +393,7 @@ public class ManagementView {
 							JOptionPane.showMessageDialog(managementFrame, "The course has been added successfully!",
 									"Success", JOptionPane.INFORMATION_MESSAGE);
 						} else {
-							JOptionPane.showMessageDialog(managementFrame, "The course hasn't been added! Try again!",
+							JOptionPane.showMessageDialog(managementFrame, "The course hasn't been added!\nTry again!",
 									"Error", JOptionPane.ERROR_MESSAGE);
 						}
 					}
