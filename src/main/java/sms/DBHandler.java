@@ -319,7 +319,7 @@ public class DBHandler {
 			return false;
 		}
 	}
-	
+
 	/**
 	 * Adds a faculty to the faculties table
 	 * 
@@ -328,8 +328,8 @@ public class DBHandler {
 	public static boolean addFaculty(final String facultyName) {
 		try {
 			Connection connection = DriverManager.getConnection(DB_URL, login, password);
-			PreparedStatement preparedStatement = connection.prepareStatement("insert into " + facultiesTable
-					+ " (Name) values " + "(?)");
+			PreparedStatement preparedStatement = connection
+					.prepareStatement("insert into " + facultiesTable + " (Name) values " + "(?)");
 
 			preparedStatement.setString(1, facultyName);
 
@@ -346,5 +346,65 @@ public class DBHandler {
 			// Return false if exception has been thrown
 			return false;
 		}
+	}
+
+	/**
+	 * Adds a course to the courses table
+	 * 
+	 * @return true if everything went fine, and false otherwise
+	 */
+	public static boolean addCourse(final String courseName, final String faculty, final int duration) {
+		try {
+			Connection connection = DriverManager.getConnection(DB_URL, login, password);
+			PreparedStatement preparedStatement = connection.prepareStatement(
+					"insert into " + coursesTable + " (Name, Faculty, Duration) values " + "(?, ?, ?)");
+
+			preparedStatement.setString(1, courseName);
+			preparedStatement.setString(2, faculty);
+			preparedStatement.setInt(3, duration);
+
+			preparedStatement.executeUpdate();
+
+			connection.close();
+			preparedStatement.close();
+
+			// Return true if no exception has been thrown
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+
+			// Return false if exception has been thrown
+			return false;
+		}
+	}
+
+	/**
+	 * Gets all the faculties from the faculties table
+	 * 
+	 * @return an array with all the faculties
+	 */
+	public static String[] getFaculties() {
+		Vector<String> faculties = new Vector<String>();
+
+		try {
+			Connection connection = DriverManager.getConnection(DB_URL, login, password);
+			PreparedStatement preparedStatement = connection.prepareStatement("select Name from faculties");
+			ResultSet resultSet = preparedStatement.executeQuery();
+
+			// Add every name of the faculty to the "faculties" vector
+			while (resultSet.next()) {
+				faculties.add(resultSet.getString("Name"));
+			}
+
+			connection.close();
+			preparedStatement.close();
+			resultSet.close();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		// Convert "faculties" vector to String array and return it
+		return (String[]) faculties.toArray(new String[0]);
 	}
 }

@@ -340,6 +340,61 @@ public class ManagementView {
 
 		// Button that adds a new course
 		JButton addCourseButton = new JButton("Add Course");
+		addCourseButton.addActionListener(new ActionListener() {
+
+			// Actions to perform when "add course" button clicked
+			public void actionPerformed(ActionEvent e) {
+				String courseName = "", faculty = "";
+				int duration = 0;
+
+				courseName = JOptionPane.showInputDialog(managementFrame, "Type the name of the course");
+
+				// If no name has been written for the course
+				if (courseName == null || courseName.equals("")) {
+					JOptionPane.showMessageDialog(managementFrame,
+							"The course hasn't been added! Please type a name for it!", "Error",
+							JOptionPane.ERROR_MESSAGE);
+					return;
+				} else {
+					String[] faculties = DBHandler.getFaculties();
+					faculty = (String) JOptionPane.showInputDialog(null, "Students Management System",
+							"Choose the faculty for the course", JOptionPane.QUESTION_MESSAGE, null, faculties,
+							faculties[0]);
+
+					// If no faculty has been selected for the course
+					if (faculty == null || faculty.equals("")) {
+						JOptionPane.showMessageDialog(managementFrame,
+								"The course hasn't been added! Please select a faculty for it or add a new one!",
+								"Error", JOptionPane.ERROR_MESSAGE);
+						return;
+					} else {
+						// In case the user types letters for the duration
+						try {
+							duration = Integer.parseInt(JOptionPane.showInputDialog(managementFrame,
+									"Type the duration of the course(months)"));
+						} catch (NumberFormatException ex) {
+							ex.printStackTrace();
+
+							JOptionPane.showMessageDialog(managementFrame,
+									"The course hasn't been added! Please type the duration of the course!", "Error",
+									JOptionPane.ERROR_MESSAGE);
+
+							return;
+						}
+
+						if (DBHandler.addCourse(courseName, faculty, duration)) {
+							JOptionPane.showMessageDialog(managementFrame, "The course has been added successfully!",
+									"Success", JOptionPane.INFORMATION_MESSAGE);
+						} else {
+							JOptionPane.showMessageDialog(managementFrame, "The course hasn't been added! Try again!",
+									"Error", JOptionPane.ERROR_MESSAGE);
+						}
+					}
+
+				}
+			}
+		});
+
 		addCourseButton.setFont(new Font("Tahoma", Font.PLAIN, 26));
 		addCourseButton.setBounds(10, 270, 220, 40);
 		studentPanel.add(addCourseButton);
