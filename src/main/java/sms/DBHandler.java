@@ -38,9 +38,19 @@ public class DBHandler {
 	static String DB_URL;
 
 	/**
-	 * The table's name on which actions are performed
+	 * The var that stores students table's name
 	 */
-	private final static String tableName;
+	private final static String studentsTable;
+
+	/**
+	 * The var that stores courses table's name
+	 */
+	private final static String coursesTable;
+
+	/**
+	 * The var that stores faculties table's name
+	 */
+	private final static String facultiesTable;
 
 	/**
 	 * Default constructor
@@ -55,7 +65,10 @@ public class DBHandler {
 	static {
 		login = "root";
 		DB_URL = "jdbc:mysql://localhost:3306/studentsdb";
-		tableName = "students";
+
+		studentsTable = "Students";
+		coursesTable = "Courses";
+		facultiesTable = "Faculties";
 	}
 
 	/**
@@ -87,13 +100,6 @@ public class DBHandler {
 	}
 
 	/**
-	 * @return The table's name on which actions are performed
-	 */
-	public static String getTableName() {
-		return tableName;
-	}
-
-	/**
 	 * @param DB_URL - the database url to set
 	 */
 	public static void setDB_URL(final String DB_URL) {
@@ -108,12 +114,12 @@ public class DBHandler {
 	}
 
 	/**
-	 * Creates a table of students
+	 * Checks if a certain table already exists in the database
 	 * 
-	 * @param tableName - The table's desired name
-	 * @return true if everything went fine, and false otherwise
+	 * @param tableName - Table's name that is wanted to be checked
+	 * @return True if table exists, false otherwise
 	 */
-	public static boolean createTable() {
+	public static boolean checkIfTableExists(final String tableName) {
 		try {
 			Connection connection = DriverManager.getConnection(DB_URL, login, password);
 			Statement statement = connection.createStatement();
@@ -123,22 +129,50 @@ public class DBHandler {
 			ResultSet resultSet = dbmData.getTables(null, null, tableName, null);
 			while (resultSet.next()) {
 				if (resultSet.getString(3).equals(tableName)) {
-					JOptionPane.showMessageDialog(new JFrame(), "All necessary tables already exist. Reading data.",
-							"Success", JOptionPane.INFORMATION_MESSAGE);
-
 					return true;
 				}
 			}
 
-			String sqlScript = "create table " + tableName + "(ID INTEGER not NULL AUTO_INCREMENT, "
-					+ " Name varchar(255), " + "Surname varchar(255), " + "Age INTEGER, " + "Gender varchar(6), "
-					+ "Course varchar(255), " + "StartYear INTEGER, " + "PRIMARY KEY ( id ))";
+			return false;
+		} catch (SQLException e) {
+			e.printStackTrace();
 
-			statement.executeUpdate(sqlScript);
+			return false;
+		}
+	}
+
+	/**
+	 * Creates a table of students, courses and faculties
+	 * 
+	 * @return true if everything went fine, and false otherwise
+	 */
+	public static boolean createTable() {
+		try {
+			Connection connection = DriverManager.getConnection(DB_URL, login, password);
+			Statement statement = connection.createStatement();
+
+			String sqlScript;
+
+			if (!checkIfTableExists("students")) {
+				// Creating a table of students
+				sqlScript = "create table " + studentsTable + "(ID INTEGER not NULL AUTO_INCREMENT, "
+						+ " Name varchar(255), " + "Surname varchar(255), " + "Age INTEGER, " + "Gender varchar(6), "
+						+ "Course varchar(255), " + "StartYear INTEGER, " + "PRIMARY KEY ( id ))";
+
+				statement.executeUpdate(sqlScript);
+			}
+
+			if (!checkIfTableExists("courses")) {
+				// Creating a table of courses
+				sqlScript = "create table " + coursesTable + "(ID INTEGER not NULL AUTO_INCREMENT, "
+						+ " Name varchar(255), " + "Faculty varchar(255), " + "Duration INTEGER, "
+						+ "PRIMARY KEY ( id ))";
+
+				statement.executeUpdate(sqlScript);
+			}
 
 			connection.close();
 			statement.close();
-			resultSet.close();
 
 			// Return true if no exception has been thrown
 			return true;
@@ -159,7 +193,7 @@ public class DBHandler {
 	public static boolean addStudent() {
 		try {
 			Connection connection = DriverManager.getConnection(DB_URL, login, password);
-			PreparedStatement preparedStatement = connection.prepareStatement("insert into " + tableName
+			PreparedStatement preparedStatement = connection.prepareStatement("insert into " + studentsTable
 					+ " (Name, Surname, Age, Gender, Course, StartYear) values " + "(?, ?, ?, ?, ?, ?)");
 
 			preparedStatement.setString(1, ManagementView.nameField.getText());
@@ -183,9 +217,9 @@ public class DBHandler {
 
 			// Return false if an exception has been thrown
 			return false;
-		} catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
-			
+
 			// Return false if an exception has been thrown
 			return false;
 		}
@@ -201,7 +235,7 @@ public class DBHandler {
 
 		try {
 			Connection connection = DriverManager.getConnection(DB_URL, login, password);
-			PreparedStatement preparedStatement = connection.prepareStatement("select * from " + tableName);
+			PreparedStatement preparedStatement = connection.prepareStatement("select * from " + studentsTable);
 
 			// Reading data from table
 			ResultSet resultSet = preparedStatement.executeQuery();
@@ -258,7 +292,7 @@ public class DBHandler {
 
 			Connection connection = DriverManager.getConnection(DB_URL, login, password);
 			PreparedStatement preparedStatement = connection
-					.prepareStatement("delete from " + tableName + " where id = ?");
+					.prepareStatement("delete from " + studentsTable + " where id = ?");
 
 			preparedStatement.setInt(1, ID);
 			preparedStatement.executeUpdate();
