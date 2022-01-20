@@ -8,10 +8,9 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.HashMap;
 import java.util.Vector;
 
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -216,7 +215,7 @@ public class DBHandler {
 			connection.close();
 			preparedStatement.close();
 
-			update();
+			updateStudents();
 
 			// Return true if no exception has been thrown
 			return true;
@@ -238,7 +237,7 @@ public class DBHandler {
 	 * 
 	 * @return true if everything went fine, and false otherwise
 	 */
-	public static boolean update() {
+	public static boolean updateStudents() {
 		int howManyColumns = 0, currentColumn = 0;
 
 		try {
@@ -270,6 +269,8 @@ public class DBHandler {
 				recordTable.addRow(columnData);
 			}
 
+			updateAttendees();
+
 			connection.close();
 			preparedStatement.close();
 			resultSet.close();
@@ -289,7 +290,7 @@ public class DBHandler {
 	 * 
 	 * @return true if everything went fine, and false otherwise
 	 */
-	public static boolean delete() {
+	public static boolean deleteStudent() {
 		// Getting row that user selected
 		DefaultTableModel RecordTable = (DefaultTableModel) ManagementView.table.getModel();
 		int selectedRow = ManagementView.table.getSelectedRow();
@@ -308,7 +309,7 @@ public class DBHandler {
 			connection.close();
 			preparedStatement.close();
 
-			update();
+			updateStudents();
 
 			// Return true if no exception has been thrown
 			return true;
@@ -328,10 +329,12 @@ public class DBHandler {
 	public static boolean addFaculty(final String facultyName) {
 		try {
 			Connection connection = DriverManager.getConnection(DB_URL, login, password);
-			PreparedStatement preparedStatement = connection
-					.prepareStatement("insert into " + facultiesTable + " (Name) values " + "(?)");
+			PreparedStatement preparedStatement = connection.prepareStatement(
+					"insert into " + facultiesTable + " (Name, Courses, Attendees) values " + "(?, ?, ?)");
 
 			preparedStatement.setString(1, facultyName);
+			preparedStatement.setInt(2, 0);
+			preparedStatement.setInt(3, 0);
 
 			preparedStatement.executeUpdate();
 
@@ -357,16 +360,19 @@ public class DBHandler {
 		try {
 			Connection connection = DriverManager.getConnection(DB_URL, login, password);
 			PreparedStatement preparedStatement = connection.prepareStatement(
-					"insert into " + coursesTable + " (Name, Faculty, Duration) values " + "(?, ?, ?)");
+					"insert into " + coursesTable + " (Name, Faculty, Duration, Attendees) values " + "(?, ?, ?, ?)");
 
 			preparedStatement.setString(1, courseName);
 			preparedStatement.setString(2, faculty);
 			preparedStatement.setInt(3, duration);
+			preparedStatement.setInt(4, 0);
 
 			preparedStatement.executeUpdate();
 
 			connection.close();
 			preparedStatement.close();
+
+			updateAttendees();
 
 			// Return true if no exception has been thrown
 			return true;
@@ -436,5 +442,134 @@ public class DBHandler {
 
 		// Convert "courses" vector to String array and return it
 		return (String[]) courses.toArray(new String[0]);
+	}
+
+	/**
+	 * Updates the number of attendees in faculties and courses tables
+	 */
+	private static void updateAttendees() {
+		updateCoursesAttendees();
+		updateFacultiesAttendees();
+	}
+
+	/**
+	 * Updates the number of attendees in courses table
+	 * 
+	 * @return true if everything went fine, and false otherwise
+	 */
+	private static boolean updateCoursesAttendees() {
+		try {
+			Connection connection = DriverManager.getConnection(DB_URL, login, password);
+			PreparedStatement preparedStatement = connection.prepareStatement("select Course from " + studentsTable);
+			Statement statement = connection.createStatement();
+
+			String sqlScript;
+
+			// Reading courses that students attend from the table
+			ResultSet resultSet = preparedStatement.executeQuery();
+			HashMap<String, Integer> coursesAttendees = new HashMap<String, Integer>();
+
+			// Calculating the number of attendees to the courses
+			MAINLOOP: while (resultSet.next()) {
+				String currentCourse = resultSet.getString("Course");
+
+				for (String key : coursesAttendees.keySet()) {
+					// If currentCourse is already in the HashMap, increment the value of attendees
+					if (currentCourse.equals(key)) {
+						coursesAttendees.put(key, coursesAttendees.get(key) + 1);
+						continue MAINLOOP;
+					}
+				}
+
+				coursesAttendees.put(currentCourse, 1);
+			}
+
+			// Update the number of attendees to the courses in the courses table
+			for (String key : coursesAttendees.keySet()) {
+				sqlScript = "update " + coursesTable + " set Attendees = " + coursesAttendees.get(key)
+						+ " where Name = " + "\"" + key + "\"";
+
+				statement.executeUpdate(sqlScript);
+			}
+
+			connection.close();
+			preparedStatement.close();
+			statement.close();
+			resultSet.close();
+
+			// Return true if no exception has been thrown
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+
+			// Return false if exception has been thrown
+			return false;
+		}
+	}
+
+	/**
+	 * Updates the number of attendees in faculties table
+	 * 
+	 * @return true if everything went fine, and false otherwise
+	 */
+	private static boolean updateFacultiesAttendees() {
+		try {
+			Connection connection = DriverManager.getConnection(DB_URL, login, password);
+			PreparedStatement preparedStatement = null, preparedStatement2 = null;
+			Statement statement = connection.createStatement();
+			ResultSet resultSet = null, resultSet2 = null;
+
+			// Setting number of courses and attendees to 0 initially, in order to avoid
+			// wrong calculations
+			String sqlScript = "update " + facultiesTable + " set Attendees = 0, Courses = 0";
+			statement.executeUpdate(sqlScript);
+
+			// Getting the faculties of courses and number of attendees
+			preparedStatement = connection.prepareStatement("select Name, Faculty, Attendees from " + coursesTable);
+			resultSet = preparedStatement.executeQuery();
+
+			while (resultSet.next()) {
+				final String courseName = resultSet.getString("Name");
+				final String faculty = resultSet.getString("Faculty");
+				final int courseAttendees = resultSet.getInt("Attendees");
+
+				preparedStatement2 = connection.prepareStatement(
+						"select Attendees, Courses from " + facultiesTable + " where Name = " + "\"" + faculty + "\"");
+				resultSet2 = preparedStatement2.executeQuery();
+
+				resultSet2.next();
+				final int currentNumberOfAttendees = resultSet2.getInt("Attendees");
+				final int currentNumberOfCourses = resultSet2.getInt("Courses");
+
+				sqlScript = "update " + facultiesTable + " set Attendees = "
+						+ (courseAttendees + currentNumberOfAttendees) + " where Name = " + "\"" + faculty + "\"";
+
+				statement.executeUpdate(sqlScript);
+
+				sqlScript = "update " + facultiesTable + " set Courses = " + (currentNumberOfCourses + 1)
+						+ " where Name = " + "\"" + faculty + "\"";
+
+				statement.executeUpdate(sqlScript);
+			}
+
+			connection.close();
+			preparedStatement.close();
+			preparedStatement2.close();
+			resultSet.close();
+			resultSet2.close();
+			statement.close();
+
+			// Return true if no exception has been thrown
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+
+			// Return false if exception has been thrown
+			return false;
+		} catch (Exception e) {
+			e.printStackTrace();
+
+			return false;
+		}
 	}
 }

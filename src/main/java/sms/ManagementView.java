@@ -92,7 +92,7 @@ public class ManagementView {
 	 */
 	public ManagementView() {
 		initialize();
-		DBHandler.update();
+		DBHandler.updateStudents();
 	}
 
 	/**
@@ -175,7 +175,7 @@ public class ManagementView {
 					if (JOptionPane.showConfirmDialog(managementFrame,
 							"Deleting a student from the table may result in losing important information.\nAre you sure?",
 							"Student Management System", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-						if (DBHandler.delete()) {
+						if (DBHandler.deleteStudent()) {
 							JOptionPane.showMessageDialog(managementFrame, "Student successfully removed!",
 									"Student Management System", JOptionPane.INFORMATION_MESSAGE);
 						} else {
@@ -198,7 +198,7 @@ public class ManagementView {
 		// Actions to perform when "update" button clicked
 		updateButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				DBHandler.update();
+				DBHandler.updateStudents();
 			}
 		});
 
