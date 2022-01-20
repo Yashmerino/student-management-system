@@ -113,6 +113,27 @@ public class DBHandler {
 	}
 
 	/**
+	 * @return The students table's name
+	 */
+	public static String getStudentsTable() {
+		return studentsTable;
+	}
+
+	/**
+	 * @return The faculties table's name
+	 */
+	public static String getFacultiesTable() {
+		return facultiesTable;
+	}
+
+	/**
+	 * @return The courses table's name
+	 */
+	public static String getCoursesTable() {
+		return coursesTable;
+	}
+
+	/**
 	 * Checks if a certain table already exists in the database
 	 * 
 	 * @param tableName - Table's name that is wanted to be checked
@@ -121,21 +142,23 @@ public class DBHandler {
 	public static boolean checkIfTableExists(final String tableName) {
 		try {
 			Connection connection = DriverManager.getConnection(DB_URL, login, password);
-			Statement statement = connection.createStatement();
 
 			// Check if a table with tableName name already exists
 			DatabaseMetaData dbmData = connection.getMetaData();
 			ResultSet resultSet = dbmData.getTables(null, null, tableName, null);
 			while (resultSet.next()) {
 				if (resultSet.getString(3).equals(tableName)) {
+					// Return true if the table has been found
 					return true;
 				}
 			}
 
+			// Return false if no table has been found
 			return false;
 		} catch (SQLException e) {
 			e.printStackTrace();
 
+			// Return false if an exception has been thrown
 			return false;
 		}
 	}
@@ -569,6 +592,38 @@ public class DBHandler {
 		} catch (Exception e) {
 			e.printStackTrace();
 
+			return false;
+		}
+	}
+
+	/**
+	 * Searches if there is already an element with certain name in a certain table
+	 * 
+	 * @param tableName - The table in which user wants to check if element already
+	 *                  exists
+	 * @param name      - The name of the element user wants to check
+	 * @return true if the element has been found, false otherwise
+	 */
+	public static boolean checkIfElementExists(final String tableName, final String name) {
+		try {
+			Connection connection = DriverManager.getConnection(DB_URL, login, password);
+			PreparedStatement preparedStatement = connection.prepareStatement("select Name from " + tableName);
+
+			// Get all the elements' name
+			ResultSet resultSet = preparedStatement.executeQuery();
+			while (resultSet.next()) {
+				if (resultSet.getString("Name").equals(name)) {
+					// Return true if an element has been found
+					return true;
+				}
+			}
+
+			// Return false if no element has been found in the table
+			return false;
+		} catch (SQLException e) {
+			e.printStackTrace();
+
+			// Return false if an exception has been thrown
 			return false;
 		}
 	}

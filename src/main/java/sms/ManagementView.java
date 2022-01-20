@@ -332,12 +332,18 @@ public class ManagementView {
 							"The faculty hasn't been added!\nPlease type a name for it!", "Error",
 							JOptionPane.ERROR_MESSAGE);
 				} else {
-					if (DBHandler.addFaculty(facultyName)) {
-						JOptionPane.showMessageDialog(managementFrame, "The faculty has been added successfully!",
-								"Success", JOptionPane.INFORMATION_MESSAGE);
+					if (DBHandler.checkIfElementExists(DBHandler.getFacultiesTable(), facultyName)) {
+						JOptionPane.showMessageDialog(managementFrame,
+								"The faculty hasn't been added!\nThe faculty " + facultyName + " already exists!",
+								"Error", JOptionPane.ERROR_MESSAGE);
 					} else {
-						JOptionPane.showMessageDialog(managementFrame, "The faculty hasn't been added!\nTry again!",
-								"Success", JOptionPane.ERROR_MESSAGE);
+						if (DBHandler.addFaculty(facultyName)) {
+							JOptionPane.showMessageDialog(managementFrame, "The faculty has been added successfully!",
+									"Success", JOptionPane.INFORMATION_MESSAGE);
+						} else {
+							JOptionPane.showMessageDialog(managementFrame, "The faculty hasn't been added!\nTry again!",
+									"Success", JOptionPane.ERROR_MESSAGE);
+						}
 					}
 				}
 			}
@@ -398,17 +404,24 @@ public class ManagementView {
 							return;
 						}
 
-						if (DBHandler.addCourse(courseName, faculty, duration)) {
-							JOptionPane.showMessageDialog(managementFrame, "The course has been added successfully!",
-									"Success", JOptionPane.INFORMATION_MESSAGE);
-
-							updateCourses();
-						} else {
-							JOptionPane.showMessageDialog(managementFrame, "The course hasn't been added!\nTry again!",
+						if (DBHandler.checkIfElementExists(DBHandler.getCoursesTable(), courseName)) {
+							JOptionPane.showMessageDialog(managementFrame,
+									"The course hasn't been added!\nThe course " + courseName + " already exists!",
 									"Error", JOptionPane.ERROR_MESSAGE);
+						} else {
+							if (DBHandler.addCourse(courseName, faculty, duration)) {
+								JOptionPane.showMessageDialog(managementFrame,
+										"The course has been added successfully!", "Success",
+										JOptionPane.INFORMATION_MESSAGE);
+
+								updateCourses();
+							} else {
+								JOptionPane.showMessageDialog(managementFrame,
+										"The course hasn't been added!\nTry again!", "Error",
+										JOptionPane.ERROR_MESSAGE);
+							}
 						}
 					}
-
 				}
 			}
 		});
