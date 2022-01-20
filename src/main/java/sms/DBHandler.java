@@ -208,7 +208,7 @@ public class DBHandler {
 			preparedStatement.setString(2, ManagementView.surnameField.getText());
 			preparedStatement.setInt(3, Integer.parseInt(ManagementView.ageField.getText()));
 			preparedStatement.setString(4, ManagementView.genderSelectionBox.getSelectedItem().toString());
-			preparedStatement.setString(5, ManagementView.courseField.getText());
+			preparedStatement.setString(5, ManagementView.courseSelectionBox.getSelectedItem().toString());
 			preparedStatement.setInt(6, Integer.parseInt(ManagementView.startYearField.getText()));
 
 			preparedStatement.executeUpdate();
@@ -406,5 +406,35 @@ public class DBHandler {
 
 		// Convert "faculties" vector to String array and return it
 		return (String[]) faculties.toArray(new String[0]);
+	}
+
+	/**
+	 * Gets all the courses from the courses table
+	 * 
+	 * @return an array with all the courses
+	 */
+	public static String[] getCourses() {
+		Vector<String> courses = new Vector<String>();
+
+		try {
+			Connection connection = DriverManager.getConnection(DB_URL, login, password);
+			PreparedStatement preparedStatement = connection.prepareStatement("select Name from courses");
+			ResultSet resultSet = preparedStatement.executeQuery();
+
+			// Add every name of the courses to the "courses" vector
+			while (resultSet.next()) {
+				courses.add(resultSet.getString("Name"));
+			}
+
+			connection.close();
+			preparedStatement.close();
+			resultSet.close();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		// Convert "courses" vector to String array and return it
+		return (String[]) courses.toArray(new String[0]);
 	}
 }

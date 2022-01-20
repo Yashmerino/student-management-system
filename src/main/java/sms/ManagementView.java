@@ -56,11 +56,6 @@ public class ManagementView {
 	static JTextField ageField;
 
 	/**
-	 * The field where user should write the student's attended course
-	 */
-	static JTextField courseField;
-
-	/**
 	 * The field where user should write the year when the student started attending
 	 * the course
 	 */
@@ -70,6 +65,11 @@ public class ManagementView {
 	 * The box that user uses in order to select student's gender
 	 */
 	static JComboBox genderSelectionBox;
+
+	/**
+	 * The box that allows user to select a course for a student
+	 */
+	static JComboBox courseSelectionBox;
 
 	/**
 	 * Launch the application.
@@ -93,6 +93,15 @@ public class ManagementView {
 	public ManagementView() {
 		initialize();
 		DBHandler.update();
+	}
+
+	/**
+	 * Updates the list of courses
+	 */
+	private void updateCourses() {
+		// Get the lists of courses
+		DefaultComboBoxModel courses = new DefaultComboBoxModel(DBHandler.getCourses());
+		courseSelectionBox.setModel(courses);
 	}
 
 	/**
@@ -203,9 +212,15 @@ public class ManagementView {
 		// Actions to perform when "add" button clicked
 		addButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				if (DBHandler.getFaculties().length == 0) {
+					JOptionPane.showMessageDialog(managementFrame,
+							"You can't add a student yet!\nAdd a faculty and a course first!", "Error",
+							JOptionPane.ERROR_MESSAGE);
+				}
+
 				// If one of the fields are empty warn user about that
 				if (nameField.getText().equals("") || surnameField.getText().equals("") || ageField.getText().equals("")
-						|| courseField.getText().equals("") || startYearField.getText().equals("")) {
+						|| startYearField.getText().equals("")) {
 
 					JOptionPane.showMessageDialog(managementFrame, "Please fill in all the fields!", "Error",
 							JOptionPane.ERROR_MESSAGE);
@@ -275,12 +290,6 @@ public class ManagementView {
 		courseText.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		courseText.setBounds(10, 156, 67, 19);
 		studentPanel.add(courseText);
-
-		// Initializing course text field
-		courseField = new JTextField();
-		courseField.setColumns(10);
-		courseField.setBounds(85, 153, 143, 22);
-		studentPanel.add(courseField);
 
 		// The text that informs the user where they have to write the year when student
 		// started attending the course
@@ -392,6 +401,8 @@ public class ManagementView {
 						if (DBHandler.addCourse(courseName, faculty, duration)) {
 							JOptionPane.showMessageDialog(managementFrame, "The course has been added successfully!",
 									"Success", JOptionPane.INFORMATION_MESSAGE);
+
+							updateCourses();
 						} else {
 							JOptionPane.showMessageDialog(managementFrame, "The course hasn't been added!\nTry again!",
 									"Error", JOptionPane.ERROR_MESSAGE);
@@ -405,5 +416,12 @@ public class ManagementView {
 		addCourseButton.setFont(new Font("Tahoma", Font.PLAIN, 26));
 		addCourseButton.setBounds(10, 270, 220, 40);
 		studentPanel.add(addCourseButton);
+
+		// Initializing the course selection box
+		courseSelectionBox = new JComboBox();
+		courseSelectionBox.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		courseSelectionBox.setBounds(85, 154, 143, 22);
+		updateCourses();
+		studentPanel.add(courseSelectionBox);
 	}
 }
