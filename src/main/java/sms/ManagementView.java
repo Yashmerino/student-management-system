@@ -140,7 +140,7 @@ public class ManagementView {
 		// Creating a sorter for the table
 		TableRowSorter tableSorter = new TableRowSorter(table.getModel());
 		table.setRowSorter(tableSorter);
-		
+
 		// The panel where all buttons are located
 		JPanel buttonsPanel = new JPanel();
 		buttonsPanel.setBorder(new LineBorder(new Color(0, 120, 215), 5));
@@ -163,8 +163,8 @@ public class ManagementView {
 			}
 		});
 
-		exitButton.setFont(new Font("Tahoma", Font.PLAIN, 26));
-		exitButton.setBounds(560, 10, 125, 60);
+		exitButton.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		exitButton.setBounds(618, 10, 125, 60);
 		buttonsPanel.add(exitButton);
 
 		// The button to press to delete an information from the table
@@ -195,8 +195,8 @@ public class ManagementView {
 			}
 		});
 
-		deleteButton.setFont(new Font("Tahoma", Font.PLAIN, 26));
-		deleteButton.setBounds(420, 10, 125, 60);
+		deleteButton.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		deleteButton.setBounds(348, 10, 125, 60);
 		buttonsPanel.add(deleteButton);
 
 		// The button to press to update an information in the table
@@ -209,8 +209,8 @@ public class ManagementView {
 			}
 		});
 
-		updateButton.setFont(new Font("Tahoma", Font.PLAIN, 26));
-		updateButton.setBounds(285, 10, 125, 60);
+		updateButton.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		updateButton.setBounds(213, 10, 125, 60);
 		buttonsPanel.add(updateButton);
 
 		// The button to press to add a student to the table
@@ -259,9 +259,27 @@ public class ManagementView {
 			}
 		});
 
-		addButton.setFont(new Font("Tahoma", Font.PLAIN, 26));
-		addButton.setBounds(150, 10, 125, 60);
+		addButton.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		addButton.setBounds(78, 10, 125, 60);
 		buttonsPanel.add(addButton);
+
+		// The button that user have to press in order to disconnect from the current
+		// database
+		JButton disconnectButton = new JButton("Disconnect");
+
+		// Actions to perform when "disconnect" button has been clicked
+		disconnectButton.addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent e) {
+				// Return back to the connection window
+				ConnectionView.main(null);
+				managementFrame.dispose();
+			}
+		});
+
+		disconnectButton.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		disconnectButton.setBounds(483, 10, 125, 60);
+		buttonsPanel.add(disconnectButton);
 
 		// The panel where user writes information about a student
 		JPanel studentPanel = new JPanel();
@@ -372,7 +390,7 @@ public class ManagementView {
 			}
 		});
 
-		addFacultyButton.setFont(new Font("Tahoma", Font.PLAIN, 26));
+		addFacultyButton.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		addFacultyButton.setBounds(10, 220, 220, 40);
 		studentPanel.add(addFacultyButton);
 
@@ -449,7 +467,7 @@ public class ManagementView {
 			}
 		});
 
-		addCourseButton.setFont(new Font("Tahoma", Font.PLAIN, 26));
+		addCourseButton.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		addCourseButton.setBounds(10, 270, 220, 40);
 		studentPanel.add(addCourseButton);
 
