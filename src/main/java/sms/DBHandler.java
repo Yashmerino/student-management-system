@@ -8,6 +8,7 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Vector;
 
@@ -178,8 +179,9 @@ public class DBHandler {
 			if (!checkIfTableExists(studentsTable)) {
 				// Creating a table of students
 				sqlScript = "create table " + studentsTable + "(ID INTEGER not NULL AUTO_INCREMENT, "
-						+ " Name varchar(255), " + "Surname varchar(255), " + "Age INTEGER, " + "Gender varchar(6), "
-						+ "Course varchar(255), " + "StartYear INTEGER, " + "PRIMARY KEY ( id ))";
+						+ " Name varchar(50), " + "Surname varchar(50), " + "Age INTEGER, " + "Gender varchar(6), "
+						+ "Course varchar(50), " + "Started varchar(25),  " + "Graduation varchar(25), "
+						+ "PRIMARY KEY ( id ))";
 
 				statement.executeUpdate(sqlScript);
 			}
@@ -187,8 +189,8 @@ public class DBHandler {
 			if (!checkIfTableExists(coursesTable)) {
 				// Creating a table of courses
 				sqlScript = "create table " + coursesTable + "(ID INTEGER not NULL AUTO_INCREMENT, "
-						+ " Name varchar(255), " + "Faculty varchar(255), " + "Duration INTEGER, "
-						+ "Attendees INTEGER, " + "PRIMARY KEY ( id ))";
+						+ " Name varchar(50), " + "Faculty varchar(50), " + "Duration INTEGER, " + "Attendees INTEGER, "
+						+ "PRIMARY KEY ( id ))";
 
 				statement.executeUpdate(sqlScript);
 			}
@@ -196,7 +198,7 @@ public class DBHandler {
 			if (!checkIfTableExists(facultiesTable)) {
 				// Creating a table of faculties
 				sqlScript = "create table " + facultiesTable + "(ID INTEGER not NULL AUTO_INCREMENT, "
-						+ " Name varchar(255), " + "Courses INTEGER, " + "Attendees INTEGER, " + "PRIMARY KEY ( id ))";
+						+ " Name varchar(50), " + "Courses INTEGER, " + "Attendees INTEGER, " + "PRIMARY KEY ( id ))";
 
 				statement.executeUpdate(sqlScript);
 			}
@@ -224,14 +226,30 @@ public class DBHandler {
 		try {
 			Connection connection = DriverManager.getConnection(DB_URL, login, password);
 			PreparedStatement preparedStatement = connection.prepareStatement("insert into " + studentsTable
-					+ " (Name, Surname, Age, Gender, Course, StartYear) values " + "(?, ?, ?, ?, ?, ?)");
+					+ " (Name, Surname, Age, Gender, Course, Started, Graduation) values " + "(?, ?, ?, ?, ?, ?, ?)");
+
+			// Getting the duration of the course in order to calculate Graduation date
+			// field
+			PreparedStatement preparedStatement2 = connection
+					.prepareStatement("select Duration from Courses where Name = " + "\""
+							+ ManagementView.courseSelectionBox.getSelectedItem().toString() + "\"");
+			ResultSet resultSet = preparedStatement2.executeQuery();
+			resultSet.next();
+			final int courseDuration = resultSet.getInt("Duration");
 
 			preparedStatement.setString(1, ManagementView.nameField.getText());
 			preparedStatement.setString(2, ManagementView.surnameField.getText());
 			preparedStatement.setInt(3, Integer.parseInt(ManagementView.ageField.getText()));
 			preparedStatement.setString(4, ManagementView.genderSelectionBox.getSelectedItem().toString());
 			preparedStatement.setString(5, ManagementView.courseSelectionBox.getSelectedItem().toString());
-			preparedStatement.setInt(6, Integer.parseInt(ManagementView.startYearField.getText()));
+
+			final String inputDate = ManagementView.startedDateField.getText();
+			LocalDate startedDate = LocalDate.of(Integer.parseInt(inputDate.substring(0, 4)),
+					Integer.parseInt(inputDate.substring(6, 7)), Integer.parseInt(inputDate.substring(8, 9)));
+			preparedStatement.setString(6, startedDate.toString());
+
+			LocalDate graduationDate = startedDate.plusMonths(courseDuration);
+			preparedStatement.setString(7, graduationDate.toString());
 
 			preparedStatement.executeUpdate();
 
@@ -286,7 +304,8 @@ public class DBHandler {
 					columnData.add(resultSet.getString("Age"));
 					columnData.add(resultSet.getString("Gender"));
 					columnData.add(resultSet.getString("Course"));
-					columnData.add(resultSet.getString("StartYear"));
+					columnData.add(resultSet.getString("Started"));
+					columnData.add(resultSet.getString("Graduation"));
 				}
 
 				recordTable.addRow(columnData);
@@ -548,11 +567,10 @@ public class DBHandler {
 			statement.executeUpdate(sqlScript);
 
 			// Getting the faculties of courses and number of attendees
-			preparedStatement = connection.prepareStatement("select Name, Faculty, Attendees from " + coursesTable);
+			preparedStatement = connection.prepareStatement("select Faculty, Attendees from " + coursesTable);
 			resultSet = preparedStatement.executeQuery();
 
 			while (resultSet.next()) {
-				final String courseName = resultSet.getString("Name");
 				final String faculty = resultSet.getString("Faculty");
 				final int courseAttendees = resultSet.getInt("Attendees");
 
@@ -577,9 +595,11 @@ public class DBHandler {
 
 			connection.close();
 			preparedStatement.close();
-			preparedStatement2.close();
+			if (preparedStatement2 != null)
+				preparedStatement2.close();
 			resultSet.close();
-			resultSet2.close();
+			if (resultSet2 != null)
+				resultSet2.close();
 			statement.close();
 
 			// Return true if no exception has been thrown

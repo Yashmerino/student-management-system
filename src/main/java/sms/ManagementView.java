@@ -6,6 +6,8 @@ import java.awt.Font;
 import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
@@ -56,10 +58,10 @@ public class ManagementView {
 	static JTextField ageField;
 
 	/**
-	 * The field where user should write the year when the student started attending
+	 * The field where user should write the date when the student started attending
 	 * the course
 	 */
-	static JTextField startYearField;
+	static JTextField startedDateField;
 
 	/**
 	 * The box that user uses in order to select student's gender
@@ -132,7 +134,7 @@ public class ManagementView {
 		tableScrollPane.setViewportView(table);
 		table.setColumnSelectionAllowed(true);
 		table.setModel(new DefaultTableModel(new Object[][] {},
-				new String[] { "ID", "Name", "Surname", "Age", "Gender", "Course", "StartYear" }));
+				new String[] { "ID", "Name", "Surname", "Age", "Gender", "Course", "Started", "Graduation" }));
 
 		// The panel where all buttons are located
 		JPanel buttonsPanel = new JPanel();
@@ -220,11 +222,26 @@ public class ManagementView {
 
 				// If one of the fields are empty warn user about that
 				if (nameField.getText().equals("") || surnameField.getText().equals("") || ageField.getText().equals("")
-						|| startYearField.getText().equals("")) {
+						|| startedDateField.getText().equals("")) {
 
 					JOptionPane.showMessageDialog(managementFrame, "Please fill in all the fields!", "Error",
 							JOptionPane.ERROR_MESSAGE);
 				} else {
+					try {
+						// Check if the written data is written correctly according to the format
+						SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+						format.setLenient(false);
+						format.parse(startedDateField.getText());
+					} catch (ParseException ex) {
+						ex.printStackTrace();
+
+						JOptionPane.showMessageDialog(managementFrame,
+								"Please type a correct data according to the format YYYY-MM-DD!", "Error",
+								JOptionPane.ERROR_MESSAGE);
+
+						return;
+					}
+
 					if (DBHandler.addStudent()) {
 						JOptionPane.showMessageDialog(managementFrame, "The student has been added successfully!",
 								"Success", JOptionPane.INFORMATION_MESSAGE);
@@ -291,18 +308,19 @@ public class ManagementView {
 		courseText.setBounds(10, 156, 67, 19);
 		studentPanel.add(courseText);
 
-		// The text that informs the user where they have to write the year when student
+		// The text that informs the user where they have to write the date when student
 		// started attending the course
-		JLabel startYearText = new JLabel("StartYear");
-		startYearText.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		startYearText.setBounds(10, 188, 67, 19);
-		studentPanel.add(startYearText);
+		JLabel startedDateText = new JLabel("Started");
+		startedDateText.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		startedDateText.setBounds(10, 188, 67, 19);
+		studentPanel.add(startedDateText);
 
-		// Initializing startYear yext field
-		startYearField = new JTextField();
-		startYearField.setColumns(10);
-		startYearField.setBounds(85, 185, 143, 22);
-		studentPanel.add(startYearField);
+		// Initializing startedDate text field
+		startedDateField = new JTextField();
+		startedDateField.setColumns(10);
+		startedDateField.setBounds(85, 185, 143, 22);
+		startedDateField.setText("YYYY-MM-DD");
+		studentPanel.add(startedDateField);
 
 		// The text that informs the user where they have to select student's gender
 		JLabel genderText = new JLabel("Gender");
@@ -398,8 +416,8 @@ public class ManagementView {
 							ex.printStackTrace();
 
 							JOptionPane.showMessageDialog(managementFrame,
-									"The course hasn't been added!\nPlease type the duration of the course!", "Error",
-									JOptionPane.ERROR_MESSAGE);
+									"The course hasn't been added!\nPlease type the duration of the course without using other characters than digits!",
+									"Error", JOptionPane.ERROR_MESSAGE);
 
 							return;
 						}
