@@ -22,6 +22,7 @@ import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 
 /**
  * The class that holds the front-end table-management part of the application
@@ -136,6 +137,10 @@ public class ManagementView {
 		table.setModel(new DefaultTableModel(new Object[][] {},
 				new String[] { "ID", "Name", "Surname", "Age", "Gender", "Course", "Started", "Graduation" }));
 
+		// Creating a sorter for the table
+		TableRowSorter tableSorter = new TableRowSorter(table.getModel());
+		table.setRowSorter(tableSorter);
+		
 		// The panel where all buttons are located
 		JPanel buttonsPanel = new JPanel();
 		buttonsPanel.setBorder(new LineBorder(new Color(0, 120, 215), 5));
