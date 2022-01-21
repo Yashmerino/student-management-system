@@ -391,7 +391,7 @@ public class ManagementView {
 		});
 
 		addFacultyButton.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		addFacultyButton.setBounds(10, 220, 220, 40);
+		addFacultyButton.setBounds(10, 220, 220, 30);
 		studentPanel.add(addFacultyButton);
 
 		// Button that adds a new course
@@ -468,7 +468,7 @@ public class ManagementView {
 		});
 
 		addCourseButton.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		addCourseButton.setBounds(10, 270, 220, 40);
+		addCourseButton.setBounds(10, 260, 220, 30);
 		studentPanel.add(addCourseButton);
 
 		// Initializing the course selection box
@@ -477,5 +477,58 @@ public class ManagementView {
 		courseSelectionBox.setBounds(85, 154, 143, 22);
 		updateCourses();
 		studentPanel.add(courseSelectionBox);
+
+		// Button that allows to delete a faculty
+		JButton deleteFacultyButton = new JButton("Delete Faculty");
+		deleteFacultyButton.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		deleteFacultyButton.setBounds(10, 300, 220, 30);
+		studentPanel.add(deleteFacultyButton);
+
+		// Button that allows to delete a course
+		JButton deleteCourseButton = new JButton("Delete Course");
+
+		// Actions to perform when "Delete Course" button clicked
+		deleteCourseButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String course = (String) JOptionPane.showInputDialog(null, "Students Management System",
+						"Choose the course to delete", JOptionPane.QUESTION_MESSAGE, null, DBHandler.getCourses(),
+						DBHandler.getCourses()[0]);
+
+				// If no course has been selected
+				if (course == null) {
+					return;
+				}
+
+				// If there are students attending the course
+				if (DBHandler.getNumberOfAttendees(DBHandler.getCoursesTable(), course) > 0) {
+					if (JOptionPane.showConfirmDialog(managementFrame,
+							"You can't delete a course that is attended by students!\nDo you wish to delete all the students attending the "
+									+ course + " course?",
+							"Student Management System", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+						if (DBHandler.deleteCourseAttendees(course)) {
+							JOptionPane.showMessageDialog(managementFrame,
+									"The students attending " + course + " course have been deleted successfully!",
+									"Success", JOptionPane.INFORMATION_MESSAGE);
+						} else {
+							JOptionPane.showMessageDialog(managementFrame, "Something went wrong!\nTry Again!", "Error",
+									JOptionPane.ERROR_MESSAGE);
+						}
+					}
+				} else {
+					if (DBHandler.deleteCourse(course)) {
+						JOptionPane.showMessageDialog(managementFrame,
+								"The " + course + " course has been deleted successfully!", "Success",
+								JOptionPane.INFORMATION_MESSAGE);
+					} else {
+						JOptionPane.showMessageDialog(managementFrame, "Something went wrong!\nTry Again!", "Error",
+								JOptionPane.ERROR_MESSAGE);
+					}
+				}
+			}
+		});
+
+		deleteCourseButton.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		deleteCourseButton.setBounds(10, 340, 220, 30);
+		studentPanel.add(deleteCourseButton);
 	}
 }

@@ -505,7 +505,9 @@ public class DBHandler {
 			PreparedStatement preparedStatement = connection.prepareStatement("select Course from " + studentsTable);
 			Statement statement = connection.createStatement();
 
-			String sqlScript;
+			// Setting number of courses and attendees to 0 initially, in order to avoid
+			// wrong calculations
+			statement.executeUpdate("update " + getCoursesTable() + " set Attendees = 0");
 
 			// Reading courses that students attend from the table
 			ResultSet resultSet = preparedStatement.executeQuery();
@@ -528,10 +530,8 @@ public class DBHandler {
 
 			// Update the number of attendees to the courses in the courses table
 			for (String key : coursesAttendees.keySet()) {
-				sqlScript = "update " + coursesTable + " set Attendees = " + coursesAttendees.get(key)
-						+ " where Name = " + "\"" + key + "\"";
-
-				statement.executeUpdate(sqlScript);
+				statement.executeUpdate("update " + coursesTable + " set Attendees = " + coursesAttendees.get(key)
+						+ " where Name = " + "\"" + key + "\"");
 			}
 
 			connection.close();
@@ -563,8 +563,7 @@ public class DBHandler {
 
 			// Setting number of courses and attendees to 0 initially, in order to avoid
 			// wrong calculations
-			String sqlScript = "update " + facultiesTable + " set Attendees = 0, Courses = 0";
-			statement.executeUpdate(sqlScript);
+			statement.executeUpdate("update " + facultiesTable + " set Attendees = 0, Courses = 0");
 
 			// Getting the faculties of courses and number of attendees
 			preparedStatement = connection.prepareStatement("select Faculty, Attendees from " + coursesTable);
@@ -582,15 +581,11 @@ public class DBHandler {
 				final int currentNumberOfAttendees = resultSet2.getInt("Attendees");
 				final int currentNumberOfCourses = resultSet2.getInt("Courses");
 
-				sqlScript = "update " + facultiesTable + " set Attendees = "
-						+ (courseAttendees + currentNumberOfAttendees) + " where Name = " + "\"" + faculty + "\"";
+				statement.executeUpdate("update " + facultiesTable + " set Attendees = "
+						+ (courseAttendees + currentNumberOfAttendees) + " where Name = " + "\"" + faculty + "\"");
 
-				statement.executeUpdate(sqlScript);
-
-				sqlScript = "update " + facultiesTable + " set Courses = " + (currentNumberOfCourses + 1)
-						+ " where Name = " + "\"" + faculty + "\"";
-
-				statement.executeUpdate(sqlScript);
+				statement.executeUpdate("update " + facultiesTable + " set Courses = " + (currentNumberOfCourses + 1)
+						+ " where Name = " + "\"" + faculty + "\"");
 			}
 
 			connection.close();
@@ -644,6 +639,82 @@ public class DBHandler {
 			e.printStackTrace();
 
 			// Return false if an exception has been thrown
+			return false;
+		}
+	}
+
+	/**
+	 * Gets the number of attendees in a course or faculty
+	 * 
+	 * @param tableName - The table in which user wants to check the number of
+	 *                  attendees(Faculties/Courses table)
+	 * @param element   - The course/faculty name in which user wants to check the
+	 *                  number of attendees
+	 * @return The number of attendees in a faculty/course.
+	 */
+	public static int getNumberOfAttendees(final String tableName, final String element) {
+		try {
+			Connection connection = DriverManager.getConnection(DB_URL, login, password);
+			PreparedStatement preparedStatement = connection
+					.prepareStatement("select Attendees from " + tableName + " where Name = " + "\"" + element + "\"");
+
+			// Get all the elements' name
+			ResultSet resultSet = preparedStatement.executeQuery();
+			resultSet.next();
+			int attendees = resultSet.getInt("Attendees");
+
+			return attendees;
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return 0;
+		}
+	}
+
+	/**
+	 * Deletes the students that attend a certain course
+	 * 
+	 * @param course - The course's name which attendees should be deleted
+	 * @return True if no exception has been thrown, false otherwise
+	 */
+	public static boolean deleteCourseAttendees(final String course) {
+		try {
+			Connection connection = DriverManager.getConnection(DB_URL, login, password);
+			Statement statement = connection.createStatement();
+
+			statement.executeUpdate("delete from " + getStudentsTable() + " where Course = " + "\"" + course + "\"");
+
+			updateStudents();
+
+			return true;
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+
+			return false;
+		}
+	}
+
+	/**
+	 * Deletes a course from the courses table
+	 * 
+	 * @param course - The course's name which should be deleted
+	 * @return True if no exception has been thrown, false otherwise
+	 */
+	public static boolean deleteCourse(final String course) {
+		try {
+			Connection connection = DriverManager.getConnection(DB_URL, login, password);
+			Statement statement = connection.createStatement();
+
+			statement.executeUpdate("delete from " + getCoursesTable() + " where Name = " + "\"" + course + "\"");
+
+			updateStudents();
+
+			return true;
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+
 			return false;
 		}
 	}
