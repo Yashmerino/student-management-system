@@ -87,33 +87,33 @@ public class ConnectionView {
 
 		// The text that informs the user where they have to type the login
 		JLabel loginText = new JLabel("Login:");
-		loginText.setBounds(45, 133, 55, 25);
+		loginText.setBounds(68, 134, 55, 25);
 		loginText.setFont(new Font("Tahoma", Font.PLAIN, 20));
 
 		// The text that informs the user where they have to type the password
 		JLabel passwordText = new JLabel("Password:");
-		passwordText.setBounds(45, 173, 100, 25);
+		passwordText.setBounds(68, 174, 100, 25);
 		passwordText.setFont(new Font("Tahoma", Font.PLAIN, 20));
 
 		// Initializes the text field where user writes the login
 		loginField = new JTextField();
-		loginField.setBounds(200, 140, 330, 20);
+		loginField.setBounds(223, 141, 330, 20);
 		loginField.setColumns(10);
 
 		// Initializes the text field where user writes the password
 		passwordField = new JPasswordField();
-		passwordField.setBounds(200, 180, 330, 20);
+		passwordField.setBounds(223, 181, 330, 20);
 
 		// The field where user should write the database url
 		databaseUrlField = new JTextField();
 		databaseUrlField.setText("jdbc:mysql://localhost:3306/studentsdb");
 		databaseUrlField.setColumns(10);
-		databaseUrlField.setBounds(200, 95, 330, 20);
+		databaseUrlField.setBounds(223, 96, 330, 20);
 
 		// The text that informs user where they have to write database url
 		JLabel databaseUrlText = new JLabel("Database URL:");
 		databaseUrlText.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		databaseUrlText.setBounds(45, 90, 130, 25);
+		databaseUrlText.setBounds(68, 91, 130, 25);
 
 		// The button to press after the login and password were written
 		JButton connectButton = new JButton("Connect");

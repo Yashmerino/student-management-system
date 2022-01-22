@@ -1,8 +1,10 @@
 package sms;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.EventQueue;
 import java.awt.Font;
+import java.awt.GridLayout;
 import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -25,6 +27,8 @@ import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
+
+import org.eclipse.wb.swing.FocusTraversalOnArray;
 
 /**
  * The class that holds the front-end table-management part of the application
@@ -171,25 +175,6 @@ public class ManagementView {
 		buttonsPanel.setBackground(UIManager.getColor("Button.background"));
 		buttonsPanel.setBounds(10, 415, 825, 80);
 		managementFrame.getContentPane().add(buttonsPanel);
-		buttonsPanel.setLayout(null);
-
-		// The button to press to exit the application
-		JButton exitButton = new JButton("Exit");
-
-		// Actions to perform when "exit" button clicked
-		exitButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if (JOptionPane.showConfirmDialog(managementFrame, "Are you sure?", "Student Management System",
-						JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-					managementFrame.dispose();
-					System.exit(0);
-				}
-			}
-		});
-
-		exitButton.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		exitButton.setBounds(618, 10, 125, 60);
-		buttonsPanel.add(exitButton);
 
 		// The button to press to delete an information from the table
 		JButton deleteButton = new JButton("Delete");
@@ -220,23 +205,6 @@ public class ManagementView {
 		});
 
 		deleteButton.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		deleteButton.setBounds(348, 10, 125, 60);
-		buttonsPanel.add(deleteButton);
-
-		// The button to press to update an information in the table
-		JButton updateButton = new JButton("Update");
-
-		// Actions to perform when "update" button clicked
-		updateButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				table.clearSelection();
-				DBHandler.updateStudents();
-			}
-		});
-
-		updateButton.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		updateButton.setBounds(213, 10, 125, 60);
-		buttonsPanel.add(updateButton);
 
 		// The button to press to add a student to the table
 		JButton addButton = new JButton("Add");
@@ -285,10 +253,39 @@ public class ManagementView {
 				}
 			}
 		});
+		buttonsPanel.setLayout(new GridLayout(0, 5, 0, 0));
 
 		addButton.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		addButton.setBounds(78, 10, 125, 60);
 		buttonsPanel.add(addButton);
+
+		// The button to press to update an information in the table
+		JButton updateButton = new JButton("Update");
+
+		// Actions to perform when "update" button clicked
+		updateButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				table.clearSelection();
+				DBHandler.updateStudents();
+			}
+		});
+
+		updateButton.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		buttonsPanel.add(updateButton);
+		buttonsPanel.add(deleteButton);
+
+		// The button to press to exit the application
+		JButton exitButton = new JButton("Exit");
+
+		// Actions to perform when "exit" button clicked
+		exitButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (JOptionPane.showConfirmDialog(managementFrame, "Are you sure?", "Student Management System",
+						JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+					managementFrame.dispose();
+					System.exit(0);
+				}
+			}
+		});
 
 		// The button that user have to press in order to disconnect from the current
 		// database
@@ -305,8 +302,12 @@ public class ManagementView {
 		});
 
 		disconnectButton.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		disconnectButton.setBounds(483, 10, 125, 60);
 		buttonsPanel.add(disconnectButton);
+
+		exitButton.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		buttonsPanel.add(exitButton);
+		buttonsPanel.setFocusTraversalPolicy(new FocusTraversalOnArray(
+				new Component[] { addButton, updateButton, deleteButton, disconnectButton, exitButton }));
 
 		// The panel where user writes information about a student
 		JPanel studentPanel = new JPanel();
