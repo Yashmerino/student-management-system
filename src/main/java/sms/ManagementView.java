@@ -1,7 +1,6 @@
 package sms;
 
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.GridLayout;
@@ -27,8 +26,6 @@ import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
-
-import org.eclipse.wb.swing.FocusTraversalOnArray;
 
 /**
  * The class that holds the front-end table-management part of the application
@@ -306,8 +303,6 @@ public class ManagementView {
 
 		exitButton.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		buttonsPanel.add(exitButton);
-		buttonsPanel.setFocusTraversalPolicy(new FocusTraversalOnArray(
-				new Component[] { addButton, updateButton, deleteButton, disconnectButton, exitButton }));
 
 		// The panel where user writes information about a student
 		JPanel studentPanel = new JPanel();
