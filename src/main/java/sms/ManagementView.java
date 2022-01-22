@@ -21,6 +21,8 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.border.LineBorder;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 
@@ -135,11 +137,26 @@ public class ManagementView {
 		tableScrollPane.setViewportView(table);
 		table.setColumnSelectionAllowed(true);
 		table.setModel(new DefaultTableModel(new Object[][] {},
-				new String[] { "ID", "Name", "Surname", "Age", "Gender", "Course", "Started", "Graduation" }));
+				new String[] { "ID", "Name", "Surname", "Age", "Gender", "Course", "Started", "Graduation" }) {
+			boolean[] columnEditables = new boolean[] { false, true, true, true, true, false, true, false };
+
+			public boolean isCellEditable(int row, int column) {
+				return columnEditables[column];
+			}
+		});
 
 		// Creating a sorter for the table
 		TableRowSorter tableSorter = new TableRowSorter(table.getModel());
 		table.setRowSorter(tableSorter);
+
+		// Creating a Table Listener to detect cell modifications
+		table.getModel().addTableModelListener(new TableModelListener() {
+
+			// Actions to perform when a cell has been edited
+			public void tableChanged(TableModelEvent e) {
+				//
+			}
+		});
 
 		// The panel where all buttons are located
 		JPanel buttonsPanel = new JPanel();
