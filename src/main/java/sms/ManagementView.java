@@ -480,6 +480,58 @@ public class ManagementView {
 
 		// Button that allows to delete a faculty
 		JButton deleteFacultyButton = new JButton("Delete Faculty");
+
+		// Actions to perform when "Delete Faculty" button clicked
+		deleteFacultyButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String faculty = (String) JOptionPane.showInputDialog(null, "Students Management System",
+						"Choose the faculty to delete", JOptionPane.QUESTION_MESSAGE, null, DBHandler.getFaculties(),
+						DBHandler.getFaculties()[0]);
+
+				// If no faculty has been selected
+				if (faculty == null) {
+					return;
+				}
+
+				// If there are students attending the courses in this faculty
+				if (DBHandler.getNumberOfCourses(faculty) > 0) {
+					if (JOptionPane.showConfirmDialog(managementFrame,
+							"You can't delete a faculty that has courses!\nDo you wish to delete all the courses and students attending these courses in the "
+									+ faculty + " faculty?",
+							"Student Management System", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+						if (DBHandler.deleteFacultyCourses(faculty)) {
+							JOptionPane.showMessageDialog(managementFrame,
+									"The courses in " + faculty + " faculty have been deleted successfully!", "Success",
+									JOptionPane.INFORMATION_MESSAGE);
+
+							if (DBHandler.deleteFaculty(faculty)) {
+								JOptionPane.showMessageDialog(managementFrame,
+										"The " + faculty + " faculty has been deleted successfully!", "Success",
+										JOptionPane.INFORMATION_MESSAGE);
+							} else {
+								JOptionPane.showMessageDialog(managementFrame, "Something went wrong!\nTry Again!",
+										"Error", JOptionPane.ERROR_MESSAGE);
+							}
+
+						} else {
+							JOptionPane.showMessageDialog(managementFrame, "Something went wrong!\nTry Again!", "Error",
+									JOptionPane.ERROR_MESSAGE);
+						}
+					}
+				} else {
+					if (DBHandler.deleteFaculty(faculty)) {
+						JOptionPane.showMessageDialog(managementFrame,
+								"The " + faculty + " faculty has been deleted successfully!", "Success",
+								JOptionPane.INFORMATION_MESSAGE);
+					} else {
+						JOptionPane.showMessageDialog(managementFrame, "Something went wrong!\nTry Again!", "Error",
+								JOptionPane.ERROR_MESSAGE);
+					}
+				}
+				updateCourses();
+			}
+		});
+
 		deleteFacultyButton.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		deleteFacultyButton.setBounds(10, 300, 220, 30);
 		studentPanel.add(deleteFacultyButton);
@@ -489,6 +541,7 @@ public class ManagementView {
 
 		// Actions to perform when "Delete Course" button clicked
 		deleteCourseButton.addActionListener(new ActionListener() {
+
 			public void actionPerformed(ActionEvent e) {
 				String course = (String) JOptionPane.showInputDialog(null, "Students Management System",
 						"Choose the course to delete", JOptionPane.QUESTION_MESSAGE, null, DBHandler.getCourses(),
@@ -509,6 +562,15 @@ public class ManagementView {
 							JOptionPane.showMessageDialog(managementFrame,
 									"The students attending " + course + " course have been deleted successfully!",
 									"Success", JOptionPane.INFORMATION_MESSAGE);
+
+							if (DBHandler.deleteCourse(course)) {
+								JOptionPane.showMessageDialog(managementFrame,
+										"The " + course + " course has been deleted successfully!", "Success",
+										JOptionPane.INFORMATION_MESSAGE);
+							} else {
+								JOptionPane.showMessageDialog(managementFrame, "Something went wrong!\nTry Again!",
+										"Error", JOptionPane.ERROR_MESSAGE);
+							}
 						} else {
 							JOptionPane.showMessageDialog(managementFrame, "Something went wrong!\nTry Again!", "Error",
 									JOptionPane.ERROR_MESSAGE);
@@ -524,6 +586,7 @@ public class ManagementView {
 								JOptionPane.ERROR_MESSAGE);
 					}
 				}
+				updateCourses();
 			}
 		});
 
