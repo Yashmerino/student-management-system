@@ -718,4 +718,28 @@ public class DBHandler {
 			return false;
 		}
 	}
+
+	/**
+	 * Deletes a faculty from the faculties table
+	 * 
+	 * @param faculty - The faculty name which should be deleted
+	 * @return True if no exception has been thrown, false otherwise
+	 */
+	public static boolean deleteFaculty(final String faculty) {
+		try {
+			Connection connection = DriverManager.getConnection(DB_URL, login, password);
+			Statement statement = connection.createStatement();
+
+			statement.executeUpdate("delete from " + getFacultiesTable() + " where Name = " + "\"" + faculty + "\"");
+
+			updateStudents();
+
+			return true;
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+
+			return false;
+		}
+	}
 }
