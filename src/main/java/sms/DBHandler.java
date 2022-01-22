@@ -754,6 +754,17 @@ public class DBHandler {
 			Connection connection = DriverManager.getConnection(DB_URL, login, password);
 			Statement statement = connection.createStatement();
 
+			// Getting the courses in that faculty, in order to delete students attending
+			// them
+			PreparedStatement preparedStatement = connection.prepareStatement(
+					"select Name from " + getCoursesTable() + " where Faculty = " + "\"" + faculty + "\"");
+			ResultSet resultSet = preparedStatement.executeQuery();
+
+			while (resultSet.next()) {
+				deleteCourseAttendees(resultSet.getString("Name"));
+			}
+
+			// Deleting the course
 			statement.executeUpdate("delete from " + getCoursesTable() + " where Faculty = " + "\"" + faculty + "\"");
 
 			updateStudents();
@@ -764,6 +775,31 @@ public class DBHandler {
 			e.printStackTrace();
 
 			return false;
+		}
+	}
+
+	/**
+	 * Gets the number of courses in a faculty
+	 * 
+	 * @param faculty - The faculty's name whose number of courses should be read
+	 * @return The number of courses in a faculty
+	 */
+	public static int getNumberOfCourses(final String faculty) {
+		try {
+			Connection connection = DriverManager.getConnection(DB_URL, login, password);
+			PreparedStatement preparedStatement = connection.prepareStatement(
+					"select Courses from " + getFacultiesTable() + " where Name = " + "\"" + faculty + "\"");
+
+			// Get Courses field's value
+			ResultSet resultSet = preparedStatement.executeQuery();
+			resultSet.next();
+			int courses = resultSet.getInt("Courses");
+
+			return courses;
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return 0;
 		}
 	}
 }
