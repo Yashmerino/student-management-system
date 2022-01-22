@@ -167,7 +167,7 @@ public class DBHandler {
 	/**
 	 * Creates a table of students, courses and faculties
 	 * 
-	 * @return true if everything went fine, and false otherwise
+	 * @return True if no exception has been thrown, false otherwise
 	 */
 	public static boolean createTable() {
 		try {
@@ -220,7 +220,7 @@ public class DBHandler {
 	/**
 	 * Adds a new student to the table
 	 * 
-	 * @return true if everything went fine, and false otherwise
+	 * @return True if no exception has been thrown, false otherwise
 	 */
 	public static boolean addStudent() {
 		try {
@@ -276,7 +276,7 @@ public class DBHandler {
 	/**
 	 * Updates the contents of the table
 	 * 
-	 * @return true if everything went fine, and false otherwise
+	 * @return True if no exception has been thrown, false otherwise
 	 */
 	public static boolean updateStudents() {
 		int howManyColumns = 0, currentColumn = 0;
@@ -330,7 +330,7 @@ public class DBHandler {
 	/**
 	 * Deletes the selected student from the table
 	 * 
-	 * @return true if everything went fine, and false otherwise
+	 * @return True if no exception has been thrown, false otherwise
 	 */
 	public static boolean deleteStudent() {
 		// Getting row that user selected
@@ -366,7 +366,7 @@ public class DBHandler {
 	/**
 	 * Adds a faculty to the faculties table
 	 * 
-	 * @return true if everything went fine, and false otherwise
+	 * @return True if no exception has been thrown, false otherwise
 	 */
 	public static boolean addFaculty(final String facultyName) {
 		try {
@@ -396,7 +396,7 @@ public class DBHandler {
 	/**
 	 * Adds a course to the courses table
 	 * 
-	 * @return true if everything went fine, and false otherwise
+	 * @return True if no exception has been thrown, false otherwise
 	 */
 	public static boolean addCourse(final String courseName, final String faculty, final int duration) {
 		try {
@@ -429,7 +429,7 @@ public class DBHandler {
 	/**
 	 * Gets all the faculties from the faculties table
 	 * 
-	 * @return an array with all the faculties
+	 * @return An array with all the faculties
 	 */
 	public static String[] getFaculties() {
 		Vector<String> faculties = new Vector<String>();
@@ -459,7 +459,7 @@ public class DBHandler {
 	/**
 	 * Gets all the courses from the courses table
 	 * 
-	 * @return an array with all the courses
+	 * @return An array with all the courses
 	 */
 	public static String[] getCourses() {
 		Vector<String> courses = new Vector<String>();
@@ -497,7 +497,7 @@ public class DBHandler {
 	/**
 	 * Updates the number of attendees in courses table
 	 * 
-	 * @return true if everything went fine, and false otherwise
+	 * @return True if no exception has been thrown, false otherwise
 	 */
 	private static boolean updateCoursesAttendees() {
 		try {
@@ -552,7 +552,7 @@ public class DBHandler {
 	/**
 	 * Updates the number of attendees in faculties table
 	 * 
-	 * @return true if everything went fine, and false otherwise
+	 * @return True if no exception has been thrown, false otherwise
 	 */
 	private static boolean updateFacultiesAttendees() {
 		try {
