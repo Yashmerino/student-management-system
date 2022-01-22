@@ -154,6 +154,9 @@ public class DBHandler {
 				}
 			}
 
+			connection.close();
+			resultSet.close();
+
 			// Return false if no table has been found
 			return false;
 		} catch (SQLException e) {
@@ -245,7 +248,7 @@ public class DBHandler {
 
 			final String inputDate = ManagementView.startedDateField.getText();
 			LocalDate startedDate = LocalDate.of(Integer.parseInt(inputDate.substring(0, 4)),
-					Integer.parseInt(inputDate.substring(6, 7)), Integer.parseInt(inputDate.substring(8, 9)));
+					Integer.parseInt(inputDate.substring(5, 7)), Integer.parseInt(inputDate.substring(8, 10)));
 			preparedStatement.setString(6, startedDate.toString());
 
 			LocalDate graduationDate = startedDate.plusMonths(courseDuration);
@@ -334,12 +337,13 @@ public class DBHandler {
 	 */
 	public static boolean deleteStudent() {
 		// Getting row that user selected
-		DefaultTableModel RecordTable = (DefaultTableModel) ManagementView.table.getModel();
+		DefaultTableModel recordTable = (DefaultTableModel) ManagementView.table.getModel();
 		int selectedRow = ManagementView.table.getSelectedRow();
+		ManagementView.table.clearSelection();
 
 		try {
 			// Geting the ID of the student in the selected row
-			final int ID = Integer.parseInt(RecordTable.getValueAt(selectedRow, 0).toString());
+			final int ID = Integer.parseInt(recordTable.getValueAt(selectedRow, 0).toString());
 
 			Connection connection = DriverManager.getConnection(DB_URL, login, password);
 			PreparedStatement preparedStatement = connection
@@ -633,6 +637,10 @@ public class DBHandler {
 				}
 			}
 
+			connection.close();
+			preparedStatement.close();
+			resultSet.close();
+
 			// Return false if no element has been found in the table
 			return false;
 		} catch (SQLException e) {
@@ -663,6 +671,10 @@ public class DBHandler {
 			resultSet.next();
 			int attendees = resultSet.getInt("Attendees");
 
+			connection.close();
+			preparedStatement.close();
+			resultSet.close();
+
 			return attendees;
 
 		} catch (SQLException e) {
@@ -685,6 +697,9 @@ public class DBHandler {
 			statement.executeUpdate("delete from " + getStudentsTable() + " where Course = " + "\"" + course + "\"");
 
 			updateStudents();
+
+			connection.close();
+			statement.close();
 
 			return true;
 
@@ -710,6 +725,9 @@ public class DBHandler {
 
 			updateStudents();
 
+			connection.close();
+			statement.close();
+
 			return true;
 
 		} catch (SQLException e) {
@@ -733,6 +751,9 @@ public class DBHandler {
 			statement.executeUpdate("delete from " + getFacultiesTable() + " where Name = " + "\"" + faculty + "\"");
 
 			updateStudents();
+
+			connection.close();
+			statement.close();
 
 			return true;
 
@@ -769,6 +790,11 @@ public class DBHandler {
 
 			updateStudents();
 
+			connection.close();
+			statement.close();
+			preparedStatement.close();
+			resultSet.close();
+
 			return true;
 
 		} catch (SQLException e) {
@@ -795,11 +821,71 @@ public class DBHandler {
 			resultSet.next();
 			int courses = resultSet.getInt("Courses");
 
+			connection.close();
+			preparedStatement.close();
+
 			return courses;
 
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return 0;
+		}
+	}
+
+	/**
+	 * Updates the contents of the database, taking into account changes from table
+	 * 
+	 * @return True if no exception has been thrown, false otherwise
+	 */
+	public static boolean updateDatabase() {
+		// Getting row and column that user selected
+		int selectedRow = ManagementView.table.getSelectedRow();
+		int selectedColumn = ManagementView.table.getSelectedColumn();
+
+		try {
+			Connection connection = DriverManager.getConnection(DB_URL, login, password);
+			Statement statement = connection.createStatement();
+
+			// If a cell has been selected
+			if (selectedRow > -1 && selectedColumn > -1) {
+				// Geting the selected field of the selected student and changing it in database
+				if (selectedColumn == 1) {
+					statement.executeUpdate("update " + studentsTable + " set Name = " + "\""
+							+ ManagementView.table.getValueAt(selectedRow, selectedColumn).toString() + "\""
+							+ " where id = "
+							+ Integer.parseInt(ManagementView.table.getValueAt(selectedRow, 0).toString()));
+				} else if (selectedColumn == 2) {
+					statement.executeUpdate("update " + studentsTable + " set Surname = " + "\""
+							+ ManagementView.table.getValueAt(selectedRow, selectedColumn).toString() + "\""
+							+ " where id = "
+							+ Integer.parseInt(ManagementView.table.getValueAt(selectedRow, 0).toString()));
+				} else if (selectedColumn == 3) {
+					statement.executeUpdate("update " + studentsTable + " set Age = "
+							+ Integer.parseInt(ManagementView.table.getValueAt(selectedRow, selectedColumn).toString())
+							+ " where id = "
+							+ Integer.parseInt(ManagementView.table.getValueAt(selectedRow, 0).toString()));
+				} else if (selectedColumn == 4) {
+					statement.executeUpdate("update " + studentsTable + " set Gender = " + "\""
+							+ ManagementView.table.getValueAt(selectedRow, selectedColumn).toString() + "\""
+							+ " where id = "
+							+ Integer.parseInt(ManagementView.table.getValueAt(selectedRow, 0).toString()));
+				}
+			}
+
+			connection.close();
+			statement.close();
+
+			// Return true if no exception has been thrown
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+
+			// Return false if exception has been thrown
+			return false;
+		} catch (Exception ex) {
+			ex.printStackTrace();
+
+			return false;
 		}
 	}
 }
