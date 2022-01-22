@@ -35,7 +35,7 @@ public class ConnectionView {
 	 */
 	private JTextField loginField;
 	private JPasswordField passwordField;
-	private JTextField dburlField;
+	private JTextField databaseUrlField;
 
 	/**
 	 * Launch the application.
@@ -87,12 +87,12 @@ public class ConnectionView {
 
 		// The text that informs the user where they have to type the login
 		JLabel loginText = new JLabel("Login:");
-		loginText.setBounds(95, 135, 55, 25);
+		loginText.setBounds(45, 133, 55, 25);
 		loginText.setFont(new Font("Tahoma", Font.PLAIN, 20));
 
 		// The text that informs the user where they have to type the password
 		JLabel passwordText = new JLabel("Password:");
-		passwordText.setBounds(95, 175, 100, 25);
+		passwordText.setBounds(45, 173, 100, 25);
 		passwordText.setFont(new Font("Tahoma", Font.PLAIN, 20));
 
 		// Initializes the text field where user writes the login
@@ -105,15 +105,15 @@ public class ConnectionView {
 		passwordField.setBounds(200, 180, 330, 20);
 
 		// The field where user should write the database url
-		dburlField = new JTextField();
-		dburlField.setText("jdbc:mysql://localhost:3306/studentsdb");
-		dburlField.setColumns(10);
-		dburlField.setBounds(200, 95, 330, 20);
+		databaseUrlField = new JTextField();
+		databaseUrlField.setText("jdbc:mysql://localhost:3306/studentsdb");
+		databaseUrlField.setColumns(10);
+		databaseUrlField.setBounds(200, 95, 330, 20);
 
 		// The text that informs user where they have to write database url
-		JLabel dburlText = new JLabel("DB_URL:");
-		dburlText.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		dburlText.setBounds(95, 90, 80, 25);
+		JLabel databaseUrlText = new JLabel("Database URL:");
+		databaseUrlText.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		databaseUrlText.setBounds(45, 90, 130, 25);
 
 		// The button to press after the login and password were written
 		JButton connectButton = new JButton("Connect");
@@ -125,7 +125,7 @@ public class ConnectionView {
 			public void actionPerformed(ActionEvent e) {
 				// If one of the fields are empty then warn user about it
 				if (loginField.getText().equals("") || passwordField.getText().equals("")
-						|| dburlField.getText().equals("")) {
+						|| databaseUrlField.getText().equals("")) {
 					JOptionPane.showMessageDialog(new JFrame(), "Please fill in all the empty fields!", "Error",
 							JOptionPane.ERROR_MESSAGE);
 				} else {
@@ -133,7 +133,7 @@ public class ConnectionView {
 					// handler
 					DBHandler.setLogin(loginField.getText());
 					DBHandler.setPassword(passwordField.getText());
-					DBHandler.setDB_URL(dburlField.getText());
+					DBHandler.setDatabaseUrl(databaseUrlField.getText());
 
 					// If table has\hasn't been successfully created then inform the user about that
 					if (DBHandler.createTable()) {
@@ -161,8 +161,8 @@ public class ConnectionView {
 		bottomPanel.add(passwordField);
 		bottomPanel.add(loginField);
 		bottomPanel.add(connectButton);
-		bottomPanel.add(dburlText);
-		bottomPanel.add(dburlField);
+		bottomPanel.add(databaseUrlText);
+		bottomPanel.add(databaseUrlField);
 
 	}
 }

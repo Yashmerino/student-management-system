@@ -35,7 +35,7 @@ public class DBHandler {
 	/**
 	 * Database URL
 	 */
-	static String DB_URL;
+	static String databaseUrl;
 
 	/**
 	 * The var that stores students table's name
@@ -64,7 +64,7 @@ public class DBHandler {
 	 */
 	static {
 		login = "root";
-		DB_URL = "jdbc:mysql://localhost:3306/studentsdb";
+		databaseUrl = "jdbc:mysql://localhost:3306/studentsdb";
 
 		studentsTable = "students";
 		coursesTable = "courses";
@@ -100,17 +100,17 @@ public class DBHandler {
 	}
 
 	/**
-	 * @param DB_URL - the database url to set
+	 * @param databaseUrl - the database url to set
 	 */
-	public static void setDB_URL(final String DB_URL) {
-		DBHandler.DB_URL = DB_URL;
+	public static void setDatabaseUrl(final String databaseUrl) {
+		DBHandler.databaseUrl = databaseUrl;
 	}
 
 	/**
 	 * @return The database URL
 	 */
-	public static String getDB_URL() {
-		return DB_URL;
+	public static String getDatabaseUrl() {
+		return databaseUrl;
 	}
 
 	/**
@@ -142,7 +142,7 @@ public class DBHandler {
 	 */
 	public static boolean checkIfTableExists(final String tableName) {
 		try {
-			Connection connection = DriverManager.getConnection(DB_URL, login, password);
+			Connection connection = DriverManager.getConnection(databaseUrl, login, password);
 
 			// Check if a table with tableName name already exists
 			DatabaseMetaData dbmData = connection.getMetaData();
@@ -174,7 +174,7 @@ public class DBHandler {
 	 */
 	public static boolean createTable() {
 		try {
-			Connection connection = DriverManager.getConnection(DB_URL, login, password);
+			Connection connection = DriverManager.getConnection(databaseUrl, login, password);
 			Statement statement = connection.createStatement();
 
 			String sqlScript;
@@ -227,7 +227,7 @@ public class DBHandler {
 	 */
 	public static boolean addStudent() {
 		try {
-			Connection connection = DriverManager.getConnection(DB_URL, login, password);
+			Connection connection = DriverManager.getConnection(databaseUrl, login, password);
 			PreparedStatement preparedStatement = connection.prepareStatement("insert into " + studentsTable
 					+ " (Name, Surname, Age, Gender, Course, Started, Graduation) values " + "(?, ?, ?, ?, ?, ?, ?)");
 
@@ -285,7 +285,7 @@ public class DBHandler {
 		int howManyColumns = 0, currentColumn = 0;
 
 		try {
-			Connection connection = DriverManager.getConnection(DB_URL, login, password);
+			Connection connection = DriverManager.getConnection(databaseUrl, login, password);
 			PreparedStatement preparedStatement = connection.prepareStatement("select * from " + studentsTable);
 
 			// Reading data from table
@@ -345,7 +345,7 @@ public class DBHandler {
 			// Geting the ID of the student in the selected row
 			final int ID = Integer.parseInt(recordTable.getValueAt(selectedRow, 0).toString());
 
-			Connection connection = DriverManager.getConnection(DB_URL, login, password);
+			Connection connection = DriverManager.getConnection(databaseUrl, login, password);
 			PreparedStatement preparedStatement = connection
 					.prepareStatement("delete from " + studentsTable + " where id = ?");
 
@@ -374,7 +374,7 @@ public class DBHandler {
 	 */
 	public static boolean addFaculty(final String facultyName) {
 		try {
-			Connection connection = DriverManager.getConnection(DB_URL, login, password);
+			Connection connection = DriverManager.getConnection(databaseUrl, login, password);
 			PreparedStatement preparedStatement = connection.prepareStatement(
 					"insert into " + facultiesTable + " (Name, Courses, Attendees) values " + "(?, ?, ?)");
 
@@ -404,7 +404,7 @@ public class DBHandler {
 	 */
 	public static boolean addCourse(final String courseName, final String faculty, final int duration) {
 		try {
-			Connection connection = DriverManager.getConnection(DB_URL, login, password);
+			Connection connection = DriverManager.getConnection(databaseUrl, login, password);
 			PreparedStatement preparedStatement = connection.prepareStatement(
 					"insert into " + coursesTable + " (Name, Faculty, Duration, Attendees) values " + "(?, ?, ?, ?)");
 
@@ -439,7 +439,7 @@ public class DBHandler {
 		Vector<String> faculties = new Vector<String>();
 
 		try {
-			Connection connection = DriverManager.getConnection(DB_URL, login, password);
+			Connection connection = DriverManager.getConnection(databaseUrl, login, password);
 			PreparedStatement preparedStatement = connection.prepareStatement("select Name from faculties");
 			ResultSet resultSet = preparedStatement.executeQuery();
 
@@ -469,7 +469,7 @@ public class DBHandler {
 		Vector<String> courses = new Vector<String>();
 
 		try {
-			Connection connection = DriverManager.getConnection(DB_URL, login, password);
+			Connection connection = DriverManager.getConnection(databaseUrl, login, password);
 			PreparedStatement preparedStatement = connection.prepareStatement("select Name from courses");
 			ResultSet resultSet = preparedStatement.executeQuery();
 
@@ -505,7 +505,7 @@ public class DBHandler {
 	 */
 	private static boolean updateCoursesAttendees() {
 		try {
-			Connection connection = DriverManager.getConnection(DB_URL, login, password);
+			Connection connection = DriverManager.getConnection(databaseUrl, login, password);
 			PreparedStatement preparedStatement = connection.prepareStatement("select Course from " + studentsTable);
 			Statement statement = connection.createStatement();
 
@@ -560,7 +560,7 @@ public class DBHandler {
 	 */
 	private static boolean updateFacultiesAttendees() {
 		try {
-			Connection connection = DriverManager.getConnection(DB_URL, login, password);
+			Connection connection = DriverManager.getConnection(databaseUrl, login, password);
 			PreparedStatement preparedStatement = null, preparedStatement2 = null;
 			Statement statement = connection.createStatement();
 			ResultSet resultSet = null, resultSet2 = null;
@@ -625,7 +625,7 @@ public class DBHandler {
 	 */
 	public static boolean checkIfElementExists(final String tableName, final String name) {
 		try {
-			Connection connection = DriverManager.getConnection(DB_URL, login, password);
+			Connection connection = DriverManager.getConnection(databaseUrl, login, password);
 			PreparedStatement preparedStatement = connection.prepareStatement("select Name from " + tableName);
 
 			// Get all the elements' name
@@ -662,7 +662,7 @@ public class DBHandler {
 	 */
 	public static int getNumberOfAttendees(final String tableName, final String element) {
 		try {
-			Connection connection = DriverManager.getConnection(DB_URL, login, password);
+			Connection connection = DriverManager.getConnection(databaseUrl, login, password);
 			PreparedStatement preparedStatement = connection
 					.prepareStatement("select Attendees from " + tableName + " where Name = " + "\"" + element + "\"");
 
@@ -691,7 +691,7 @@ public class DBHandler {
 	 */
 	public static boolean deleteCourseAttendees(final String course) {
 		try {
-			Connection connection = DriverManager.getConnection(DB_URL, login, password);
+			Connection connection = DriverManager.getConnection(databaseUrl, login, password);
 			Statement statement = connection.createStatement();
 
 			statement.executeUpdate("delete from " + getStudentsTable() + " where Course = " + "\"" + course + "\"");
@@ -718,7 +718,7 @@ public class DBHandler {
 	 */
 	public static boolean deleteCourse(final String course) {
 		try {
-			Connection connection = DriverManager.getConnection(DB_URL, login, password);
+			Connection connection = DriverManager.getConnection(databaseUrl, login, password);
 			Statement statement = connection.createStatement();
 
 			statement.executeUpdate("delete from " + getCoursesTable() + " where Name = " + "\"" + course + "\"");
@@ -745,7 +745,7 @@ public class DBHandler {
 	 */
 	public static boolean deleteFaculty(final String faculty) {
 		try {
-			Connection connection = DriverManager.getConnection(DB_URL, login, password);
+			Connection connection = DriverManager.getConnection(databaseUrl, login, password);
 			Statement statement = connection.createStatement();
 
 			statement.executeUpdate("delete from " + getFacultiesTable() + " where Name = " + "\"" + faculty + "\"");
@@ -772,7 +772,7 @@ public class DBHandler {
 	 */
 	public static boolean deleteFacultyCourses(final String faculty) {
 		try {
-			Connection connection = DriverManager.getConnection(DB_URL, login, password);
+			Connection connection = DriverManager.getConnection(databaseUrl, login, password);
 			Statement statement = connection.createStatement();
 
 			// Getting the courses in that faculty, in order to delete students attending
@@ -812,7 +812,7 @@ public class DBHandler {
 	 */
 	public static int getNumberOfCourses(final String faculty) {
 		try {
-			Connection connection = DriverManager.getConnection(DB_URL, login, password);
+			Connection connection = DriverManager.getConnection(databaseUrl, login, password);
 			PreparedStatement preparedStatement = connection.prepareStatement(
 					"select Courses from " + getFacultiesTable() + " where Name = " + "\"" + faculty + "\"");
 
@@ -843,7 +843,7 @@ public class DBHandler {
 		int selectedColumn = ManagementView.table.getSelectedColumn();
 
 		try {
-			Connection connection = DriverManager.getConnection(DB_URL, login, password);
+			Connection connection = DriverManager.getConnection(databaseUrl, login, password);
 			Statement statement = connection.createStatement();
 
 			// If a cell has been selected
