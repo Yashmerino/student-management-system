@@ -97,6 +97,9 @@ public class ManagementView {
 	 */
 	public ManagementView() {
 		initialize();
+		// Clear the selection in the table, to avoid issues with updateDatabase method
+		// when cells are selected
+		table.clearSelection();
 		DBHandler.updateStudents();
 	}
 
@@ -138,7 +141,7 @@ public class ManagementView {
 		table.setColumnSelectionAllowed(true);
 		table.setModel(new DefaultTableModel(new Object[][] {},
 				new String[] { "ID", "Name", "Surname", "Age", "Gender", "Course", "Started", "Graduation" }) {
-			boolean[] columnEditables = new boolean[] { false, true, true, true, true, false, true, false };
+			boolean[] columnEditables = new boolean[] { false, true, true, true, true, false, false, false };
 
 			public boolean isCellEditable(int row, int column) {
 				return columnEditables[column];
@@ -154,7 +157,11 @@ public class ManagementView {
 
 			// Actions to perform when a cell has been edited
 			public void tableChanged(TableModelEvent e) {
-				//
+				if (!DBHandler.updateDatabase()) {
+					JOptionPane.showMessageDialog(managementFrame,
+							"An error has occured!\nCheck your input one more time!", "Student Management System",
+							JOptionPane.ERROR_MESSAGE);
+				}
 			}
 		});
 
@@ -222,6 +229,7 @@ public class ManagementView {
 		// Actions to perform when "update" button clicked
 		updateButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				table.clearSelection();
 				DBHandler.updateStudents();
 			}
 		});
@@ -236,6 +244,8 @@ public class ManagementView {
 		// Actions to perform when "add" button clicked
 		addButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				table.clearSelection();
+
 				if (DBHandler.getFaculties().length == 0) {
 					JOptionPane.showMessageDialog(managementFrame,
 							"You can't add a student yet!\nAdd a faculty and a course first!", "Error",
@@ -501,6 +511,8 @@ public class ManagementView {
 		// Actions to perform when "Delete Faculty" button clicked
 		deleteFacultyButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				table.clearSelection();
+
 				String faculty = (String) JOptionPane.showInputDialog(null, "Students Management System",
 						"Choose the faculty to delete", JOptionPane.QUESTION_MESSAGE, null, DBHandler.getFaculties(),
 						DBHandler.getFaculties()[0]);
@@ -560,6 +572,8 @@ public class ManagementView {
 		deleteCourseButton.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
+				table.clearSelection();
+
 				String course = (String) JOptionPane.showInputDialog(null, "Students Management System",
 						"Choose the course to delete", JOptionPane.QUESTION_MESSAGE, null, DBHandler.getCourses(),
 						DBHandler.getCourses()[0]);
