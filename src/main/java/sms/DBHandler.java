@@ -177,33 +177,25 @@ public class DBHandler {
 			Connection connection = DriverManager.getConnection(databaseUrl, login, password);
 			Statement statement = connection.createStatement();
 
-			String sqlScript;
-
 			if (!checkIfTableExists(studentsTable)) {
 				// Creating a table of students
-				sqlScript = "create table " + studentsTable + "(ID INTEGER not NULL AUTO_INCREMENT, "
+				statement.executeUpdate("create table " + studentsTable + "(ID INTEGER not NULL AUTO_INCREMENT, "
 						+ " Name varchar(50), " + "Surname varchar(50), " + "Age INTEGER, " + "Gender varchar(6), "
 						+ "Course varchar(50), " + "Started varchar(25),  " + "Graduation varchar(25), "
-						+ "PRIMARY KEY ( id ))";
-
-				statement.executeUpdate(sqlScript);
+						+ "PRIMARY KEY ( id ))");
 			}
 
 			if (!checkIfTableExists(coursesTable)) {
 				// Creating a table of courses
-				sqlScript = "create table " + coursesTable + "(ID INTEGER not NULL AUTO_INCREMENT, "
+				statement.executeUpdate("create table " + coursesTable + "(ID INTEGER not NULL AUTO_INCREMENT, "
 						+ " Name varchar(50), " + "Faculty varchar(50), " + "Duration INTEGER, " + "Attendees INTEGER, "
-						+ "PRIMARY KEY ( id ))";
-
-				statement.executeUpdate(sqlScript);
+						+ "PRIMARY KEY ( id ))");
 			}
 
 			if (!checkIfTableExists(facultiesTable)) {
 				// Creating a table of faculties
-				sqlScript = "create table " + facultiesTable + "(ID INTEGER not NULL AUTO_INCREMENT, "
-						+ " Name varchar(50), " + "Courses INTEGER, " + "Attendees INTEGER, " + "PRIMARY KEY ( id ))";
-
-				statement.executeUpdate(sqlScript);
+				statement.executeUpdate("create table " + facultiesTable + "(ID INTEGER not NULL AUTO_INCREMENT, "
+						+ " Name varchar(50), " + "Courses INTEGER, " + "Attendees INTEGER, " + "PRIMARY KEY ( id ))");
 			}
 
 			connection.close();
@@ -457,7 +449,7 @@ public class DBHandler {
 		}
 
 		// Convert "faculties" vector to String array and return it
-		return (String[]) faculties.toArray(new String[0]);
+		return faculties.toArray(new String[0]);
 	}
 
 	/**
@@ -487,7 +479,7 @@ public class DBHandler {
 		}
 
 		// Convert "courses" vector to String array and return it
-		return (String[]) courses.toArray(new String[0]);
+		return courses.toArray(new String[0]);
 	}
 
 	/**
