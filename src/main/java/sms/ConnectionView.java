@@ -28,7 +28,7 @@ public class ConnectionView {
 	/**
 	 * The contents of the connection window where you have to connect to a database
 	 */
-	private JFrame connectionFrame;
+	static JFrame connectionFrame;
 
 	/**
 	 * The text field that stores the login the user has written
@@ -58,6 +58,9 @@ public class ConnectionView {
 	 */
 	public ConnectionView() {
 		initialize();
+		// Make it visible in constructor, in order to make tests in
+		// ConnectionViewTest.java work
+		connectionFrame.setVisible(true);
 	}
 
 	/**
@@ -97,15 +100,18 @@ public class ConnectionView {
 
 		// Initializes the text field where user writes the login
 		loginField = new JTextField();
+		loginField.setName("loginField");
 		loginField.setBounds(223, 141, 330, 20);
 		loginField.setColumns(10);
 
 		// Initializes the text field where user writes the password
 		passwordField = new JPasswordField();
+		passwordField.setName("passwordField");
 		passwordField.setBounds(223, 181, 330, 20);
 
 		// The field where user should write the database url
 		databaseUrlField = new JTextField();
+		databaseUrlField.setName("databaseUrlField");
 		databaseUrlField.setText("jdbc:mysql://localhost:3306/studentsdb");
 		databaseUrlField.setColumns(10);
 		databaseUrlField.setBounds(223, 96, 330, 20);
@@ -117,6 +123,7 @@ public class ConnectionView {
 
 		// The button to press after the login and password were written
 		JButton connectButton = new JButton("Connect");
+		connectButton.setName("connectButton");
 		connectButton.setBounds(240, 290, 140, 35);
 		connectButton.setFont(new Font("Tahoma", Font.PLAIN, 20));
 
@@ -124,8 +131,7 @@ public class ConnectionView {
 		connectButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				// If one of the fields are empty then warn user about it
-				if (loginField.getText().equals("") || passwordField.getText().equals("")
-						|| databaseUrlField.getText().equals("")) {
+				if (loginField.getText().equals("") || databaseUrlField.getText().equals("")) {
 					JOptionPane.showMessageDialog(new JFrame(), "Please fill in all the empty fields!", "Error",
 							JOptionPane.ERROR_MESSAGE);
 				} else {
