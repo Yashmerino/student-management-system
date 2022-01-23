@@ -137,13 +137,13 @@
 		<!-- ManagementView text -->
 		<id>ID</id>
 		<name>Имя</name>
-		<фамилия>Фамилия</фамилия>
+		<surname>Фамилия</surname>
 		<age>Возраст</age>
 		<gender>Пол</gender>
-		<курс>Курс</курс>
+		<course>Курс</course>
 		<started>Начал</started>
 		<graduation>Выпускной</graduation>
-		<добавить>Добавить</добавить>
+		<add>Добавить</add>
 		<update>Обновить</update>
 		<delete>Удалить</delete>
 		<disconnect>Отключиться</disconnect>
