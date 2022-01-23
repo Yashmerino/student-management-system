@@ -23,7 +23,7 @@ public class DBHandlerTest {
 	@Before
 	public void init() {
 		// Create tables in order to test methods that modifies them
-		DBHandler.createTable();
+		DBHandler.createTables();
 	}
 
 	@Test

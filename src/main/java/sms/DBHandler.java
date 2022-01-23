@@ -172,7 +172,7 @@ public class DBHandler {
 	 * 
 	 * @return True if no exception has been thrown, false otherwise
 	 */
-	public static boolean createTable() {
+	public static boolean createTables() {
 		try {
 			Connection connection = DriverManager.getConnection(databaseUrl, login, password);
 			Statement statement = connection.createStatement();
@@ -608,7 +608,7 @@ public class DBHandler {
 	}
 
 	/**
-	 * Searches if there is already an element with certain name in a certain table
+	 * Searches if there is already an element with a certain name in a certain table
 	 * 
 	 * @param tableName - The table in which user wants to check if element already
 	 *                  exists

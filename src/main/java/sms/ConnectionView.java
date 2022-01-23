@@ -136,7 +136,7 @@ public class ConnectionView {
 					DBHandler.setDatabaseUrl(databaseUrlField.getText());
 
 					// If table has\hasn't been successfully created then inform the user about that
-					if (DBHandler.createTable()) {
+					if (DBHandler.createTables()) {
 						JOptionPane.showMessageDialog(new JFrame(),
 								"Connection with the database has been successfully established!", "Success",
 								JOptionPane.INFORMATION_MESSAGE);
