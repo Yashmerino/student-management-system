@@ -2,11 +2,8 @@ package sms;
 
 import static org.junit.Assert.assertEquals;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -64,4 +61,54 @@ public class DBHandlerTest {
 
 	}
 
+	@Test
+	public void addFacultyTest() throws SQLException {
+		boolean result = DBHandler.addFaculty("Test");
+		assertEquals(true, result);
+
+		result = DBHandler.addFaculty("students");
+		assertEquals(true, result);
+
+		result = DBHandler.addFaculty("automatica");
+		assertEquals(true, result);
+
+		result = DBHandler.addFaculty("calculatoare");
+		assertEquals(true, result);
+
+		result = DBHandler.addFaculty("electronica");
+		assertEquals(true, result);
+
+		result = DBHandler.addFaculty("y y y y y");
+		assertEquals(true, result);
+
+		result = DBHandler.addFaculty("5161521");
+		assertEquals(true, result);
+
+		result = DBHandler.addFaculty("=-/*-+");
+		assertEquals(true, result);
+
+		result = DBHandler.addFaculty("");
+		assertEquals(true, result);
+
+		result = DBHandler.addFaculty("   ");
+		assertEquals(true, result);
+	}
+
+	@Test
+	public void addCourse() throws SQLException {
+		boolean result = DBHandler.addCourse("matematica", "Test", 12);
+		assertEquals(true, result);
+
+		result = DBHandler.addCourse("bigint", "students", 999999999);
+		assertEquals(true, result);
+
+		result = DBHandler.addCourse("negativeint", "automatica", -9515141);
+		assertEquals(true, result);
+
+		result = DBHandler.addCourse("zero", "calculatoare", 0);
+		assertEquals(true, result);
+
+		result = DBHandler.addCourse("fizica", "electronica", 6);
+		assertEquals(true, result);
+	}
 }
