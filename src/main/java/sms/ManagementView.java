@@ -39,7 +39,7 @@ public class ManagementView {
 	/**
 	 * The contents of the management window where you read and write students data
 	 */
-	private JFrame managementFrame;
+	static JFrame managementFrame;
 
 	/**
 	 * The table containing all students
@@ -175,6 +175,7 @@ public class ManagementView {
 
 		// The button to press to delete an information from the table
 		JButton deleteButton = new JButton("Delete");
+		deleteButton.setName("deleteButton");
 
 		// Actions to perform when "delete" button clicked
 		deleteButton.addActionListener(new ActionListener() {
@@ -205,6 +206,7 @@ public class ManagementView {
 
 		// The button to press to add a student to the table
 		JButton addButton = new JButton("Add");
+		addButton.setName("addButton");
 
 		// Actions to perform when "add" button clicked
 		addButton.addActionListener(new ActionListener() {
@@ -272,6 +274,7 @@ public class ManagementView {
 
 		// The button to press to exit the application
 		JButton exitButton = new JButton("Exit");
+		exitButton.setName("exitButton");
 
 		// Actions to perform when "exit" button clicked
 		exitButton.addActionListener(new ActionListener() {
@@ -287,6 +290,7 @@ public class ManagementView {
 		// The button that user have to press in order to disconnect from the current
 		// database
 		JButton disconnectButton = new JButton("Disconnect");
+		disconnectButton.setName("disconnectButton");
 
 		// Actions to perform when "disconnect" button has been clicked
 		disconnectButton.addActionListener(new ActionListener() {
@@ -319,6 +323,7 @@ public class ManagementView {
 
 		// Initializing name text field
 		nameField = new JTextField();
+		nameField.setName("nameField");
 		nameField.setBounds(85, 23, 143, 22);
 		studentPanel.add(nameField);
 		nameField.setColumns(10);
@@ -331,6 +336,7 @@ public class ManagementView {
 
 		// Initializing surname text field
 		surnameField = new JTextField();
+		surnameField.setName("surnameField");
 		surnameField.setColumns(10);
 		surnameField.setBounds(85, 51, 143, 22);
 		studentPanel.add(surnameField);
@@ -343,6 +349,7 @@ public class ManagementView {
 
 		// Initializing age text field
 		ageField = new JTextField();
+		ageField.setName("ageField");
 		ageField.setColumns(10);
 		ageField.setBounds(85, 83, 143, 22);
 		studentPanel.add(ageField);
@@ -363,6 +370,7 @@ public class ManagementView {
 
 		// Initializing startedDate text field
 		startedDateField = new JTextField();
+		startedDateField.setName("startedDataField");
 		startedDateField.setColumns(10);
 		startedDateField.setBounds(85, 185, 143, 22);
 		startedDateField.setText("YYYY-MM-DD");
@@ -376,6 +384,7 @@ public class ManagementView {
 
 		// Initializing the box where user selects the student's gender
 		genderSelectionBox = new JComboBox();
+		genderSelectionBox.setName("genderSelectionBox");
 		genderSelectionBox.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		genderSelectionBox.setModel(new DefaultComboBoxModel(sms.Gender.values()));
 		genderSelectionBox.setBounds(85, 120, 143, 22);
@@ -383,6 +392,7 @@ public class ManagementView {
 
 		// Button that adds a new faculty
 		JButton addFacultyButton = new JButton("Add Faculty");
+		addFacultyButton.setName("addFacultyButton");
 
 		// Actions to perform when "add faculty" button clicked
 		addFacultyButton.addActionListener(new ActionListener() {
@@ -419,6 +429,7 @@ public class ManagementView {
 
 		// Button that adds a new course
 		JButton addCourseButton = new JButton("Add Course");
+		addCourseButton.setName("addCourseButton");
 		addCourseButton.addActionListener(new ActionListener() {
 
 			// Actions to perform when "add course" button clicked
@@ -503,6 +514,7 @@ public class ManagementView {
 
 		// Button that allows to delete a faculty
 		JButton deleteFacultyButton = new JButton("Delete Faculty");
+		deleteFacultyButton.setName("deleteFacultyButton");
 
 		// Actions to perform when "Delete Faculty" button clicked
 		deleteFacultyButton.addActionListener(new ActionListener() {
@@ -563,6 +575,7 @@ public class ManagementView {
 
 		// Button that allows to delete a course
 		JButton deleteCourseButton = new JButton("Delete Course");
+		deleteCourseButton.setName("deleteCourseButton");
 
 		// Actions to perform when "Delete Course" button clicked
 		deleteCourseButton.addActionListener(new ActionListener() {
