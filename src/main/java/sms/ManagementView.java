@@ -296,9 +296,13 @@ public class ManagementView {
 		disconnectButton.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
-				// Return back to the connection window
-				ConnectionView.main(null);
-				managementFrame.dispose();
+				if (JOptionPane.showConfirmDialog(managementFrame,
+						"Do you want to disconnect from the current database?", "Student Management System",
+						JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+					// Return back to the connection window
+					ConnectionView.main(null);
+					managementFrame.dispose();
+				}
 			}
 		});
 
