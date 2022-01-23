@@ -101,6 +101,9 @@ public class ManagementView {
 		// Clear the selection in the table, to avoid issues with updateDatabase method
 		// when cells are selected
 		table.clearSelection();
+		// Make it visible in constructor, in order to make tests in
+		// ManagementViewTest.java work
+		managementFrame.setVisible(true);
 		DBHandler.updateStudents();
 	}
 
@@ -374,7 +377,7 @@ public class ManagementView {
 
 		// Initializing startedDate text field
 		startedDateField = new JTextField();
-		startedDateField.setName("startedDataField");
+		startedDateField.setName("startedDateField");
 		startedDateField.setColumns(10);
 		startedDateField.setBounds(85, 185, 143, 22);
 		startedDateField.setText("YYYY-MM-DD");
