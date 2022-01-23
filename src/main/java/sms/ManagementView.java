@@ -101,9 +101,6 @@ public class ManagementView {
 		// Clear the selection in the table, to avoid issues with updateDatabase method
 		// when cells are selected
 		table.clearSelection();
-		// Make it visible in constructor, in order to make tests in
-		// ManagementViewTest.java work
-		managementFrame.setVisible(true);
 		DBHandler.updateStudents();
 	}
 
@@ -404,12 +401,14 @@ public class ManagementView {
 		// Actions to perform when "add faculty" button clicked
 		addFacultyButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String facultyName;
+				String facultyName = "";
 
 				facultyName = JOptionPane.showInputDialog(managementFrame, "Type the name of the faculty");
 
-				if (facultyName == null) {
-					return;
+				if (facultyName == null || facultyName.equals("")) {
+					JOptionPane.showMessageDialog(managementFrame,
+							"The faculty hasn't been added!\nPlease type a name for it!", "Error",
+							JOptionPane.ERROR_MESSAGE);
 				} else {
 					if (DBHandler.checkIfElementExists(DBHandler.getFacultiesTable(), facultyName)) {
 						JOptionPane.showMessageDialog(managementFrame,
@@ -446,13 +445,16 @@ public class ManagementView {
 					return;
 				}
 
-				String courseName, faculty;
+				String courseName = "", faculty = "";
 				int duration = 0;
 
 				courseName = JOptionPane.showInputDialog(managementFrame, "Type the name of the course");
 
 				// If no name has been written for the course
-				if (courseName == null) {
+				if (courseName == null || courseName.equals("")) {
+					JOptionPane.showMessageDialog(managementFrame,
+							"The course hasn't been added!\nPlease type a name for it!", "Error",
+							JOptionPane.ERROR_MESSAGE);
 					return;
 				} else {
 					String[] faculties = DBHandler.getFaculties();
@@ -461,18 +463,16 @@ public class ManagementView {
 							faculties[0]);
 
 					// If no faculty has been selected for the course
-					if (faculty == null) {
+					if (faculty == null || faculty.equals("")) {
+						JOptionPane.showMessageDialog(managementFrame,
+								"The course hasn't been added!\nPlease select a faculty for it or add a new one!",
+								"Error", JOptionPane.ERROR_MESSAGE);
 						return;
 					} else {
 						// In case the user types letters for the duration
 						try {
-							final String durationString = JOptionPane.showInputDialog(managementFrame,
-									"Type the duration of the course(months)");
-
-							if (durationString == null)
-								return;
-
-							duration = Integer.parseInt(durationString);
+							duration = Integer.parseInt(JOptionPane.showInputDialog(managementFrame,
+									"Type the duration of the course(months)"));
 						} catch (NumberFormatException ex) {
 							ex.printStackTrace();
 
