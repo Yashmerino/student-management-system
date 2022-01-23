@@ -1,374 +1,397 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<Languages>
-	<eng>
-		<!-- ConnectionView text -->
-		<sms>Student Management System</sms>
-		<connectText>Connect to a database:</connectText>
-		<loginText>Login:</loginText>
-		<passwordText>Password:</passwordText>
-		<databaseUrlText>Database URL:</databaseUrlText>
-		<connectButton>Connect</connectButton>
-		<error>Error</error>
-		<success>Success</success>
-		<fillEmptyFields>Please, fill in all the empty fields!
-		</fillEmptyFields>
-		<connectionEstablished>Connection with the database has been
-			successfully established!
-		</connectionEstablished>
-		<connectionNotEstablished>Connection with the database hasn't been
-			established!\nPlease check your credentials!
-		</connectionNotEstablished>
-
-		<!-- ManagementView text -->
-		<id>ID</id>
-		<name>Name</name>
-		<surname>Surname</surname>
-		<age>Age</age>
-		<gender>Gender</gender>
-		<course>Course</course>
-		<started>Started</started>
-		<graduation>Graduation</graduation>
-		<add>Add</add>
-		<update>Update</update>
-		<delete>Delete</delete>
-		<disconnect>Disconnect</disconnect>
-		<exit>Exit</exit>
-		<yearFormat>YYYY-MM-DD</yearFormat>
-		<addFaculty>Add Faculty</addFaculty>
-		<addCourse>Add Course</addCourse>
-		<deleteFaculty>Delete Faculty</deleteFaculty>
-		<deleteCourse>Delete Course</deleteCourse>
-		<checkInput>An error has occured!\nCheck your input one more time!
-		</checkInput>
-		<noStudentSelected>No student has been selected!</noStudentSelected>
-		<warningDelete>Deleting a student from the table may result in losing
-			important information.\nAre you sure?
-		</warningDelete>
-		<studentSuccessfullyDeleted>Student successfully deleted!
-		</studentSuccessfullyDeleted>
-		<somethingWrongInput>Something went wrong!\nCheck your credentials!
-		</somethingWrongInput>
-		<somethingWrongUnexpected>Something went wrong!\nTry restarting the
-			application!
-		</somethingWrongUnexpected>
-		<somethingWrongTryAgain>Something went wrong!\nTry Again!
-		</somethingWrongTryAgain>
-		<cannotAddStudent>You can't add a student yet!\nAdd a faculty and a
-			course first!
-		</cannotAddStudent>
-		<dateFormatError>Please type a correct data according to the format
-			YYYY-MM-DD!
-		</dateFormatError>
-		<studentSuccessfullyAdded>The student has been added successfully!
-		</studentSuccessfullyAdded>
-		<confirmDialog>Are you sure?</confirmDialog>
-		<typeNameFaculty>Type the name of the faculty:</typeNameFaculty>
-		<emptyNameFaculty>The faculty hasn't been added!\nPlease type a name
-			for it!
-		</emptyNameFaculty>
-		<facultyAlreadyExists>The faculty hasn't been added!\nThe faculty
-			already exists!
-		</facultyAlreadyExists>
-		<facultySuccessfullyAdded>The faculty has been successfully added!
-		</facultySuccessfullyAdded>
-		<facultyNotAdded>The faculty hasn't been added!\nTry again!
-		</facultyNotAdded>
-		<cannotAddCourse>You can't add a course!\nAdd a faculty first
-		</cannotAddCourse>
-		<typeNameCourse>Type the name of the course</typeNameCourse>
-		<emptyNameCourse>The course hasn't been added!\nPlease type a name for
-			it!
-		</emptyNameCourse>
-		<chooseFaculty>Choose the faculty for the course</chooseFaculty>
-		<courseNotAddedNoFaculty>The course hasn't been added!\nPlease select
-			a faculty for it or add a new one!
-		</courseNotAddedNoFaculty>
-		<courseTypeDuration>Type the duration of the course(months)
-		</courseTypeDuration>
-		<courseNotAddedNoDuration>The course hasn't been added!\nPlease type
-			the duration of the course without using other characters than
-			digits!
-		</courseNotAddedNoDuration>
-		<courseAlreadyExists>The course hasn't been added!\nThe course already
-			exists!
-		</courseAlreadyExists>
-		<courseSuccessfullyAdded>The course has been added successfully!
-		</courseSuccessfullyAdded>
-		<courseNotAdded>The course hasn't been added!\nTry again!
-		</courseNotAdded>
-		<chooseFacultyDelete>Choose the faculty to delete
-		</chooseFacultyDelete>
-		<deleteFacultyWithCourses>You can't delete a faculty that has
-			courses!\nDo you wish to delete all the courses and students
-			attending these courses in that faculty?
-		</deleteFacultyWithCourses>
-		<coursesFromFacultySuccessfullyDeleted>The courses and the students in
-			the faculty have
-			been deleted successfully!
-		</coursesFromFacultySuccessfullyDeleted>
-		<deleteCourseWithStudents>You can't delete a course that is attended
-			by students!\nDo you wish to delete all the students attending that
-			course?
-		</deleteCourseWithStudents>
-		<studentsAttendingSuccessfullyDeleted>The students attending the
-			courses have been deleted successfully!
-		</studentsAttendingSuccessfullyDeleted>
-	</eng>
-
-	<ru>
-		<!-- ConnectionView text -->
-		<sms>Система управления студентами</sms>
-		<connectText>Подключитесь к базе данных:</connectText>
-		<loginText>Логин:</loginText>
-		<passwordText>Пароль:</passwordText>
-		<databaseUrlText>URL-адрес базы данных:</databaseUrlText>
-		<connectButton>Подключиться</connectButton>
-		<error>Ошибка</error>
-		<success>Успешно</success>
-		<fillEmptyFields>Пожалуйста, заполните все пустые поля!
-		</fillEmptyFields>
-		<connectionEstablished>Соединение с базой данных успешно установлено!
-		</connectionEstablished>
-		<connectionNotEstablished>Соединение с базой данных не было
+<translation>
+	<languageList>
+		<language description="English" lang="eng" />
+		<language description="Russian" lang="ru" />
+		<language description="Romanian" lang="ro" />
+	</languageList>
+	<key value="sms">
+		<val lang="eng">Student Management System</val>
+		<val lang="ru">Система управления студентами</val>
+		<val lang="ro">Sistem de management al elevilor</val>
+	</key>
+	<key value="connectText">
+		<val lang="eng">Connect to a database:</val>
+		<val lang="ru">Подключитесь к базе данных:</val>
+		<val lang="ro">Conectați-vă la o bază de date:</val>
+	</key>
+	<key value="loginText">
+		<val lang="eng">Login</val>
+		<val lang="ru">Логин:</val>
+		<val lang="ro">Login:</val>
+	</key>
+	<key value="passwordText">
+		<val lang="eng">Password:</val>
+		<val lang="ru">Пароль:</val>
+		<val lang="ro">Password:</val>
+	</key>
+	<key value="databaseUrlText">
+		<val lang="eng">Database URL:</val>
+		<val lang="ru">URL-адрес базы данных:</val>
+		<val lang="ro">Adresa URL a bazei de date:</val>
+	</key>
+	<key value="connectButton">
+		<val lang="eng">Connect:</val>
+		<val lang="ru">Подключиться:</val>
+		<val lang="ro">Conectați</val>
+	</key>
+	<key value="error">
+		<val lang="eng">Error</val>
+		<val lang="ru">Ошибка</val>
+		<val lang="ro">Eroare</val>
+	</key>
+	<key value="success">
+		<val lang="eng">Success</val>
+		<val lang="ru">Успех</val>
+		<val lang="ro">Succes</val>
+	</key>
+	<key value="fillEmptyFields">
+		<val lang="eng">Please, fill in all the empty fields!</val>
+		<val lang="ru">Пожалуйста, заполните все пустые поля!</val>
+		<val lang="ro">Vă rugăm să completați toate câmpurile goale!</val>
+	</key>
+	<key value="connectionEstablished">
+		<val lang="eng">Connection with the database has been successfully
+			established!
+		</val>
+		<val lang="ru">Соединение с базой данных успешно установлено!</val>
+		<val lang="ro">Conexiunea cu baza de date a foststabilita cu succes!
+		</val>
+	</key>
+	<key value="connectionNotEstablished">
+		<val lang="eng">Connection with the database hasn't been</val>
+		<val lang="ru">Соединение с базой данных не было
 			установлено!\nПроверьте введенные данные!
-		</connectionNotEstablished>
-
-		<!-- ManagementView text -->
-		<id>ID</id>
-		<name>Имя</name>
-		<surname>Фамилия</surname>
-		<age>Возраст</age>
-		<gender>Пол</gender>
-		<course>Курс</course>
-		<started>Начал</started>
-		<graduation>Выпускной</graduation>
-		<add>Добавить</add>
-		<update>Обновить</update>
-		<delete>Удалить</delete>
-		<disconnect>Отключиться</disconnect>
-		<exit>Выход</exit>
-		<yearFormat>ГГГГ-ММ-ДД</yearFormat>
-		<addFaculty>Добавить факультет</addFaculty>
-		<addCourse>Добавить курс</addCourse>
-		<deleteFaculty>Удалить факультет</deleteFaculty>
-		<deleteCourse>Удалить курс</deleteCourse>
-		<checkInput>Произошла ошибка!\nПроверьте введёную информацию еще раз!
-		</checkInput>
-		<noStudentSelected>Ни один студент не выбран!</noStudentSelected>
-		<warningDelete>Удаление сутдент из таблицы может привести к потере
+		</val>
+		<val lang="ro">Conexiunea cu baza de date nu a fost stabilita!\nVă
+			rugăm să vă verificați datele!
+		</val>
+	</key>
+	<key value="ID">
+		<val lang="eng">ID</val>
+		<val lang="ru">ID</val>
+		<val lang="ro">ID</val>
+	</key>
+	<key value="name">
+		<val lang="eng">Name</val>
+		<val lang="ru">Имя</val>
+		<val lang="ro">Numele</val>
+	</key>
+	<key value="surname">
+		<val lang="eng">Name</val>
+		<val lang="ru">Имя</val>
+		<val lang="ro">Numele</val>
+	</key>
+	<key value="age">
+		<val lang="eng">Age</val>
+		<val lang="ru">Возраст</val>
+		<val lang="ro">Vârsta</val>
+	</key>
+	<key value="gender">
+		<val lang="eng">Sex</val>
+		<val lang="ru">Пол</val>
+		<val lang="ro">Sex</val>
+	</key>
+	<key value="course">
+		<val lang="eng">Course</val>
+		<val lang="ru">Курс</val>
+		<val lang="ro">Curs</val>
+	</key>
+	<key value="started">
+		<val lang="eng">Started</val>
+		<val lang="ru">Начал</val>
+		<val lang="ro">A inceput</val>
+	</key>
+	<key value="graduation">
+		<val lang="eng">Graduation</val>
+		<val lang="ru">Выпускной</val>
+		<val lang="ro">Graduarea</val>
+	</key>
+	<key value="add">
+		<val lang="eng">Add</val>
+		<val lang="ru">Добавить</val>
+		<val lang="ro">Adăugați</val>
+	</key>
+	<key value="update">
+		<val lang="eng">Update</val>
+		<val lang="ru">Обновить</val>
+		<val lang="ro">Actualizare</val>
+	</key>
+	<key value="delete">
+		<val lang="eng">Delete</val>
+		<val lang="ru">Удалить</val>
+		<val lang="ro">Șterge</val>
+	</key>
+	<key value="disconnect">
+		<val lang="eng">Disconnect</val>
+		<val lang="ru">Отключиться</val>
+		<val lang="ro">Deconectați</val>
+	</key>
+	<key value="exit">
+		<val lang="eng">Exit</val>
+		<val lang="ru">Выход</val>
+		<val lang="ro">Ieșire</val>
+	</key>
+	<key value="yearFormat">
+		<val lang="eng">YYYY-MM-DD</val>
+		<val lang="ru">ГГГГ-ММ-ДД</val>
+		<val lang="ro">AAAA-LL-DD</val>
+	</key>
+	<key value="addFaculty">
+		<val lang="eng">Add faculty</val>
+		<val lang="ru">Добавить факультет</val>
+		<val lang="ro">Adăugați o facultate</val>
+	</key>
+	<key value="addCourse">
+		<val lang="eng">Add course</val>
+		<val lang="ru">Добавить курс</val>
+		<val lang="ro">Adăugați un curs</val>
+	</key>
+	<key value="deleteFaculty">
+		<val lang="eng">Delete faculty</val>
+		<val lang="ru">Удалить факультет</val>
+		<val lang="ro">Șterge o facultate</val>
+	</key>
+	<key value="deleteCourse">
+		<val lang="eng">Delete course</val>
+		<val lang="ru">Удалить курс</val>
+		<val lang="ro">Șterge un curs</val>
+	</key>
+	<key value="checkInput">
+		<val lang="eng">An error has occured!\nCheck your input one more time!
+		</val>
+		<val lang="ru">Произошла ошибка!\nПроверьте введёную информацию еще
+			раз!
+		</val>
+		<val lang="ro">A apărut o eroare!\nVerificați încă o dată informația
+			ntrodusă!
+		</val>
+	</key>
+	<key value="noStudentSelected">
+		<val lang="eng">No student has been selected!</val>
+		<val lang="ru">Ни один студент не выбран!</val>
+		<val lang="ro">Niciun student nu a fost selectat!</val>
+	</key>
+	<key value="warningDelete">
+		<val lang="eng">Deleting a student from the table may result in losing
+			important information.\nAre you sure?
+		</val>
+		<val lang="ru">Удаление сутдент из таблицы может привести к потере
 			важной информации.\nВы уверены?
-		</warningDelete>
-		<studentSuccessfullyDeleted>
-			Студент успешно удален!
-		</studentSuccessfullyDeleted>
-		<somethingWrongInput>Что-то пошло не так!\nПроверьте введёные
-			данные!
-		</somethingWrongInput>
-		<somethingWrongUnexpected>Что-то пошло не так!\nПопробуйте
-			перезапустить приложение!
-		</somethingWrongUnexpected>
-		<somethingWrongTryAgain>Что-то пошло не так!\nПопробуйте еще раз!
-		</somethingWrongTryAgain>
-		<cannotAddStudent>Вы еще не можете добавить студента!\nДобавьте
-			факультет и
-			хотя-бы один курс первее!
-		</cannotAddStudent>
-		<dateFormatError>
-			Пожалуйста, введите правильные данные в соответствии
-			с форматом ГГГГ-ММ-ДД!
-		</dateFormatError>
-		<studentSuccessfulAdded>Студент успешно добавлен!
-		</studentSuccessfulAdded>
-		<confirmDialog>Вы уверены?</confirmDialog>
-		<typeNameFaculty>Введите название факультета:</typeNameFaculty>
-		<emptyNameFaculty>Факультет не добавлен!\nПожалуйста, введите имя для
-			него
-		</emptyNameFaculty>
-		<facultyAlreadyExists>Факультет не добавлен!\nФакультет
-			уже существует!
-		</facultyAlreadyExists>
-		<facultySuccessfullyAdded>
-			Факультет успешно добавлен!
-		</facultySuccessfullyAdded>
-		<facultyNotAdded>Факультет не добавлен!\nПовторите попытку!
-		</facultyNotAdded>
-		<cannotAddCourse>Вы не можете добавить курс!\nСначала добавьте
-			факультет
-		</cannotAddCourse>
-		<typeNameCourse>Введите название курса</typeNameCourse>
-		<emptyNameCourse>Курс не добавлен!\nПожалуйста, введите название для
-			него!
-		</emptyNameCourse>
-		<chooseFaculty>Выберите факультет для курса</chooseFaculty>
-		<courseNotAddedNoFaculty>Курс не добавлен!\nПожалуйста, выберите
-			факультет для него или добавьте новый!
-		</courseNotAddedNoFaculty>
-		<courseTypeDuration>Введите продолжительность курса (в месяцах)
-		</courseTypeDuration>
-		<courseNotAddedNoDuration>Курс не добавлен!\nПожалуйста, введите
-			продолжительность курса без использования других символов, кроме
-			цифр!
-		</courseNotAddedNoDuration>
-		<courseAlreadyExists>
-			Курс не добавлен!\nКурс уже
-			существуют!
-		</courseAlreadyExists>
-		<courseSuccessfulAdded>Курс успешно добавлен!
-		</courseSuccessfulAdded>
-		<courseNotAdded>Курс не добавлен!\nПопробуйте еще раз!
-		</courseNotAdded>
-		<chooseFacultyDelete>
-			Выберите факультет для удаления
-		</chooseFacultyDelete>
-		<deleteFacultyWithCourses>Вы не можете удалить факультет, который
-			имеет
-			курсы!\nВы хотите удалить все курсы и студентов посещающих этот
-			курс?
-		</deleteFacultyWithCourses>
-		<coursesFromFacultySuccessfullyDeleted>Курсы и студенты на факультете
-			успешно
-			удалены!
-		</coursesFromFacultySuccessfullyDeleted>
-		<deleteCourseWithStudents>Вы не можете удалить курс посещаемый
-			студентами!\nВы хотите удалить всех студентов, посещающих этот
-			курс?
-		</deleteCourseWithStudents>
-		<studentsAttendingSuccessfullyDeleted>Студенты, посещающие
-			курс успешно
-			удалены!
-		</studentsAttendingSuccessfullyDeleted>
-	</ru>
-
-	<ro>
-		<!-- ConnectionView text -->
-		<sms>Sistem de management al elevilor</sms>
-		<connectText>Conectați-vă la o bază de date:</connectText>
-		<loginText>Login:</loginText>
-		<passwordText>Parola:</passwordText>
-		<databaseUrlText>Adresa URL a bazei de date:</databaseUrlText>
-		<connectButton>Conectați</connectButton>
-		<error>Eroare</error>
-		<success>Succes</success>
-		<fillEmptyFields>Vă rugăm să completați toate câmpurile goale!
-		</fillEmptyFields>
-		<connectionEstablished>Conexiunea cu baza de date a fost
-			stabilita cu
-			succes!
-		</connectionEstablished>
-		<connectionNotEstablished>Conexiunea cu baza de date nu a fost
-			stabilita!\nVă rugăm să vă verificați datele!
-		</connectionNotEstablished>
-
-		<!-- ManagementView text -->
-		<id>ID</id>
-		<name>Nume</name>
-		<surname>Nume</surname>
-		<age>Vârsta</age>
-		<gender>Sex</gender>
-		<course>Curs</course>
-		<started>A început</started>
-		<graduation>Graduarea</graduation>
-		<add>Adăugați</add>
-		<update>Actualizare</update>
-		<delete>Șterge</delete>
-		<disconnect>Deconectați</disconnect>
-		<exit>Ieșire</exit>
-		<yearFormat>AAAA-LL-ZZ</yearFormat>
-		<addFaculty>Adăugați o facultate</addFaculty>
-		<addCourse>Adăugați un curs</addCourse>
-		<deleteFaculty>Șterge o facultatea</deleteFaculty>
-		<deleteCourse>Ștergeți un cursul</deleteCourse>
-		<checkInput>A apărut o eroare!\nVerificați încă o dată informația
-			întrodusă!
-		</checkInput>
-		<noStudentSelected>Niciun student nu a fost selectat!
-		</noStudentSelected>
-		<warningDelete>Ștergerea unui student din tabel poate duce la
-			pierderea
+		</val>
+		<val lang="ro">Ștergerea unui student din tabel poate duce la pierderea
 			informației importante.\Sunteți sigur?
-		</warningDelete>
-		<studentSuccessfullyDeleted>Studentul a fost șters cu succes!
-		</studentSuccessfullyDeleted>
-		<somethingWrongInput>Ceva a mers prost!\nVerificați informația
+		</val>
+	</key>
+	<key value="studentSuccessfullyDeleted">
+		<val lang="eng">Student successfully deleted!</val>
+		<val lang="ru">Студент успешно удален!</val>
+		<val lang="ro">Studentul a fost șters cu succes!</val>
+	</key>
+	<key value="somethingWrongInput">
+		<val lang="eng">Something went wrong!\nCheck your credentials!</val>
+		<val lang="ru">Что-то пошло не так!\nПроверьте введёные
+			данные!
+		</val>
+		<val lang="ro">Ceva a mers prost!\nVerificați informația
 			introdusă!
-		</somethingWrongInput>
-		<somethingWrongUnexpected>Ceva a mers prost!\nÎncercați să reporniți
+		</val>
+	</key>
+	<key value="somethingWrongUnexpected">
+		<val lang="eng">Something went wrong!\nTry restarting the
+			application!
+		</val>
+		<val lang="ru">Что-то пошло не так!\nПопробуйте перезапустить
+			приложение!
+		</val>
+		<val lang="ro">Ceva a mers prost!\nÎncercați să reporniți
 			aplicația!
-		</somethingWrongUnexpected>
-		<somethingWrongTryAgain>Ceva a mers prost!\nÎncercați din nou!
-		</somethingWrongTryAgain>
-		<cannotAddStudent>Nu puteți adăuga încă un student!\nAdăugați o
-			facultate și un
-			curs mai intai!
-		</cannotAddStudent>
-		<dateFormatError>Vă rugăm să introduceți datele corecte conform
-			formatului
-			AAAA-LL-ZZ!
-		</dateFormatError>
-		<studentSuccessfullyAdded>Studentul a fost adăugat cu succes!
-		</studentSuccessfullyAdded>
-		<confirmDialog>Sunteți sigur?</confirmDialog>
-		<typeNameFaculty>Tastați numele facultății:</typeNameFaculty>
-		<emptyNameFaculty>Facultatea nu a fost adăugată!\nVă rugăm să
-			introduceți un nume
-			pentru aceasta!
-		</emptyNameFaculty>
-		<facultyAlreadyExists>Facultatea nu a fost adăugată!\nFacultatea
-			deja
-			exista!
-		</facultyAlreadyExists>
-		<facultySuccessfullyAdded>Facultatea a fost adăugată cu succes!
-		</facultySuccessfullyAdded>
-		<facultyNotAdded>Facultatea nu a fost adăugată!\nÎncercați din nou!
-		</facultyNotAdded>
-		<cannotAddCourse>Nu puteți adăuga un curs!\nAdăugați mai întâi o
+		</val>
+	</key>
+	<key value="somethingWrongTryAgain">
+		<val lang="eng">Something went wrong!\nTry Again!</val>
+		<val lang="ru">Что-то пошло не так!\nПопробуйте еще раз!</val>
+		<val lang="ro">Ceva a mers prost!\nÎncercați să repornițiaplicația!
+		</val>
+	</key>
+	<key value="cannotAddStudent">
+		<val lang="eng">You can't add a student yet!\nAdd a faculty and a
+			course
+			first!
+		</val>
+		<val lang="ru">Вы еще не можете добавить студента!\nДобавьте факультет
+			и хотя-бы один курс первее!
+		</val>
+		<val lang="ro">Nu puteți adăuga încă un student!\nAdăugați o facultate
+			și un curs mai intai!
+		</val>
+	</key>
+	<key value="dateFormatError">
+		<val lang="eng">Please type a correct data according to the
+			formatYYY-MM-DD!
+		</val>
+		<val lang="ru">Пожалуйста, введите правильные данные в соответствиис
+			форматом ГГГГ-ММ-ДД!
+		</val>
+		<val lang="ro">Vă rugăm să introduceți datele corecte conform
+			formatului AAAA-LL-ZZ!
+		</val>
+	</key>
+	<key value="studentSuccessfullyAdded">
+		<val lang="eng">The student has been added successfully!</val>
+		<val lang="ru">Студент успешно добавлен!</val>
+		<val lang="ro">Studentul a fost adăugat cu succes!</val>
+	</key>
+	<key value="confirmDialog">
+		<val lang="eng">Are you sure?</val>
+		<val lang="ru">Вы уверены?</val>
+		<val lang="ro">Sunteți sigur?</val>
+	</key>
+	<key value="typeNameFaculty">
+		<val lang="eng">Type the name of the faculty:</val>
+		<val lang="ru">Введите название факультета:</val>
+		<val lang="ro">Tastați numele facultății:</val>
+	</key>
+	<key value="emptyNameFaculty">
+		<val lang="eng">The faculty hasn't been added!\nPlease type a name for
+			it!
+		</val>
+		<val lang="ru">Факультет не добавлен!\nПожалуйста, введите имя для него
+		</val>
+		<val lang="ro">Facultatea nu a fost adăugată!\nVă rugăm să introduceți
+			un nume pentru aceasta!
+		</val>
+	</key>
+	<key value="facultyAlreadyExists">
+		<val lang="eng">The faculty hasn't been added!\nThe faculty already
+			exists!
+		</val>
+		<val lang="ru">Факультет не добавлен!\nФакультет уже существует!</val>
+		<val lang="ro">Facultatea nu a fost adăugată!\nFacultatea deja exista!
+		</val>
+	</key>
+	<key value="facultySuccessfullyAdded">
+		<val lang="eng">The faculty has been successfully added!</val>
+		<val lang="ru">Факультет успешно добавлен!</val>
+		<val lang="ro">Facultatea a fost adăugată cu succes!</val>
+	</key>
+	<key value="facultyNotAdded">
+		<val lang="eng">The faculty hasn't been added!\nTry again!</val>
+		<val lang="ru">Факультет не добавлен!\nПовторите попытку!</val>
+		<val lang="ro">Facultatea nu a fost adăugată!\nÎncercați din nou!</val>
+	</key>
+	<key value="cannotAddCourse">
+		<val lang="eng">You can't add a course!\nAdd a faculty first</val>
+		<val lang="ru">Вы не можете добавить курс!\nСначала добавьте факультет
+		</val>
+		<val lang="ro">Nu puteți adăuga un curs!\nAdăugați mai întâi o
 			facultate
-		</cannotAddCourse>
-		<typeNameCourse>Tastați numele cursului</typeNameCourse>
-		<emptyNameCourse>Cursul nu a fost adăugat!\nVă rugăm să introduceți
-			un
-			nume pentru
-			acesta!
-		</emptyNameCourse>
-		<chooseFaculty>Alegeți facultatea pentru curs</chooseFaculty>
-		<courseNotAddedNoFaculty>Cursul nu a fost adăugat!\nVă rugăm să
-			selectați
-			o facultate pentru el sau adaugă una nouă!
-		</courseNotAddedNoFaculty>
-		<courseTypeDuration>Introduceți durata cursului (în luni)
-		</courseTypeDuration>
-		<courseNotAddedNoDuration>Cursul nu a fost adăugat!\nVă rugăm să
-			tastați
-			durata cursului fără a folosi alte caractere decât
-			cifre!
-		</courseNotAddedNoDuration>
-		<courseAlreadyExists>Cursul nu a fost adăugat!\nCursul deja
-			exista!
-		</courseAlreadyExists>
-		<courseSuccessfullyAdded>Cursul a fost adăugat cu succes!
-		</courseSuccessfullyAdded>
-		<courseNotAdded>Cursul nu a fost adăugat!\nÎncercați din nou!
-		</courseNotAdded>
-		<chooseFacultyDelete>Alegeți facultatea spre ștergere
-		</chooseFacultyDelete>
-		<deleteFacultyWithCourses>Nu puteți șterge o facultate care are
-			cursuri!\nDoriți să ștergeți toate cursurile și studenții
-			care umblă
-			la
-			aceste cursuri in aceasta facultate?
-		</deleteFacultyWithCourses>
-		<coursesFromFacultySuccessfullyDeleted>Cursurile din facultate au
-			fost
-			sterse cu succes!
-		</coursesFromFacultySuccessfullyDeleted>
-		<deleteCourseWithStudents>Nu puteți șterge un curs care are
-			studenți!\nDoriți să ștergeți toți studenții care participă la acest
-			curs?
-		</deleteCourseWithStudents>
-		<studentsAttendingSuccessfullyDeleted>
-			Elevii care participă la
-			cursurile au fost șterse cu succes!
-		</studentsAttendingSuccessfullyDeleted>
-	</ro>
-</Languages>
+		</val>
+	</key>
+	<key value="typeNameCourse">
+		<val lang="eng">Type the name of the course</val>
+		<val lang="ru">Введите название курса</val>
+		<val lang="ro">Nu puteți adăuga un curs!\nAdăugați mai întâi o
+			facultate
+		</val>
+	</key>
+	<key value="emptyNameCourse">
+		<val lang="eng">The course hasn't been added!\nPlease type a name for
+			it!
+		</val>
+		<val lang="ru">Курс не добавлен!\nПожалуйста, введите название для
+			него!
+		</val>
+		<val lang="ro">Cursul nu a fost adăugat!\nVă rugăm să introduceți un
+			nume pentru acesta!
+		</val>
+	</key>
+	<key value="chooseFaculty">
+		<val lang="eng">Choose the faculty for the course</val>
+		<val lang="ru">Выберите факультет для курса</val>
+		<val lang="ro">Alegeți facultatea pentru curs</val>
+	</key>
+	<key value="courseNotAddedNoFaculty">
+		<val lang="eng">The course hasn't been added!\nPlease select a faculty
+			for it or add a new one!
+		</val>
+		<val lang="ru">Курс не добавлен!\nПожалуйста, выберите факультет для
+			него или добавьте новый!
+		</val>
+		<val lang="ro">Cursul nu a fost adăugat!\nVă rugăm să selectați o
+			facultate pentru el sau adaugă una nouă!
+		</val>
+	</key>
+	<key value="courseTypeDuration">
+		<val lang="eng">Type the duration of the course(months)</val>
+		<val lang="ru">Введите продолжительность курса (в месяцах)</val>
+		<val lang="ro">Introduceți durata cursului (în luni)</val>
+	</key>
+	<key value="courseNotAddedNoDuration">
+		<val lang="eng">The course hasn't been added!\nPlease type the duration
+			of the course without using other characters than digits!
+		</val>
+		<val lang="ru">Курс не добавлен!\nПожалуйста, введите продолжительность
+			курса без использования других символов, кроме цифр!
+		</val>
+		<val lang="ro">Cursul nu a fost adăugat!\nVă rugăm să tastați durata
+			cursului fără a folosi alte caractere decât cifre!
+		</val>
+	</key>
+	<key value="courseAlreadyExists">
+		<val lang="eng">The course hasn't been added!\nThe course already
+			exists!
+		</val>
+		<val lang="ru">Курс не добавлен!\nКурс уже существуют!</val>
+		<val lang="ro">Cursul nu a fost adăugat!\nCursul deja exista!</val>
+	</key>
+	<key value="courseSuccessfullyAdded">
+		<val lang="eng">Cursul a fost adăugat cu succes!</val>
+		<val lang="ru">Курс успешно добавлен!</val>
+		<val lang="ro">Cursul nu a fost adăugat!\nCursul deja exista!</val>
+	</key>
+	<key value="courseNotAdded">
+		<val lang="eng">The course hasn't been added!\nTry again!</val>
+		<val lang="ru">Курс не добавлен!\nПопробуйте еще раз!</val>
+		<val lang="ro">Cursul nu a fost adăugat!\nÎncercați din nou!</val>
+	</key>
+	<key value="chooseFacultyDelete">
+		<val lang="eng">Choose the faculty to delete</val>
+		<val lang="ru">Выберите факультет для удаления</val>
+		<val lang="ro">Alegeți facultatea spre ștergere</val>
+	</key>
+	<key value="deleteFacultyWithCourses">
+		<val lang="eng">You can't delete a faculty that has courses!\nDo you
+			wish to delete all the courses and students attending these courses
+			in that faculty?</val>
+		<val lang="ru">Вы не можете удалить факультет, который имеет курсы!\nВы
+			хотите удалить все курсы и студентов посещающих этот курс?</val>
+		<val lang="ro">Nu puteți șterge o facultate care are cursuri!\nDoriți
+			să ștergeți toate cursurile și studenții care umblă la aceste cursuri
+			in aceasta facultate?</val>
+	</key>
+	<key value="coursesFromFacultySuccessfullyDeleted">
+		<val lang="eng">The courses and the students in the faculty have been
+			deleted successfully!</val>
+		<val lang="ru">Курсы и студенты на факультете успешно удалены!</val>
+		<val lang="ro">Cursurile din facultate au fost șterse cu succes!</val>
+	</key>
+	<key value="deleteCourseWithStudents">
+		<val lang="eng">You can't delete a course that is attended by
+			students!\nDo you wish to delete all the students attending that
+			course?</val>
+		<val lang="ru">Вы не можете удалить курс посещаемый студентами!\nВы
+			хотите удалить всех студентов, посещающих этот курс?</val>
+		<val lang="ro">Nu puteți șterge un curs care are studenți!\nDoriți să
+			ștergeți toți studenții care participă la acest curs?</val>
+	</key>
+	<key value="studentsAttendingSuccessfullyDeleted">
+		<val lang="eng">The students attending the courses have been deleted
+			successfully!</val>
+		<val lang="ru">Студенты, посещающие курс успешно удалены!</val>
+		<val lang="ro">Elevii care participă la cursurile au fost șterse cu
+			succes!</val>
+	</key>
+</translation>
+	
