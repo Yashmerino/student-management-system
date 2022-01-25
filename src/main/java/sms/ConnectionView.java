@@ -43,6 +43,10 @@ public class ConnectionView {
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
+				// Reading messages in dependance of the selected language(by default ENG)
+				Translator.setLanguage(Language.ENG);
+				Translator.getMessagesFromXML();
+
 				try {
 					ConnectionView window = new ConnectionView();
 					window.connectionFrame.setVisible(true);
@@ -71,7 +75,7 @@ public class ConnectionView {
 		connectionFrame.setBounds(100, 100, 640, 480);
 		connectionFrame.setResizable(false);
 		connectionFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		connectionFrame.setTitle("Student Management System");
+		connectionFrame.setTitle(Translator.getValue("sms"));
 
 		// The blue-colored panel in the top part of the application
 		JPanel topPanel = new JPanel();
@@ -79,7 +83,7 @@ public class ConnectionView {
 		connectionFrame.getContentPane().add(topPanel, BorderLayout.NORTH);
 
 		// The text that informs the user that they have to connect to a database
-		JLabel connectText = new JLabel("Connect to a database:");
+		JLabel connectText = new JLabel(Translator.getValue("connectText"));
 		connectText.setForeground(new Color(255, 255, 255));
 		connectText.setFont(new Font("Tahoma", Font.PLAIN, 50));
 		topPanel.add(connectText);
@@ -89,12 +93,12 @@ public class ConnectionView {
 		connectionFrame.getContentPane().add(bottomPanel, BorderLayout.CENTER);
 
 		// The text that informs the user where they have to type the login
-		JLabel loginText = new JLabel("Login:");
+		JLabel loginText = new JLabel(Translator.getValue("loginText"));
 		loginText.setBounds(68, 134, 55, 25);
 		loginText.setFont(new Font("Tahoma", Font.PLAIN, 20));
 
 		// The text that informs the user where they have to type the password
-		JLabel passwordText = new JLabel("Password:");
+		JLabel passwordText = new JLabel(Translator.getValue("passwordText"));
 		passwordText.setBounds(68, 174, 100, 25);
 		passwordText.setFont(new Font("Tahoma", Font.PLAIN, 20));
 
@@ -117,12 +121,12 @@ public class ConnectionView {
 		databaseUrlField.setBounds(223, 96, 330, 20);
 
 		// The text that informs user where they have to write database url
-		JLabel databaseUrlText = new JLabel("Database URL:");
+		JLabel databaseUrlText = new JLabel(Translator.getValue("databaseUrlText"));
 		databaseUrlText.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		databaseUrlText.setBounds(68, 91, 130, 25);
 
 		// The button to press after the login and password were written
-		JButton connectButton = new JButton("Connect");
+		JButton connectButton = new JButton(Translator.getValue("connectButton"));
 		connectButton.setName("connectButton");
 		connectButton.setBounds(240, 290, 140, 35);
 		connectButton.setFont(new Font("Tahoma", Font.PLAIN, 20));
@@ -132,8 +136,8 @@ public class ConnectionView {
 			public void actionPerformed(ActionEvent e) {
 				// If one of the fields are empty then warn user about it
 				if (loginField.getText().equals("") || databaseUrlField.getText().equals("")) {
-					JOptionPane.showMessageDialog(new JFrame(), "Please fill in all the empty fields!", "Error",
-							JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(new JFrame(), Translator.getValue("fillEmptyFields"),
+							Translator.getValue("error"), JOptionPane.ERROR_MESSAGE);
 				} else {
 					// Get login, password and database url from fields and set them for database
 					// handler
@@ -143,18 +147,16 @@ public class ConnectionView {
 
 					// If table has\hasn't been successfully created then inform the user about that
 					if (DBHandler.createTables()) {
-						JOptionPane.showMessageDialog(new JFrame(),
-								"Connection with the database has been successfully established!", "Success",
-								JOptionPane.INFORMATION_MESSAGE);
+						JOptionPane.showMessageDialog(new JFrame(), Translator.getValue("connectionEstablished"),
+								Translator.getValue("success"), JOptionPane.INFORMATION_MESSAGE);
 
 						// Open a new window where you can manage the table and close the old one
 						ManagementView.main(null);
 						connectionFrame.dispose();
 
 					} else {
-						JOptionPane.showMessageDialog(new JFrame(),
-								"Connection with the database hasn't been established!\nPlease check your credentials!",
-								"Error", JOptionPane.ERROR_MESSAGE);
+						JOptionPane.showMessageDialog(new JFrame(), Translator.getValue("connectionNotEstablished"),
+								Translator.getValue("error"), JOptionPane.ERROR_MESSAGE);
 					}
 				}
 

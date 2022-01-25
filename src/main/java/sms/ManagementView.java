@@ -83,6 +83,10 @@ public class ManagementView {
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
+				// Reading messages in dependance of the selected language(by default ENG)
+				Translator.setLanguage(Language.ENG);
+				Translator.getMessagesFromXML();
+
 				try {
 					ManagementView window = new ManagementView();
 					window.managementFrame.setVisible(true);
@@ -124,7 +128,7 @@ public class ManagementView {
 		managementFrame.setBounds(100, 100, 860, 540);
 		managementFrame.setResizable(false);
 		managementFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		managementFrame.setTitle("Student Management System");
+		managementFrame.setTitle(Translator.getValue("sms"));
 		managementFrame.getContentPane().setLayout(null);
 
 		// The panel where students table is located
@@ -144,7 +148,9 @@ public class ManagementView {
 		tableScrollPane.setViewportView(table);
 		table.setColumnSelectionAllowed(true);
 		table.setModel(new DefaultTableModel(new Object[][] {},
-				new String[] { "ID", "Name", "Surname", "Age", "Gender", "Course", "Started", "Graduation" }) {
+				new String[] { Translator.getValue("ID"), Translator.getValue("name"), Translator.getValue("surname"),
+						Translator.getValue("age"), Translator.getValue("gender"), Translator.getValue("course"),
+						Translator.getValue("started"), Translator.getValue("graduation") }) {
 			boolean[] columnEditables = new boolean[] { false, true, true, true, true, false, false, false };
 
 			public boolean isCellEditable(int row, int column) {
@@ -162,9 +168,8 @@ public class ManagementView {
 			// Actions to perform when a cell has been edited
 			public void tableChanged(TableModelEvent e) {
 				if (!DBHandler.updateDatabase()) {
-					JOptionPane.showMessageDialog(managementFrame,
-							"An error has occured!\nCheck your input one more time!", "Student Management System",
-							JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(managementFrame, Translator.getValue("checkInput"),
+							Translator.getValue("sms"), JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		});
@@ -177,7 +182,7 @@ public class ManagementView {
 		managementFrame.getContentPane().add(buttonsPanel);
 
 		// The button to press to delete an information from the table
-		JButton deleteButton = new JButton("Delete");
+		JButton deleteButton = new JButton(Translator.getValue("delete"));
 		deleteButton.setName("deleteButton");
 
 		// Actions to perform when "delete" button clicked
@@ -185,20 +190,20 @@ public class ManagementView {
 			public void actionPerformed(ActionEvent e) {
 				// If no row has been selected
 				if (table.getSelectedRow() == -1) {
-					JOptionPane.showMessageDialog(managementFrame, "No student has been selected!",
-							"Student Management System", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(managementFrame, Translator.getValue("noStudentSelected"),
+							Translator.getValue("sms"), JOptionPane.ERROR_MESSAGE);
 				} else {
 					// Asking the user if they are sure about that
-					if (JOptionPane.showConfirmDialog(managementFrame,
-							"Deleting a student from the table may result in losing important information.\nAre you sure?",
-							"Student Management System", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+					if (JOptionPane.showConfirmDialog(managementFrame, Translator.getValue("warningDelete"),
+							Translator.getValue("sms"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
 						if (DBHandler.deleteStudent()) {
-							JOptionPane.showMessageDialog(managementFrame, "Student successfully removed!",
-									"Student Management System", JOptionPane.INFORMATION_MESSAGE);
+							JOptionPane.showMessageDialog(managementFrame,
+									Translator.getValue("studentSuccessfullyDeleted"), Translator.getValue("sms"),
+									JOptionPane.INFORMATION_MESSAGE);
 						} else {
 							JOptionPane.showMessageDialog(managementFrame,
-									"Something went wrong!\nTry restarting the application!",
-									"Student Management System", JOptionPane.ERROR_MESSAGE);
+									Translator.getValue("somethingWrongUnexpected"), Translator.getValue("sms"),
+									JOptionPane.ERROR_MESSAGE);
 						}
 					}
 				}
@@ -208,7 +213,7 @@ public class ManagementView {
 		deleteButton.setFont(new Font("Tahoma", Font.PLAIN, 16));
 
 		// The button to press to add a student to the table
-		JButton addButton = new JButton("Add");
+		JButton addButton = new JButton(Translator.getValue("add"));
 		addButton.setName("addButton");
 
 		// Actions to perform when "add" button clicked
@@ -217,17 +222,16 @@ public class ManagementView {
 				table.clearSelection();
 
 				if (DBHandler.getFaculties().length == 0) {
-					JOptionPane.showMessageDialog(managementFrame,
-							"You can't add a student yet!\nAdd a faculty and a course first!", "Error",
-							JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(managementFrame, Translator.getValue("cannotAddStudent"),
+							Translator.getValue("error"), JOptionPane.ERROR_MESSAGE);
 				}
 
 				// If one of the fields are empty warn user about that
 				if (nameField.getText().equals("") || surnameField.getText().equals("") || ageField.getText().equals("")
 						|| startedDateField.getText().equals("")) {
 
-					JOptionPane.showMessageDialog(managementFrame, "Please fill in all the fields!", "Error",
-							JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(managementFrame, Translator.getValue("fillEmptyFields"),
+							Translator.getValue("error"), JOptionPane.ERROR_MESSAGE);
 				} else {
 					try {
 						// Check if the written data is written correctly according to the format
@@ -237,19 +241,18 @@ public class ManagementView {
 					} catch (ParseException ex) {
 						ex.printStackTrace();
 
-						JOptionPane.showMessageDialog(managementFrame,
-								"Please type a correct data according to the format YYYY-MM-DD!", "Error",
-								JOptionPane.ERROR_MESSAGE);
+						JOptionPane.showMessageDialog(managementFrame, Translator.getValue("dateFormatError"),
+								Translator.getValue("error"), JOptionPane.ERROR_MESSAGE);
 
 						return;
 					}
 
 					if (DBHandler.addStudent()) {
-						JOptionPane.showMessageDialog(managementFrame, "The student has been added successfully!",
-								"Success", JOptionPane.INFORMATION_MESSAGE);
+						JOptionPane.showMessageDialog(managementFrame, Translator.getValue("studentSuccessfullyAdded"),
+								Translator.getValue("success"), JOptionPane.INFORMATION_MESSAGE);
 					} else {
-						JOptionPane.showMessageDialog(managementFrame, "Something went wrong!\nCheck the credentials!",
-								"Error", JOptionPane.ERROR_MESSAGE);
+						JOptionPane.showMessageDialog(managementFrame, Translator.getValue("somethingWrongInput"),
+								Translator.getValue("error"), JOptionPane.ERROR_MESSAGE);
 					}
 
 				}
@@ -261,7 +264,7 @@ public class ManagementView {
 		buttonsPanel.add(addButton);
 
 		// The button to press to update an information in the table
-		JButton updateButton = new JButton("Update");
+		JButton updateButton = new JButton(Translator.getValue("update"));
 
 		// Actions to perform when "update" button clicked
 		updateButton.addActionListener(new ActionListener() {
@@ -276,14 +279,14 @@ public class ManagementView {
 		buttonsPanel.add(deleteButton);
 
 		// The button to press to exit the application
-		JButton exitButton = new JButton("Exit");
+		JButton exitButton = new JButton(Translator.getValue("exit"));
 		exitButton.setName("exitButton");
 
 		// Actions to perform when "exit" button clicked
 		exitButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (JOptionPane.showConfirmDialog(managementFrame, "Are you sure?", "Student Management System",
-						JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+				if (JOptionPane.showConfirmDialog(managementFrame, Translator.getValue("confirmDialog"),
+						Translator.getValue("sms"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
 					managementFrame.dispose();
 					System.exit(0);
 				}
@@ -292,16 +295,15 @@ public class ManagementView {
 
 		// The button that user have to press in order to disconnect from the current
 		// database
-		JButton disconnectButton = new JButton("Disconnect");
+		JButton disconnectButton = new JButton(Translator.getValue("disconnect"));
 		disconnectButton.setName("disconnectButton");
 
 		// Actions to perform when "disconnect" button has been clicked
 		disconnectButton.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
-				if (JOptionPane.showConfirmDialog(managementFrame,
-						"Do you want to disconnect from the current database?", "Student Management System",
-						JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+				if (JOptionPane.showConfirmDialog(managementFrame, Translator.getValue("confirmDialog"),
+						Translator.getValue("sms"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
 					// Return back to the connection window
 					ConnectionView.main(null);
 					managementFrame.dispose();
@@ -323,7 +325,7 @@ public class ManagementView {
 		studentPanel.setLayout(null);
 
 		// The text that informs the user where they have to write the student's name
-		JLabel nameText = new JLabel("Name");
+		JLabel nameText = new JLabel(Translator.getValue("name"));
 		nameText.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		nameText.setBounds(10, 22, 67, 19);
 		studentPanel.add(nameText);
@@ -336,7 +338,7 @@ public class ManagementView {
 		nameField.setColumns(10);
 
 		// The text that informs the user where they have to write the student's surname
-		JLabel surnameText = new JLabel("Surname");
+		JLabel surnameText = new JLabel(Translator.getValue("surname"));
 		surnameText.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		surnameText.setBounds(10, 54, 67, 19);
 		studentPanel.add(surnameText);
@@ -349,7 +351,7 @@ public class ManagementView {
 		studentPanel.add(surnameField);
 
 		// The text that informs the user where they have to write the student's age
-		JLabel ageText = new JLabel("Age");
+		JLabel ageText = new JLabel(Translator.getValue("age"));
 		ageText.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		ageText.setBounds(10, 86, 67, 19);
 		studentPanel.add(ageText);
@@ -363,14 +365,14 @@ public class ManagementView {
 
 		// The text that informs the user where they have to write the student's
 		// attended course
-		JLabel courseText = new JLabel("Course");
+		JLabel courseText = new JLabel(Translator.getValue("course"));
 		courseText.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		courseText.setBounds(10, 156, 67, 19);
 		studentPanel.add(courseText);
 
 		// The text that informs the user where they have to write the date when student
 		// started attending the course
-		JLabel startedDateText = new JLabel("Started");
+		JLabel startedDateText = new JLabel(Translator.getValue("started"));
 		startedDateText.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		startedDateText.setBounds(10, 188, 67, 19);
 		studentPanel.add(startedDateText);
@@ -380,11 +382,11 @@ public class ManagementView {
 		startedDateField.setName("startedDateField");
 		startedDateField.setColumns(10);
 		startedDateField.setBounds(85, 185, 143, 22);
-		startedDateField.setText("YYYY-MM-DD");
+		startedDateField.setText(Translator.getValue("dateFormat"));
 		studentPanel.add(startedDateField);
 
 		// The text that informs the user where they have to select student's gender
-		JLabel genderText = new JLabel("Gender");
+		JLabel genderText = new JLabel(Translator.getValue("gender"));
 		genderText.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		genderText.setBounds(10, 120, 67, 19);
 		studentPanel.add(genderText);
@@ -398,7 +400,7 @@ public class ManagementView {
 		studentPanel.add(genderSelectionBox);
 
 		// Button that adds a new faculty
-		JButton addFacultyButton = new JButton("Add Faculty");
+		JButton addFacultyButton = new JButton(Translator.getValue("addFaculty"));
 		addFacultyButton.setName("addFacultyButton");
 
 		// Actions to perform when "add faculty" button clicked
@@ -406,24 +408,23 @@ public class ManagementView {
 			public void actionPerformed(ActionEvent e) {
 				String facultyName = "";
 
-				facultyName = JOptionPane.showInputDialog(managementFrame, "Type the name of the faculty");
+				facultyName = JOptionPane.showInputDialog(managementFrame, Translator.getValue("typeNameFaculty"));
 
 				if (facultyName == null || facultyName.equals("")) {
-					JOptionPane.showMessageDialog(managementFrame,
-							"The faculty hasn't been added!\nPlease type a name for it!", "Error",
-							JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(managementFrame, Translator.getValue("emptyNameFaculty"),
+							Translator.getValue("error"), JOptionPane.ERROR_MESSAGE);
 				} else {
 					if (DBHandler.checkIfElementExists(DBHandler.getFacultiesTable(), facultyName)) {
-						JOptionPane.showMessageDialog(managementFrame,
-								"The faculty hasn't been added!\nThe faculty " + facultyName + " already exists!",
-								"Error", JOptionPane.ERROR_MESSAGE);
+						JOptionPane.showMessageDialog(managementFrame, Translator.getValue("facultyAlreadyExists"),
+								Translator.getValue("error"), JOptionPane.ERROR_MESSAGE);
 					} else {
 						if (DBHandler.addFaculty(facultyName)) {
-							JOptionPane.showMessageDialog(managementFrame, "The faculty has been added successfully!",
-									"Success", JOptionPane.INFORMATION_MESSAGE);
+							JOptionPane.showMessageDialog(managementFrame,
+									Translator.getValue("facultySuccessfullyAdded"), Translator.getValue("success"),
+									JOptionPane.INFORMATION_MESSAGE);
 						} else {
-							JOptionPane.showMessageDialog(managementFrame, "The faculty hasn't been added!\nTry again!",
-									"Success", JOptionPane.ERROR_MESSAGE);
+							JOptionPane.showMessageDialog(managementFrame, Translator.getValue("facultyNotAdded"),
+									Translator.getValue("success"), JOptionPane.ERROR_MESSAGE);
 						}
 					}
 				}
@@ -435,7 +436,7 @@ public class ManagementView {
 		studentPanel.add(addFacultyButton);
 
 		// Button that adds a new course
-		JButton addCourseButton = new JButton("Add Course");
+		JButton addCourseButton = new JButton(Translator.getValue("addCourse"));
 		addCourseButton.setName("addCourseButton");
 		addCourseButton.addActionListener(new ActionListener() {
 
@@ -443,64 +444,60 @@ public class ManagementView {
 			public void actionPerformed(ActionEvent e) {
 				// If there are no faculties there is no way to add a course
 				if (DBHandler.getFaculties().length == 0) {
-					JOptionPane.showMessageDialog(managementFrame, "You can't add a course!\nAdd a faculty first",
-							"Error", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(managementFrame, Translator.getValue("cannotAddCourse"),
+							Translator.getValue("error"), JOptionPane.ERROR_MESSAGE);
 					return;
 				}
 
 				String courseName = "", faculty = "";
 				int duration = 0;
 
-				courseName = JOptionPane.showInputDialog(managementFrame, "Type the name of the course");
+				courseName = JOptionPane.showInputDialog(managementFrame, Translator.getValue("typeNameCourse"));
 
 				// If no name has been written for the course
 				if (courseName == null || courseName.equals("")) {
-					JOptionPane.showMessageDialog(managementFrame,
-							"The course hasn't been added!\nPlease type a name for it!", "Error",
-							JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(managementFrame, Translator.getValue("emptyNameCourse"),
+							Translator.getValue("error"), JOptionPane.ERROR_MESSAGE);
 					return;
 				} else {
 					String[] faculties = DBHandler.getFaculties();
-					faculty = (String) JOptionPane.showInputDialog(null, "Students Management System",
-							"Choose the faculty for the course", JOptionPane.QUESTION_MESSAGE, null, faculties,
+					faculty = (String) JOptionPane.showInputDialog(null, Translator.getValue("sms"),
+							Translator.getValue("chooseFaculty"), JOptionPane.QUESTION_MESSAGE, null, faculties,
 							faculties[0]);
 
 					// If no faculty has been selected for the course
 					if (faculty == null || faculty.equals("")) {
-						JOptionPane.showMessageDialog(managementFrame,
-								"The course hasn't been added!\nPlease select a faculty for it or add a new one!",
-								"Error", JOptionPane.ERROR_MESSAGE);
+						JOptionPane.showMessageDialog(managementFrame, Translator.getValue("courseNotAddedNoFaculty"),
+								Translator.getValue("error"), JOptionPane.ERROR_MESSAGE);
 						return;
 					} else {
 						// In case the user types letters for the duration
 						try {
 							duration = Integer.parseInt(JOptionPane.showInputDialog(managementFrame,
-									"Type the duration of the course(months)"));
+									Translator.getValue("courseTypeDuration")));
 						} catch (NumberFormatException ex) {
 							ex.printStackTrace();
 
 							JOptionPane.showMessageDialog(managementFrame,
-									"The course hasn't been added!\nPlease type the duration of the course without using other characters than digits!",
-									"Error", JOptionPane.ERROR_MESSAGE);
+									Translator.getValue("courseNotAddedNoDuration"), Translator.getValue("error"),
+									JOptionPane.ERROR_MESSAGE);
 
 							return;
 						}
 
 						if (DBHandler.checkIfElementExists(DBHandler.getCoursesTable(), courseName)) {
-							JOptionPane.showMessageDialog(managementFrame,
-									"The course hasn't been added!\nThe course " + courseName + " already exists!",
-									"Error", JOptionPane.ERROR_MESSAGE);
+							JOptionPane.showMessageDialog(managementFrame, Translator.getValue("courseAlreadyExists"),
+									Translator.getValue("error"), JOptionPane.ERROR_MESSAGE);
 						} else {
 							if (DBHandler.addCourse(courseName, faculty, duration)) {
 								JOptionPane.showMessageDialog(managementFrame,
-										"The course has been added successfully!", "Success",
+										Translator.getValue("courseSuccessfullyAdded"), Translator.getValue("success"),
 										JOptionPane.INFORMATION_MESSAGE);
 
 								updateCourses();
 							} else {
-								JOptionPane.showMessageDialog(managementFrame,
-										"The course hasn't been added!\nTry again!", "Error",
-										JOptionPane.ERROR_MESSAGE);
+								JOptionPane.showMessageDialog(managementFrame, Translator.getValue("courseNotAdded"),
+										Translator.getValue("error"), JOptionPane.ERROR_MESSAGE);
 							}
 						}
 					}
@@ -520,7 +517,7 @@ public class ManagementView {
 		studentPanel.add(courseSelectionBox);
 
 		// Button that allows to delete a faculty
-		JButton deleteFacultyButton = new JButton("Delete Faculty");
+		JButton deleteFacultyButton = new JButton(Translator.getValue("deleteFaculty"));
 		deleteFacultyButton.setName("deleteFacultyButton");
 
 		// Actions to perform when "Delete Faculty" button clicked
@@ -528,9 +525,9 @@ public class ManagementView {
 			public void actionPerformed(ActionEvent e) {
 				table.clearSelection();
 
-				String faculty = (String) JOptionPane.showInputDialog(null, "Students Management System",
-						"Choose the faculty to delete", JOptionPane.QUESTION_MESSAGE, null, DBHandler.getFaculties(),
-						DBHandler.getFaculties()[0]);
+				String faculty = (String) JOptionPane.showInputDialog(null, Translator.getValue("sms"),
+						Translator.getValue("chooseFacultyDelete"), JOptionPane.QUESTION_MESSAGE, null,
+						DBHandler.getFaculties(), DBHandler.getFaculties()[0]);
 
 				// If no faculty has been selected
 				if (faculty == null) {
@@ -539,37 +536,35 @@ public class ManagementView {
 
 				// If there are students attending the courses in this faculty
 				if (DBHandler.getNumberOfCourses(faculty) > 0) {
-					if (JOptionPane.showConfirmDialog(managementFrame,
-							"You can't delete a faculty that has courses!\nDo you wish to delete all the courses and students attending these courses in the "
-									+ faculty + " faculty?",
-							"Student Management System", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+					if (JOptionPane.showConfirmDialog(managementFrame, Translator.getValue("deleteFacultyWithCourses"),
+							Translator.getValue("sms"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
 						if (DBHandler.deleteFacultyCourses(faculty)) {
 							JOptionPane.showMessageDialog(managementFrame,
-									"The courses in " + faculty + " faculty have been deleted successfully!", "Success",
-									JOptionPane.INFORMATION_MESSAGE);
+									Translator.getValue("courseFromFacultySuccessfullyDeleted"),
+									Translator.getValue("success"), JOptionPane.INFORMATION_MESSAGE);
 
 							if (DBHandler.deleteFaculty(faculty)) {
-								JOptionPane.showMessageDialog(managementFrame,
-										"The " + faculty + " faculty has been deleted successfully!", "Success",
-										JOptionPane.INFORMATION_MESSAGE);
+								JOptionPane.showMessageDialog(managementFrame, Translator.getValue("facultyDeleted"),
+										Translator.getValue("success"), JOptionPane.INFORMATION_MESSAGE);
 							} else {
-								JOptionPane.showMessageDialog(managementFrame, "Something went wrong!\nTry Again!",
-										"Error", JOptionPane.ERROR_MESSAGE);
+								JOptionPane.showMessageDialog(managementFrame,
+										Translator.getValue("somethingWrongTryAgain"), Translator.getValue("error"),
+										JOptionPane.ERROR_MESSAGE);
 							}
 
 						} else {
-							JOptionPane.showMessageDialog(managementFrame, "Something went wrong!\nTry Again!", "Error",
+							JOptionPane.showMessageDialog(managementFrame,
+									Translator.getValue("somethingWrongTryAgain"), Translator.getValue("error"),
 									JOptionPane.ERROR_MESSAGE);
 						}
 					}
 				} else {
 					if (DBHandler.deleteFaculty(faculty)) {
-						JOptionPane.showMessageDialog(managementFrame,
-								"The " + faculty + " faculty has been deleted successfully!", "Success",
-								JOptionPane.INFORMATION_MESSAGE);
+						JOptionPane.showMessageDialog(managementFrame, Translator.getValue("facultyDeleted"),
+								Translator.getValue("success"), JOptionPane.INFORMATION_MESSAGE);
 					} else {
-						JOptionPane.showMessageDialog(managementFrame, "Something went wrong!\nTry Again!", "Error",
-								JOptionPane.ERROR_MESSAGE);
+						JOptionPane.showMessageDialog(managementFrame, Translator.getValue("somethingWrongTryAgain"),
+								Translator.getValue("error"), JOptionPane.ERROR_MESSAGE);
 					}
 				}
 				updateCourses();
@@ -581,7 +576,7 @@ public class ManagementView {
 		studentPanel.add(deleteFacultyButton);
 
 		// Button that allows to delete a course
-		JButton deleteCourseButton = new JButton("Delete Course");
+		JButton deleteCourseButton = new JButton(Translator.getValue("deleteCourse"));
 		deleteCourseButton.setName("deleteCourseButton");
 
 		// Actions to perform when "Delete Course" button clicked
@@ -590,9 +585,9 @@ public class ManagementView {
 			public void actionPerformed(ActionEvent e) {
 				table.clearSelection();
 
-				String course = (String) JOptionPane.showInputDialog(null, "Students Management System",
-						"Choose the course to delete", JOptionPane.QUESTION_MESSAGE, null, DBHandler.getCourses(),
-						DBHandler.getCourses()[0]);
+				String course = (String) JOptionPane.showInputDialog(null, Translator.getValue("sms"),
+						Translator.getValue("chooseCourseDelete"), JOptionPane.QUESTION_MESSAGE, null,
+						DBHandler.getCourses(), DBHandler.getCourses()[0]);
 
 				// If no course has been selected
 				if (course == null) {
@@ -601,36 +596,34 @@ public class ManagementView {
 
 				// If there are students attending the course
 				if (DBHandler.getNumberOfAttendees(DBHandler.getCoursesTable(), course) > 0) {
-					if (JOptionPane.showConfirmDialog(managementFrame,
-							"You can't delete a course that is attended by students!\nDo you wish to delete all the students attending the "
-									+ course + " course?",
-							"Student Management System", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+					if (JOptionPane.showConfirmDialog(managementFrame, Translator.getValue("deleteCourseWithStudents"),
+							Translator.getValue("deleteCourse"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
 						if (DBHandler.deleteCourseAttendees(course)) {
 							JOptionPane.showMessageDialog(managementFrame,
-									"The students attending " + course + " course have been deleted successfully!",
-									"Success", JOptionPane.INFORMATION_MESSAGE);
+									Translator.getValue("studentsAttendingSuccessfullyDeleted"),
+									Translator.getValue("success"), JOptionPane.INFORMATION_MESSAGE);
 
 							if (DBHandler.deleteCourse(course)) {
-								JOptionPane.showMessageDialog(managementFrame,
-										"The " + course + " course has been deleted successfully!", "Success",
-										JOptionPane.INFORMATION_MESSAGE);
+								JOptionPane.showMessageDialog(managementFrame, Translator.getValue("courseDeleted"),
+										Translator.getValue("success"), JOptionPane.INFORMATION_MESSAGE);
 							} else {
-								JOptionPane.showMessageDialog(managementFrame, "Something went wrong!\nTry Again!",
-										"Error", JOptionPane.ERROR_MESSAGE);
+								JOptionPane.showMessageDialog(managementFrame,
+										Translator.getValue("somethingWrongTryAgain"), "Error",
+										JOptionPane.ERROR_MESSAGE);
 							}
 						} else {
-							JOptionPane.showMessageDialog(managementFrame, "Something went wrong!\nTry Again!", "Error",
+							JOptionPane.showMessageDialog(managementFrame,
+									Translator.getValue("somethingWrongTryAgain"), Translator.getValue("error"),
 									JOptionPane.ERROR_MESSAGE);
 						}
 					}
 				} else {
 					if (DBHandler.deleteCourse(course)) {
-						JOptionPane.showMessageDialog(managementFrame,
-								"The " + course + " course has been deleted successfully!", "Success",
-								JOptionPane.INFORMATION_MESSAGE);
+						JOptionPane.showMessageDialog(managementFrame, Translator.getValue("courseDeleted"),
+								Translator.getValue("success"), JOptionPane.INFORMATION_MESSAGE);
 					} else {
-						JOptionPane.showMessageDialog(managementFrame, "Something went wrong!\nTry Again!", "Error",
-								JOptionPane.ERROR_MESSAGE);
+						JOptionPane.showMessageDialog(managementFrame, Translator.getValue("somethingWrongTryAgain"),
+								Translator.getValue("error"), JOptionPane.ERROR_MESSAGE);
 					}
 				}
 				updateCourses();
