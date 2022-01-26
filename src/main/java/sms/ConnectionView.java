@@ -131,9 +131,14 @@ public class ConnectionView {
 		// Actions to perform when "Change language" button is clicked
 		changeLanguageButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Translator.setLanguage((Language) JOptionPane.showInputDialog(null, Translator.getValue("sms"),
+				Language selectedLanguage = (Language) JOptionPane.showInputDialog(null, Translator.getValue("sms"),
 						Translator.getValue("selectLanguage"), JOptionPane.QUESTION_MESSAGE, null, Language.values(),
-						Language.ENG.toString()));
+						Language.ENG.toString());
+
+				if (selectedLanguage != null)
+					Translator.setLanguage(selectedLanguage);
+				else
+					return;
 
 				Translator.getMessagesFromXML();
 
