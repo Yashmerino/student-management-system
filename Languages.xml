@@ -54,8 +54,7 @@
 	<key value="connectionEstablished">
 		<val lang="ENG">Connection with the database has been successfully established! </val>
 		<val lang="RU">Соединение с базой данных успешно установлено!</val>
-		<val lang="RO">Conexiunea cu baza de date a fost stabilita cu succes!
-		</val>
+		<val lang="RO">Conexiunea cu baza de date a fost stabilita cu succes!</val>
 	</key>
 	<key value="connectionNotEstablished">
 		<val lang="ENG">Connection with the database hasn't been established</val>
@@ -288,9 +287,9 @@
 		<val lang="RO">Cursul nu a fost adăugat! Cursul deja exista!</val>
 	</key>
 	<key value="courseSuccessfullyAdded">
-		<val lang="ENG">Cursul a fost adăugat cu succes!</val>
+		<val lang="ENG">The course has been successfully added!</val>
 		<val lang="RU">Курс успешно добавлен!</val>
-		<val lang="RO">Cursul nu a fost adăugat! Cursul deja exista!</val>
+		<val lang="RO">Cursul a fost adăugat cu succes!</val>
 	</key>
 	<key value="courseNotAdded">
 		<val lang="ENG">The course hasn't been added! Try again!</val>
@@ -323,7 +322,7 @@
 		<val lang="RO">Nu puteți șterge o facultate care are cursuri! Doriți să ștergeți toate cursurile și studenții care umblă la aceste cursuri in aceasta facultate?</val>
 	</key>
 	<key value="coursesFromFacultySuccessfullyDeleted">
-		<val lang="ENG">The courses and the students in the faculty have beendeleted successfully!</val>
+		<val lang="ENG">The courses and the students in the faculty have been deleted successfully!</val>
 		<val lang="RU">Курсы и студенты на факультете успешно удалены!</val>
 		<val lang="RO">Cursurile din facultate au fost șterse cu succes!</val>
 	</key>
