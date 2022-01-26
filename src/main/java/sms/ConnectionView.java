@@ -44,7 +44,7 @@ public class ConnectionView {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				// Reading messages in dependance of the selected language(by default ENG)
-				Translator.setLanguage(Language.RO);
+				Translator.setLanguage(Language.ENG);
 				Translator.getMessagesFromXML();
 
 				try {
@@ -124,6 +124,27 @@ public class ConnectionView {
 		JLabel databaseUrlText = new JLabel(Translator.getValue("databaseUrlText"));
 		databaseUrlText.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		databaseUrlText.setBounds(68, 91, 162, 25);
+
+		// The button that changes the langauge of the application
+		JButton changeLanguageButton = new JButton(Translator.getValue("changeLanguage"));
+
+		// Actions to perform when "Change language" button is clicked
+		changeLanguageButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Translator.setLanguage((Language) JOptionPane.showInputDialog(null, Translator.getValue("sms"),
+						Translator.getValue("selectLanguage"), JOptionPane.QUESTION_MESSAGE, null, Language.values(),
+						Language.ENG.toString()));
+
+				Translator.getMessagesFromXML();
+
+				connectionFrame.dispose();
+				new ConnectionView();
+			}
+		});
+
+		changeLanguageButton.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		changeLanguageButton.setBounds(480, 365, 135, 25);
+		bottomPanel.add(changeLanguageButton);
 
 		// The button to press after the login and password were written
 		JButton connectButton = new JButton(Translator.getValue("connectButton"));
