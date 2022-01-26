@@ -32,8 +32,8 @@
 		<val lang="RO">Adresa URL a bazei de date:</val>
 	</key>
 	<key value="connectButton">
-		<val lang="ENG">Connect:</val>
-		<val lang="RU">Подключиться:</val>
+		<val lang="ENG">Connect</val>
+		<val lang="RU">Подключиться</val>
 		<val lang="RO">Conectați</val>
 	</key>
 	<key value="error">
@@ -49,10 +49,10 @@
 	<key value="fillEmptyFields">
 		<val lang="ENG">Please, fill in all the empty fields!</val>
 		<val lang="RU">Пожалуйста, заполните все пустые поля!</val>
-		<val lang="RO">Vă RUgăm să completați toate câmpurile goale!</val>
+		<val lang="RO">Vă rugăm să completați toate câmpurile goale!</val>
 	</key>
 	<key value="connectionEstablished">
-		<val lang="ENG">Connection with the database has been successfully established!</val>
+		<val lang="ENG">Connection with the database has been successfully established! </val>
 		<val lang="RU">Соединение с базой данных успешно установлено!</val>
 		<val lang="RO">Conexiunea cu baza de date a fost stabilita cu succes!
 		</val>
@@ -62,6 +62,16 @@
 		<val lang="RU">Соединение с базой данных не было установлено! Проверьте введенные данные!</val>
 		<val lang="RO">Conexiunea cu baza de date nu a fost stabilita! Vă rugăm să vă verificați datele!</val>
 	</key>
+	<key value="changeLanguage">
+		<val lang="ENG">Change language</val>
+		<val lang="RU">Изменить язык</val>
+		<val lang="RO">Schimbă limba</val>
+	</key>
+	<key value="selectLanguage">
+		<val lang="ENG">Select a language</val>
+		<val lang="RU">Выберите язык</val>
+		<val lang="RO">Alege o limbă</val>
+	</key>
 	<key value="ID">
 		<val lang="ENG">ID</val>
 		<val lang="RU">ID</val>
@@ -70,12 +80,12 @@
 	<key value="name">
 		<val lang="ENG">Name</val>
 		<val lang="RU">Имя</val>
-		<val lang="RO">Numele</val>
+		<val lang="RO">Nume</val>
 	</key>
 	<key value="surname">
-		<val lang="ENG">Name</val>
-		<val lang="RU">Имя</val>
-		<val lang="RO">Numele</val>
+		<val lang="ENG">Surname</val>
+		<val lang="RU">Фамилия</val>
+		<val lang="RO">Prenume</val>
 	</key>
 	<key value="age">
 		<val lang="ENG">Age</val>
@@ -197,7 +207,7 @@
 		<val lang="RU">Пожалуйста, введите правильные данные в соответствии с форматом ГГГГ-ММ-ДД!</val>
 		<val lang="RO">Vă rugăm să introduceți datele corecte conform formatului AAAA-LL-ZZ!</val>
 	</key>
-		<key value="dateFormat">
+	<key value="dateFormat">
 		<val lang="ENG">YYYY-MM-DD</val>
 		<val lang="RU">ГГГГ-ММ-ДД</val>
 		<val lang="RO">AAAA-LL-ZZ</val>
@@ -243,9 +253,9 @@
 		<val lang="RO">Nu puteți adăuga un curs! Adăugați mai întâi o facultate</val>
 	</key>
 	<key value="typeNameCourse">
-		<val lang="ENG">Type the name of the course</val>
+		<val lang="ENG">Type the name of the course:</val>
 		<val lang="RU">Введите название курса</val>
-		<val lang="RO">Nu puteți adăuga un curs! Adăugați mai întâi o facultate</val>
+		<val lang="RO">Tastați numele cursului:</val>
 	</key>
 	<key value="emptyNameCourse">
 		<val lang="ENG">The course hasn't been added! Please type a name for it!</val>
@@ -292,17 +302,17 @@
 		<val lang="RU">Выберите факультет для удаления</val>
 		<val lang="RO">Alegeți facultatea spre ștergere</val>
 	</key>
-		<key value="chooseCourseDelete">
+	<key value="chooseCourseDelete">
 		<val lang="ENG">Choose the course to delete</val>
 		<val lang="RU">Выберите курс для удаления</val>
 		<val lang="RO">Alegeți cursul spre ștergere</val>
 	</key>
-		<key value="facultyDeleted">
+	<key value="facultyDeleted">
 		<val lang="ENG">The faculty has been deleted successfully!</val>
 		<val lang="RU">Факультет успешно удален!</val>
 		<val lang="RO">Facultatea a fost ștearsă cu succes!</val>
 	</key>
-		<key value="courseDeleted">
+	<key value="courseDeleted">
 		<val lang="ENG">The course has been deleted successfully!</val>
 		<val lang="RU">Курс успешно удален!</val>
 		<val lang="RO">Cursul a fost șters cu succes!</val>
@@ -313,7 +323,7 @@
 		<val lang="RO">Nu puteți șterge o facultate care are cursuri! Doriți să ștergeți toate cursurile și studenții care umblă la aceste cursuri in aceasta facultate?</val>
 	</key>
 	<key value="coursesFromFacultySuccessfullyDeleted">
-		<val lang="ENG">The courses and the students in the faculty have been deleted successfully!</val>
+		<val lang="ENG">The courses and the students in the faculty have beendeleted successfully!</val>
 		<val lang="RU">Курсы и студенты на факультете успешно удалены!</val>
 		<val lang="RO">Cursurile din facultate au fost șterse cu succes!</val>
 	</key>
