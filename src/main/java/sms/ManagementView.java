@@ -84,7 +84,6 @@ public class ManagementView {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				// Reading messages in dependance of the selected language(by default ENG)
-				Translator.setLanguage(Language.ENG);
 				Translator.getMessagesFromXML();
 
 				try {
