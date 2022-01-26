@@ -1,5 +1,7 @@
 package sms;
 
+import java.util.Date;
+
 enum Gender {
 	Male, Female
 }
@@ -24,7 +26,7 @@ public class Student {
 	/**
 	 * The age of the student
 	 */
-	private short age;
+	private int age;
 
 	/**
 	 * The gender of the student
@@ -37,9 +39,14 @@ public class Student {
 	private String course;
 
 	/**
-	 * The year when the student started the course
+	 * The date when the student started the course
 	 */
-	private short startYear;
+	private Date started;
+
+	/**
+	 * The date when the student started the course
+	 */
+	private Date graduation;
 
 	/**
 	 * The unique id of the student
@@ -100,14 +107,14 @@ public class Student {
 	/**
 	 * @return The age of the student
 	 */
-	public short getAge() {
+	public int getAge() {
 		return age;
 	}
 
 	/**
 	 * @param age - The age to set to the student
 	 */
-	public void setAge(final short age) {
+	public void setAge(final int age) {
 		this.age = age;
 	}
 
@@ -133,17 +140,17 @@ public class Student {
 	}
 
 	/**
-	 * @return The year when student started the course
+	 * @return The date when student started the course
 	 */
-	public short getStartYear() {
-		return startYear;
+	public Date getStarted() {
+		return started;
 	}
 
 	/**
-	 * @param startYear - The year when student started attending the course
+	 * @param started - The date when student started attending the course
 	 */
-	public void setStartYear(final short startYear) {
-		this.startYear = startYear;
+	public void setStarted(final Date started) {
+		this.started = started;
 	}
 
 	/**
@@ -156,7 +163,21 @@ public class Student {
 	/**
 	 * @param gender - The gender to set to the student
 	 */
-	public void setGender(Gender gender) {
+	public void setGender(final Gender gender) {
 		this.gender = gender;
+	}
+
+	/**
+	 * @return the date when student will graduate
+	 */
+	public Date getGraduation() {
+		return graduation;
+	}
+
+	/**
+	 * @param graduation - The graduation's date to set to the student
+	 */
+	public void setGraduation(final Date graduation) {
+		this.graduation = graduation;
 	}
 }
