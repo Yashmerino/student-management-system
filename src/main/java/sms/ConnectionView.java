@@ -44,7 +44,7 @@ public class ConnectionView {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				// Reading messages in dependance of the selected language(by default ENG)
-				Translator.setLanguage(Language.ENG);
+				Translator.setLanguage(Language.RO);
 				Translator.getMessagesFromXML();
 
 				try {
@@ -85,7 +85,7 @@ public class ConnectionView {
 		// The text that informs the user that they have to connect to a database
 		JLabel connectText = new JLabel(Translator.getValue("connectText"));
 		connectText.setForeground(new Color(255, 255, 255));
-		connectText.setFont(new Font("Tahoma", Font.PLAIN, 50));
+		connectText.setFont(new Font("Tahoma", Font.PLAIN, 25));
 		topPanel.add(connectText);
 
 		// The panel in the bottom part of the application
@@ -94,41 +94,41 @@ public class ConnectionView {
 
 		// The text that informs the user where they have to type the login
 		JLabel loginText = new JLabel(Translator.getValue("loginText"));
-		loginText.setBounds(68, 134, 55, 25);
-		loginText.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		loginText.setBounds(68, 134, 162, 25);
+		loginText.setFont(new Font("Tahoma", Font.PLAIN, 12));
 
 		// The text that informs the user where they have to type the password
 		JLabel passwordText = new JLabel(Translator.getValue("passwordText"));
-		passwordText.setBounds(68, 174, 100, 25);
-		passwordText.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		passwordText.setBounds(68, 174, 162, 25);
+		passwordText.setFont(new Font("Tahoma", Font.PLAIN, 12));
 
 		// Initializes the text field where user writes the login
 		loginField = new JTextField();
 		loginField.setName("loginField");
-		loginField.setBounds(223, 141, 330, 20);
+		loginField.setBounds(240, 139, 330, 20);
 		loginField.setColumns(10);
 
 		// Initializes the text field where user writes the password
 		passwordField = new JPasswordField();
 		passwordField.setName("passwordField");
-		passwordField.setBounds(223, 181, 330, 20);
+		passwordField.setBounds(240, 179, 330, 20);
 
 		// The field where user should write the database url
 		databaseUrlField = new JTextField();
 		databaseUrlField.setName("databaseUrlField");
 		databaseUrlField.setText("jdbc:mysql://localhost:3306/studentsdb");
 		databaseUrlField.setColumns(10);
-		databaseUrlField.setBounds(223, 96, 330, 20);
+		databaseUrlField.setBounds(240, 96, 330, 20);
 
 		// The text that informs user where they have to write database url
 		JLabel databaseUrlText = new JLabel(Translator.getValue("databaseUrlText"));
-		databaseUrlText.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		databaseUrlText.setBounds(68, 91, 130, 25);
+		databaseUrlText.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		databaseUrlText.setBounds(68, 91, 162, 25);
 
 		// The button to press after the login and password were written
 		JButton connectButton = new JButton(Translator.getValue("connectButton"));
 		connectButton.setName("connectButton");
-		connectButton.setBounds(240, 290, 140, 35);
+		connectButton.setBounds(221, 290, 190, 42);
 		connectButton.setFont(new Font("Tahoma", Font.PLAIN, 20));
 
 		// Execute connection and create a table when "Connect" button pressed
