@@ -223,6 +223,7 @@ public class ManagementView {
 				if (DBHandler.getFaculties().length == 0) {
 					JOptionPane.showMessageDialog(managementFrame, Translator.getValue("cannotAddStudent"),
 							Translator.getValue("error"), JOptionPane.ERROR_MESSAGE);
+					return;
 				}
 
 				// If one of the fields are empty warn user about that
@@ -460,9 +461,8 @@ public class ManagementView {
 					return;
 				} else {
 					String[] faculties = DBHandler.getFaculties();
-					faculty = (String) JOptionPane.showInputDialog(null, Translator.getValue("sms"),
-							Translator.getValue("chooseFaculty"), JOptionPane.QUESTION_MESSAGE, null, faculties,
-							faculties[0]);
+					faculty = (String) JOptionPane.showInputDialog(null, Translator.getValue("chooseFaculty"),
+							Translator.getValue("sms"), JOptionPane.QUESTION_MESSAGE, null, faculties, faculties[0]);
 
 					// If no faculty has been selected for the course
 					if (faculty == null || faculty.equals("")) {
@@ -539,7 +539,7 @@ public class ManagementView {
 							Translator.getValue("sms"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
 						if (DBHandler.deleteFacultyCourses(faculty)) {
 							JOptionPane.showMessageDialog(managementFrame,
-									Translator.getValue("courseFromFacultySuccessfullyDeleted"),
+									Translator.getValue("coursesFromFacultySuccessfullyDeleted"),
 									Translator.getValue("success"), JOptionPane.INFORMATION_MESSAGE);
 
 							if (DBHandler.deleteFaculty(faculty)) {
